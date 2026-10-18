@@ -1,0 +1,547 @@
+/* ==========================================================================
+   Global styles — tokens from design/project/Main.dc.html ("Industrial editorial")
+   Components use scoped <style> blocks and only these tokens; the shared
+   primitives at the bottom (.wrap, .grid, .lbl, .dsp, .ul, .pill, .mag, .tag)
+   are the design-system controls every section reuses.
+   ========================================================================== */
+
+/* ---------- Tokens ---------- */
+:root {
+  /* Colour — warm neutrals + one accent */
+  --paper: #efece5; /* light ground */
+  --paper-2: #e2ded4; /* tags, panels, plates */
+  --paper-3: #cbc6ba; /* placeholder photo fills on paper-2 */
+  --rule-light: #c9c4b8; /* hairlines on paper */
+  --mute-light: #55524c; /* 6.4:1 on paper */
+  --ink: #0e0f11; /* dark ground, text */
+  --ink-2: #1b1d21; /* rules / dark round buttons on ink */
+  --rule-dark: #3a3b3f; /* hairlines on ink */
+  --border-dark: #4a4842; /* pill outline on ink */
+  --mute-dark: #9c988f; /* 6.9:1 on ink */
+  --body-dark: #c9c5bc; /* secondary body copy on ink */
+
+  --accent: #2f3cff; /* cobalt — fills, dots, one highlighted word */
+  --on-accent: #ffffff; /* text on the accent */
+  --accent-dark: #8f97ff; /* accent used as text/glyph on ink */
+
+  /* Tone — the page ground. Driven by [data-tone] sections (see scripts/motion/tone.ts). */
+  --bg: var(--ink);
+  --fg: var(--paper);
+
+  /* Type families (Fontsource variable builds, self-hosted) */
+  --font-display: 'Unbounded Variable', 'Unbounded', 'Arial Black', sans-serif;
+  --font-body: 'Onest Variable', 'Onest', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Type scale — fluid between the 390 px and 1440 px designs */
+  --fs-xxl: 15vw; /* hero name marquee (mobile 26vw) */
+  --fs-mega: min(19vw, 300px); /* "eMachy" feature / case-study title */
+  --fs-xl: clamp(56px, 26.29px + 7.619vw, 136px); /* footer "Let's work together." */
+  --fs-big: clamp(48px, 30.17px + 4.571vw, 96px); /* "Selected work" */
+  --fs-l: clamp(48px, 39.09px + 2.286vw, 72px); /* h2 */
+  --fs-m: clamp(28px, 23.54px + 1.143vw, 40px); /* h3 large */
+  --fs-h3: clamp(21px, 17.66px + 0.857vw, 30px); /* timeline h3 */
+  --fs-work: clamp(26px, 19.31px + 1.714vw, 44px); /* work-list names */
+  --fs-statement: clamp(28px, 21.31px + 1.714vw, 46px); /* intro statement, Onest */
+  --fs-skill: clamp(19px, 16.4px + 0.667vw, 26px);
+  --fs-body-l: clamp(17px, 15.89px + 0.286vw, 20px);
+  --fs-body: clamp(15px, 14.26px + 0.19vw, 17px);
+  --fs-small: clamp(14px, 13.63px + 0.095vw, 15px);
+  --fs-caption: 13px;
+  --fs-label: 12px;
+
+  --lh-display: 0.92;
+  --lh-statement: 1.16;
+  --lh-body-l: 1.5;
+  --lh-body: 1.55;
+
+  --ls-xxl: -0.045em;
+  --ls-display: -0.045em;
+  --ls-h3: -0.03em;
+  --ls-statement: -0.022em;
+  --ls-label: 0.14em;
+
+  /* Space — 4 px base */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 40px;
+  --space-6: 64px;
+  --space-7: 96px;
+  --space-8: 128px;
+  --space-9: 176px;
+  --section-pad: var(--space-9); /* 176 desktop / 96 mobile */
+
+  /* Grid — 12 col · margin 64 · gutter 24 · max 1600 (mobile 4 col · 20 · 16) */
+  --grid-cols: 12;
+  --grid-margin: 64px;
+  --grid-gutter: 24px;
+  --grid-max: 1600px;
+
+  /* Radii */
+  --radius-0: 0;
+  --radius-pill: 999px;
+
+  /* Control sizes */
+  --round-xl: 188px; /* magnetic round, feature / footer (mobile 132–136) */
+  --round-l: 164px; /* magnetic round, intro (mobile 124) */
+  --pill-h: 60px;
+  --tag-h: 30px;
+
+  /* Motion (CSS side; GSAP equivalents live in scripts/gsap.ts) */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* expo.out-ish — entrances */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* fills, wipes */
+  --ease-bars: cubic-bezier(0.76, 0, 0.24, 1); /* loader bars, panels */
+  --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fill: 0.6s;
+  --dur-ul: 0.5s;
+
+  /* Layers */
+  --z-content: 1;
+  --z-grain: 30;
+  --z-preview: 40;
+  --z-scrim: 50;
+  --z-panel: 55;
+  --z-menu-btn: 60;
+  --z-transition: 90;
+  --z-loader: 100;
+
+  color-scheme: dark light;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --fs-xxl: 26vw;
+    --fs-mega: 24vw;
+    --fs-label: 11px;
+    --section-pad: var(--space-7);
+    --grid-cols: 4;
+    --grid-margin: 20px;
+    --grid-gutter: 16px;
+    --round-xl: 132px;
+    --round-l: 124px;
+    --pill-h: 52px;
+    --tag-h: 28px;
+  }
+}
+
+/* ---------- Tone system ----------
+   Every section paints itself from --bg/--fg. Without JS each [data-tone]
+   section shows its own colours. With JS (html.tone-live) all non-fixed
+   sections inherit the page tone from <html>, which tone.ts cross-fades when a
+   section with a different tone reaches mid-screen. [data-tone-fixed]
+   sections (hero, footer) always keep their own tone. */
+[data-tone='dark'] {
+  --bg: var(--ink);
+  --fg: var(--paper);
+}
+[data-tone='light'] {
+  --bg: var(--paper);
+  --fg: var(--ink);
+}
+html.tone-live [data-tone]:not([data-tone-fixed]) {
+  --bg: inherit;
+  --fg: inherit;
+}
+:root,
+[data-tone] {
+  --mu: color-mix(in srgb, var(--fg) 62%, var(--bg)); /* muted text */
+  --mu2: color-mix(in srgb, var(--fg) 80%, var(--bg)); /* secondary body */
+  --line: color-mix(in srgb, var(--fg) 22%, var(--bg)); /* hairline */
+  --line2: color-mix(in srgb, var(--fg) 45%, var(--bg)); /* outline */
+}
+[data-tone] {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* ---------- Reset / base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--bg);
+  color: var(--fg);
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+img,
+svg,
+video,
+picture {
+  display: block;
+  max-width: 100%;
+}
+img {
+  height: auto;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+ol,
+ul {
+  margin: 0;
+}
+ol[role='list'],
+ul[role='list'] {
+  list-style: none;
+  padding: 0;
+}
+a {
+  color: inherit;
+}
+button {
+  font: inherit;
+  color: inherit;
+}
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* Lenis (smooth scroll) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+html.is-loading,
+html.scroll-locked:not(.lenis) {
+  overflow: hidden;
+}
+
+/* ---------- Focus ---------- */
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+  border-radius: 2px;
+}
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: 16px;
+  z-index: calc(var(--z-loader) + 1);
+  padding: 12px 18px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 500;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+.skip-link:focus-visible {
+  transform: none;
+  outline-color: var(--paper);
+}
+
+/* ---------- Grain (design toggle "grain", default on) ---------- */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-grain);
+  pointer-events: none;
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+}
+
+/* ---------- Layout primitives ---------- */
+.wrap {
+  width: 100%;
+  max-width: var(--grid-max);
+  margin-inline: auto;
+  padding-inline: var(--grid-margin);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+  column-gap: var(--grid-gutter);
+}
+@media (max-width: 760px) {
+  .grid > * {
+    grid-column: 1 / -1 !important;
+  }
+}
+.section {
+  position: relative;
+  padding-block: var(--section-pad);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Type primitives ---------- */
+.dsp {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: var(--ls-display);
+  line-height: var(--lh-display);
+}
+.lbl {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  line-height: 1.3;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.mu {
+  color: var(--mu);
+}
+/* Manual line mask (when not using data-split-lines): <span class="ln"><span>Line</span></span> */
+.ln {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
+}
+.ln > span {
+  display: block;
+}
+
+/* ---------- Controls ---------- */
+
+/* Text link: underline draws left→right on hover, retracts to the right on leave */
+.ul {
+  position: relative;
+  text-decoration: none;
+}
+.ul::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-ul) var(--ease-in-out);
+}
+.ul:hover::after,
+.ul:focus-visible::after,
+.ul[aria-current='page']::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Tag */
+.tag {
+  height: var(--tag-h);
+  padding: 0 13px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line2);
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--fs-caption);
+  line-height: 1;
+  white-space: nowrap;
+}
+.tag--solid {
+  border-color: transparent;
+  background: var(--paper-2);
+  color: var(--ink);
+}
+
+/* Pill (outline, follows tone). Markup: <a class="pill"><span class="fill"></span><span>Label</span></a> */
+.pill {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  height: var(--pill-h);
+  padding: 0 30px;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--fg);
+  border: 1px solid var(--line2);
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.4s, border-color 0.4s;
+}
+.pill > .fill {
+  position: absolute;
+  left: -10%;
+  width: 120%;
+  height: 300%;
+  top: 105%;
+  border-radius: 50%;
+  z-index: -1;
+  background: var(--pill-fill, var(--fg));
+  transition: top 0.55s var(--ease-in-out);
+  pointer-events: none;
+}
+.pill:hover,
+.pill:focus-visible {
+  color: var(--pill-fill-fg, var(--bg));
+  border-color: var(--pill-fill, var(--fg));
+}
+.pill:hover > .fill,
+.pill:focus-visible > .fill {
+  top: -100%;
+}
+
+/* Magnetic round button. Pull + fill are driven by scripts/motion/magnetic.ts
+   ([data-magnetic]); colours come from custom properties:
+     --mag-size   diameter            (default var(--round-xl))
+     --mag-bg     resting background  (default var(--accent))
+     --mag-fg     resting label       (default var(--on-accent))
+     --mag-fill   hover fill          (default var(--fg))
+     --mag-fill-fg label on the fill  (default var(--bg))
+   Markup: <a class="mag" data-magnetic><span class="fill"></span><span class="t">Label</span></a> */
+.mag {
+  --mag-size: var(--round-xl);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  flex: none;
+  width: var(--mag-size);
+  height: var(--mag-size);
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.25;
+  background: var(--mag-bg, var(--accent));
+  color: var(--mag-fg, var(--on-accent));
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.mag > .fill {
+  position: absolute;
+  left: -10%;
+  top: -25%;
+  width: 120%;
+  height: 150%;
+  border-radius: 50%;
+  z-index: -1;
+  background: var(--mag-fill, var(--fg));
+  transform: translateY(100%);
+  pointer-events: none;
+}
+.mag > .t {
+  display: block;
+  position: relative;
+  transition: color 0.35s;
+  pointer-events: none;
+}
+.mag.is-hover > .t {
+  color: var(--mag-fill-fg, var(--bg));
+}
+/* No-JS / touch fallback: CSS-only fill on hover */
+html:not(.js) .mag > .fill {
+  transition: transform var(--dur-fill) var(--ease-in-out);
+}
+html:not(.js) .mag:hover > .fill {
+  transform: none;
+}
+html:not(.js) .mag:hover > .t {
+  color: var(--mag-fill-fg, var(--bg));
+}
+@media (max-width: 760px) {
+  .mag {
+    font-size: 15px;
+  }
+}
+
+/* ---------- Motion initial states (JS on) ----------
+   Hidden only while JS runs (html.js is set by an inline head script), so
+   no-JS visitors always see content. */
+html.js [data-reveal]:not([data-reveal='children']),
+html.js [data-reveal='children'] > * {
+  opacity: 0;
+}
+html.js [data-split-lines] {
+  visibility: hidden;
+}
+/* SplitText line masks: padded so diacritics (š, ć, Ž) and descenders are not clipped */
+.split-line-mask {
+  padding-block: 0.1em 0.16em;
+  margin-block: -0.1em -0.16em;
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+  .ul::after,
+  .pill > .fill {
+    transition-duration: 0.15s;
+    transition-timing-function: linear;
+  }
+  /* Magnetic: no pull; the fill becomes a 150 ms colour change */
+  .mag {
+    transition: background-color 0.15s linear;
+  }
+  .mag > .fill {
+    display: none;
+  }
+  .mag:hover,
+  .mag:focus-visible {
+    background: var(--mag-fill, var(--fg));
+  }
+  .mag:hover > .t,
+  .mag:focus-visible > .t {
+    color: var(--mag-fill-fg, var(--bg));
+  }
+}

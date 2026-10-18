@@ -1,0 +1,121 @@
+---
+/**
+ * Intro loader (Motion row 02). Animated by src/scripts/loader.ts.
+ * Hidden before first paint on repeat visits (html.loader-skip) and without JS.
+ */
+---
+
+<div class="loader" data-loader aria-hidden="true">
+  <div class="bars">
+    {Array.from({ length: 6 }, () => <span class="bar" data-loader-bar />)}
+  </div>
+  <div class="centre" data-loader-centre>
+    <div class="greet">
+      <span class="dot"></span>
+      <span class="mask"><span class="word dsp" data-loader-word>Zdravo</span></span>
+    </div>
+    <span class="lbl corner corner--l">Marko Janošević - Portfolio</span>
+    <span class="lbl corner corner--r"><span data-loader-count>01</span> / 06</span>
+  </div>
+</div>
+
+<style>
+  .loader {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-loader);
+    display: flex;
+    pointer-events: auto;
+    color: var(--paper);
+  }
+  :global(html:not(.js)) .loader,
+  :global(html.loader-skip) .loader {
+    display: none;
+  }
+  .bars {
+    position: absolute;
+    inset: 0;
+    display: flex;
+  }
+  .bar {
+    flex: 1 0 0;
+    margin-inline-end: -1px; /* hide sub-pixel seams between bars */
+    background: var(--ink);
+  }
+  .centre {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .greet {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .dot {
+    width: 14px;
+    height: 14px;
+    flex: none;
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    animation: pulse 0.5s ease-in-out infinite;
+  }
+  .mask {
+    display: block;
+    overflow: hidden;
+    padding-block: 0.12em 0.18em;
+  }
+  .word {
+    display: block;
+    font-size: clamp(40px, 6vw, 88px);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .corner {
+    position: absolute;
+    bottom: 32px;
+    color: var(--mute-dark);
+  }
+  .corner--l {
+    left: 32px;
+  }
+  .corner--r {
+    right: 32px;
+    font-variant-numeric: tabular-nums;
+  }
+  @media (max-width: 760px) {
+    .greet {
+      gap: 14px;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+    }
+    .corner {
+      bottom: 20px;
+    }
+    .corner--l {
+      left: 20px;
+    }
+    .corner--r {
+      right: 20px;
+    }
+  }
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.55);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dot {
+      animation: none;
+    }
+  }
+</style>

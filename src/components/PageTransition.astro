@@ -1,0 +1,59 @@
+---
+/**
+ * Page-transition panel (Motion row 15). Persisted across ClientRouter swaps;
+ * animated by src/scripts/transition.ts.
+ */
+---
+
+<div class="pt" data-page-transition transition:persist="page-transition" aria-hidden="true">
+  <div class="inner" data-page-transition-inner>
+    <span class="dot"></span>
+    <span class="word dsp" data-page-transition-word>Home</span>
+  </div>
+</div>
+
+<style>
+  .pt {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-transition);
+    display: flex;
+    align-items: flex-end;
+    padding: 64px;
+    background: var(--ink);
+    color: var(--paper);
+    visibility: hidden;
+    transform: translateY(101%);
+    pointer-events: none;
+  }
+  .inner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .dot {
+    width: 14px;
+    height: 14px;
+    flex: none;
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+  }
+  .word {
+    font-size: clamp(48px, 33.14px + 3.81vw, 88px);
+    letter-spacing: -0.05em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  @media (max-width: 760px) {
+    .pt {
+      padding: 20px 20px 40px;
+    }
+    .inner {
+      gap: 14px;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+    }
+  }
+</style>

@@ -1,0 +1,26 @@
+---
+/**
+ * eMachy case study — TODO(phase 2c): build from design/project/CaseStudy.dc.html
+ * and CaseStudyMobile.dc.html. Put section components in src/components/case-study/.
+ * The case study has its own "Next / All work →" footer (not the home Footer).
+ * Title lines should rise with the page transition: use
+ * data-split-lines data-motion-on="reveal" on the h1.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../data/site';
+---
+
+<BaseLayout
+  title="eMachy — case study · Marko Janošević"
+  description="eMachy: a B2B marketplace for new and used industrial machines, built by a small team and a software factory of AI agents. Case study by Marko Janošević, co-founder and tech lead."
+  nav="page"
+  navExternal={{ href: SITE.emachy, label: 'emachy.com ↗' }}
+>
+  <header id="hero" class="section" data-tone="dark" data-tone-fixed style="min-height: 100svh">
+    <div class="wrap">
+      <!-- TODO: case-study hero -->
+      <p class="lbl">Case study No. 01</p>
+      <h1 class="dsp" data-split-lines data-motion-on="reveal">eMachy</h1>
+    </div>
+  </header>
+</BaseLayout>

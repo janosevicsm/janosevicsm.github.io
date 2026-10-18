@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MagneticButton from '../components/ui/MagneticButton.astro';
+---
+
+<BaseLayout title="Page not found — Marko Janošević" description="This page does not exist." nav="page" noindex>
+  <section id="hero" class="nf" data-tone="dark" data-tone-fixed>
+    <div class="wrap inner">
+      <div class="top">
+        <span class="lbl">Error No. 404</span>
+        <span class="lbl mu">Page not found</span>
+      </div>
+      <h1 class="dsp code" data-split-lines data-motion-on="reveal">
+        404<span class="acc">.</span>
+      </h1>
+      <div class="bottom">
+        <p class="copy" data-reveal data-motion-on="reveal" data-motion-delay="0.2">
+          This page went off the map. The rest of the site is still here.
+        </p>
+        <MagneticButton href="/" label="Back home" attrs={{ 'data-transition-word': 'Home' }} />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+  }
+  .inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--space-5);
+    padding-top: 140px;
+    padding-bottom: var(--space-6);
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .code {
+    font-size: var(--fs-mega);
+    letter-spacing: -0.06em;
+    line-height: 0.82;
+  }
+  .acc {
+    color: var(--accent-dark);
+  }
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--space-5);
+    flex-wrap: wrap;
+  }
+  .copy {
+    max-width: 30ch;
+    font-size: var(--fs-statement);
+    line-height: var(--lh-statement);
+    letter-spacing: var(--ls-statement);
+  }
+  @media (max-width: 760px) {
+    .inner {
+      padding-top: 120px;
+      padding-bottom: var(--space-5);
+    }
+    .code {
+      font-size: 40vw;
+    }
+  }
+</style>

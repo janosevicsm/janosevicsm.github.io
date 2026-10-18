@@ -1,0 +1,367 @@
+---
+/**
+ * Top bar + round "Menu" button + slide-in menu panel (Motion row 14).
+ * Behaviour: src/scripts/nav.ts. The top bar is absolutely positioned over the
+ * first section (the hero) and scrolls away with it; the Menu button is fixed.
+ *
+ * variant="home"  logo · Work / Experience / About / Contact (in-page anchors)
+ * variant="page"  ← Back to home · logo · optional external link (case study, 404)
+ */
+import { NAV_LINKS, SOCIALS } from '../data/site';
+import MagneticButton from './ui/MagneticButton.astro';
+
+interface Props {
+  variant?: 'home' | 'page';
+  /** right-hand link on variant="page", e.g. { href: 'https://emachy.com', label: 'emachy.com ↗' } */
+  external?: { href: string; label: string };
+}
+
+const { variant = 'home', external } = Astro.props;
+const onHome = variant === 'home';
+const href = (id: string) => (onHome ? `#${id}` : `/#${id}`);
+---
+
+<div class="topbar" id="top" data-topbar>
+  <div class="wrap bar">
+    {
+      onHome ? (
+        <>
+          <a href="#top" class="logo dsp" aria-label="Marko Janošević — back to top">
+            <span class="m">
+              <span data-rise>
+                MJ<span class="slash">/</span>26
+              </span>
+            </span>
+          </a>
+          <nav aria-label="Primary" class="links">
+            <ul role="list">
+              {NAV_LINKS.map((l) => (
+                <li>
+                  <a href={href(l.id)} class="navlink" data-nav-key={l.key}>
+                    <span class="m">
+                      <span data-rise class="rise">
+                        <span class="dot" aria-hidden="true" />
+                        <span class="ul">{l.label}</span>
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </>
+      ) : (
+        <>
+          <a href="/" class="back" data-transition-word="Home">
+            <span class="m">
+              <span data-rise class="ul">
+                <span aria-hidden="true">← </span>
+                <span class="back-long">Back to home</span>
+                <span class="back-short">Home</span>
+              </span>
+            </span>
+          </a>
+          <a href="/" class="logo logo--centre dsp" aria-label="Marko Janošević — home" data-transition-word="Home">
+            <span class="m">
+              <span data-rise>
+                MJ<span class="slash">/</span>26
+              </span>
+            </span>
+          </a>
+          {external ? (
+            <a href={external.href} class="external" rel="noopener">
+              <span class="m">
+                <span data-rise class="ul">
+                  {external.label}
+                </span>
+              </span>
+            </a>
+          ) : (
+            <span class="external" />
+          )}
+        </>
+      )
+    }
+  </div>
+</div>
+
+<MagneticButton
+  as="button"
+  class="menu-btn"
+  label="Menu"
+  size="76px"
+  bg="var(--accent)"
+  fg="var(--on-accent)"
+  fill="var(--paper)"
+  fillFg="var(--ink)"
+  attrs={{
+    type: 'button',
+    'data-menu-button': '',
+    'aria-expanded': 'false',
+    'aria-controls': 'menu-panel',
+    'aria-label': 'Open menu',
+  }}
+/>
+
+<div class="scrim" data-menu-scrim aria-hidden="true"></div>
+
+<div
+  id="menu-panel"
+  class="panel"
+  data-menu-panel
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menu"
+  aria-hidden="true"
+  inert
+>
+  <nav aria-label="Menu" class="panel-nav">
+    <span class="lbl panel-lbl">Navigation</span>
+    <ul role="list">
+      {
+        NAV_LINKS.map((l) => (
+          <li class="m">
+            <a href={href(l.id)} class="panel-link dsp" data-nav-key={l.key} data-menu-rise data-transition-word={onHome ? undefined : 'Home'}>
+              <span class="dot" aria-hidden="true" />
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <ul role="list" class="socials">
+    {
+      SOCIALS.map((s) => (
+        <li>
+          <a class="ul" href={s.href} rel={s.href.startsWith('http') ? 'noopener' : undefined}>
+            {s.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  /* ---- top bar ---- */
+  .topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    color: var(--paper);
+  }
+  .bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding-block: 32px;
+  }
+  /* line masks; padded so underlines/diacritics are not clipped */
+  .m {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-block: 4px 6px;
+    margin-block: -4px -6px;
+  }
+  .m > [data-rise] {
+    display: inline-block;
+  }
+  :global(html.js:not(.is-revealed)) [data-topbar] [data-rise] {
+    opacity: 0;
+  }
+  .logo {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-decoration: none;
+  }
+  .slash {
+    color: var(--accent-dark);
+  }
+  .links ul {
+    display: flex;
+    gap: 36px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .navlink {
+    font-size: 16px;
+    text-decoration: none;
+  }
+  .rise {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dot {
+    width: 6px;
+    height: 6px;
+    flex: none;
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    opacity: 0;
+    transform: scale(0.4);
+    transition:
+      opacity 0.3s,
+      transform 0.4s var(--ease-out);
+  }
+  .is-active .dot {
+    opacity: 1;
+    transform: none;
+  }
+  .back,
+  .external {
+    font-size: 16px;
+    text-decoration: none;
+    flex: 1 1 0;
+  }
+  .external {
+    text-align: right;
+  }
+  .logo--centre {
+    flex: none;
+  }
+  .back-short {
+    display: none;
+  }
+
+  /* ---- menu button ---- */
+  :global(.menu-btn) {
+    position: fixed !important;
+    top: 24px;
+    right: 24px;
+    z-index: var(--z-menu-btn);
+    font-size: 14px !important;
+    transform: scale(0);
+    visibility: hidden;
+  }
+  :global(html:not(.js)) :global(.menu-btn) {
+    display: none;
+  }
+
+  /* ---- panel ---- */
+  .scrim {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-scrim);
+    background: rgb(14 15 17 / 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s;
+  }
+  .scrim:global(.is-open) {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .panel {
+    --bg: var(--ink);
+    --fg: var(--paper);
+    background: var(--ink);
+    color: var(--paper);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(560px, 100%);
+    z-index: var(--z-panel);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 48px;
+    padding: 120px 56px 48px;
+    overflow-y: auto;
+    transform: translateX(102%);
+    visibility: hidden;
+  }
+  .panel-nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .panel-lbl {
+    display: block;
+    color: var(--mute-dark);
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--rule-dark);
+    margin-bottom: 20px;
+  }
+  .panel-nav .m {
+    display: block;
+    /* room for the focus ring inside the mask */
+    padding: 8px;
+    margin: -8px;
+  }
+  .panel-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    font-size: clamp(44px, 41.77px + 0.571vw, 52px);
+    letter-spacing: -0.04em;
+    line-height: 1.12;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .panel-link .dot {
+    width: 10px;
+    height: 10px;
+  }
+  .panel-link:hover {
+    color: var(--accent-dark);
+  }
+  .socials {
+    display: flex;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 15px;
+  }
+
+  @media (max-width: 760px) {
+    .bar {
+      padding-block: 16px;
+      min-height: 92px;
+    }
+    .links {
+      display: none;
+    }
+    .logo {
+      font-size: 14px;
+    }
+    .logo--centre,
+    .external {
+      display: none;
+    }
+    .back {
+      font-size: 15px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .back-long {
+      display: none;
+    }
+    .back-short {
+      display: inline;
+    }
+    :global(.menu-btn) {
+      --mag-size: 60px !important;
+      top: 16px;
+      right: 20px;
+      font-size: 13px !important;
+    }
+    .panel {
+      padding: 112px 20px 32px;
+    }
+  }
+</style>
