@@ -31,8 +31,8 @@ const CASE = '/work/emachy';
 
     <div class="desc" data-reveal>
       <p>
-        A B2B marketplace for new and used industrial machines - listings and lead generation, in six languages, with
-        real sellers on it.
+        A B2B marketplace for new and used industrial machines - buyers contact sellers directly, with no middlemen
+        and no commission.
       </p>
       <p class="mu">
         I created every repository, made the architecture calls and set up how the team builds: Claude Code as an
@@ -55,14 +55,14 @@ const CASE = '/work/emachy';
           class="plate-d"
           src={shotDesktop}
           alt="The eMachy home page: search for industrial machines"
-          sizes="(max-width: 760px) 100vw, min(calc(100vw - 240px), 1200px)"
+          sizes="(max-width: 760px) 100vw, min(calc(93.14vw - 141.26px), 1360px)"
         />
         <DeviceShot
           kind="phone"
           class="plate-m"
           src={shotMobile}
           alt="The eMachy home page on a phone: search for industrial machines"
-          sizes="200px"
+          sizes="184px"
         />
       </div>
     </a>
@@ -73,8 +73,8 @@ const CASE = '/work/emachy';
         <dd>Since Sep<span class="d-only">tember</span> 2026</dd>
       </div>
       <div class="fact">
-        <dt class="lbl mu">Reach</dt>
-        <dd>Six languages<span class="d-only">, real sellers</span></dd>
+        <dt class="lbl mu">Model</dt>
+        <dd>No commission<span class="d-only">, free for buyers</span></dd>
       </div>
       <div class="fact">
         <dt class="lbl mu">Role</dt>
@@ -152,9 +152,7 @@ const CASE = '/work/emachy';
   :global(html.js) .plate[data-emachy-plate] {
     clip-path: inset(10% 6% 10% 6%);
   }
-  .plate-in {
-    will-change: transform;
-  }
+  /* no will-change: a promoted layer moved by sub-pixels resamples (blurs) the screenshot */
   /* browser window: same height as the design's stylised view (474 px inside the 586 px plate at 1440) */
   .plate-in > :global(.plate-d) {
     aspect-ratio: 1200 / 474;

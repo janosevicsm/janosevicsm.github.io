@@ -3,21 +3,25 @@
  * repeat visits and client-side navigations skip it (an inline head script
  * adds html.loader-skip before first paint, so it never flashes).
  *
- * Timeline: "Zdravo · Hello · Hallo · Živjo · Здраво · Bok" swap in place,
- * each rising 12 px from a mask (first 280 ms, then 140 ms each), the accent
- * dot pulses, counter 01→06. Exit: six vertical bars lift away left→right
- * (0.7 s cubic(.76,0,.24,1), stagger 0.04). Total ≈ 1.9 s.
+ * Timeline: the greetings (LOADER_GREETINGS in data/site.ts: "Hello · Zdravo ·
+ * Hola · Bonjour · Ciao · Hallo · Olá · 你好") swap in place, each rising 12 px
+ * from a mask (first 280 ms, the rest share ≈ 700 ms), the accent dot pulses,
+ * counter 01→08. Exit: one vertical bar per greeting lifts away left→right
+ * (0.7 s cubic(.76,0,.24,1), stagger 0.04). Total ≈ 2 s.
  *
  * Hook: the page reveal fires 0.4 s before the bars finish ("-=0.4"), see
  * page-reveal.ts. 'loader:done' is dispatched on document when the loader is gone.
- * Reduced motion: "Zdravo" fades in and out (300 ms each), then the screen fades.
+ * Reduced motion: "Hello" fades in and out (300 ms each), then the screen fades.
  */
 import { gsap, EASE_BARS } from './gsap';
 import { prefersReducedMotion, LOADER_SEEN_KEY } from './env';
 import { reveal } from './page-reveal';
 import { stopScroll, startScroll } from './smooth-scroll';
+import { LOADER_GREETINGS as GREETINGS } from '../data/site';
 
-const GREETINGS = ['Zdravo', 'Hello', 'Hallo', 'Živjo', 'Здраво', 'Bok'];
+/** time on the first greeting, and the time all the others share */
+const FIRST = 0.28;
+const REST = 0.7;
 
 function markSeen(): void {
   try {
@@ -80,11 +84,13 @@ export function runLoader(): void {
     word.textContent = GREETINGS[i]!;
     if (count) count.textContent = String(i + 1).padStart(2, '0');
   };
+  const step = REST / Math.max(1, GREETINGS.length - 1);
   let t = 0;
   GREETINGS.forEach((_, i) => {
+    const slot = i === 0 ? FIRST : step;
     tl.call(() => setGreeting(i), undefined, t);
-    tl.fromTo(word, { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: i === 0 ? 0.24 : 0.12, ease: 'power2.out' }, t);
-    t += i === 0 ? 0.28 : 0.14;
+    tl.fromTo(word, { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: slot * 0.86, ease: 'power2.out' }, t);
+    t += slot;
   });
   const exitAt = t + 0.02;
   if (centre) tl.to(centre, { opacity: 0, duration: 0.25, ease: 'none' }, exitAt);

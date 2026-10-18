@@ -1,82 +1,82 @@
 /**
- * Selected work (home #work). Copy from design/project/Home.dc.html (desktop
- * columns) and HomeMobile.dc.html (`meta`, the one-line summary under the name).
- * Client projects at WeDoSoftware are under NDA: named by domain, not linked.
+ * Selected work (home #work). Desktop columns: Project | What it is | Stack | Where
+ * (role or company, plus the year for eMachy). `meta` is the one-line mobile /
+ * touch summary under the name ("What · Stack · Where", short enough for one line at 390 px).
  *
- * `bg` / `ink` are the placeholder panel colours from the design (the eMachy
- * panel uses the accent). Swap in real images later if NDAs allow.
+ * Client projects (WeDoSoftware) are named by domain and not linked. Preview
+ * panels: `bg` / `ink` colour the panel, `logo` sits centred on it.
  */
 export interface WorkItem {
   name: string;
-  /** desktop "Discipline" column */
-  discipline: string;
-  /** desktop "Context" column */
-  context: string;
-  /** right end of the context column ("2026" or "NDA") */
-  year: string;
+  /** "What it is" column */
+  what: string;
+  /** "Stack" column */
+  stack: string;
+  /** "Where" column: role or company */
+  where: string;
+  /** right end of the "Where" column (eMachy only) */
+  year?: string;
   /** mobile / touch one-liner under the name */
   meta: string;
-  /** large word on the floating preview panel */
-  glyph: string;
-  /** placeholder panel background + text colour (CSS colour or var()) */
+  /** logo on the preview panel and the inline thumbnail (public/logos) */
+  logo: { src: string; width: number; height: number };
+  /** panel background + ring colour (CSS colour or var()) */
   bg: string;
   ink: string;
-  /** case-study link; client rows have none (NDA) */
+  /** round label on the floating preview card */
+  label: string;
+  /** case-study link; client rows have none */
   href?: string;
 }
 
-export const WORK_NOTE = 'Client projects at WeDoSoftware are under NDA, so they are named by domain.';
+const EMACHY_LOGO = { src: '/logos/emachy.svg', width: 1000, height: 1000 };
+const WDS_LOGO = { src: '/logos/wedosoftware.svg', width: 800, height: 800 };
 
 export const WORK: WorkItem[] = [
   {
     name: 'eMachy',
-    discipline: 'Industrial machines marketplace',
-    context: 'Own venture - Tech lead',
+    what: 'Industrial machines marketplace',
+    stack: '.NET · Angular',
+    where: 'Co-founder & tech lead',
     year: '2026',
-    meta: 'Industrial machines marketplace · Tech lead · 2026',
-    glyph: 'eMachy',
+    meta: 'Marketplace · .NET + Angular · Co-founder, 2026',
+    logo: EMACHY_LOGO,
     bg: 'var(--accent)',
     ink: 'var(--on-accent)',
+    label: 'View',
     href: '/work/emachy',
   },
   {
-    name: 'Agriculture platform',
-    discipline: 'Full-stack (.NET + Angular)',
-    context: 'WeDoSoftware',
-    year: 'NDA',
-    meta: 'Full-stack (.NET + Angular) · WeDoSoftware',
-    glyph: 'Agri',
-    bg: '#3e5238',
+    name: 'Agriculture platforms',
+    what: 'Web applications for agriculture',
+    stack: '.NET · Angular',
+    where: 'WeDoSoftware',
+    meta: 'Web apps · .NET + Angular · WeDoSoftware',
+    logo: WDS_LOGO,
+    bg: 'var(--ink-2)',
     ink: 'var(--paper)',
-  },
-  {
-    name: 'Real estate platform',
-    discipline: 'Full-stack (.NET + Angular)',
-    context: 'WeDoSoftware',
-    year: 'NDA',
-    meta: 'Full-stack (.NET + Angular) · WeDoSoftware',
-    glyph: 'Estate',
-    bg: '#b8a98d',
-    ink: 'var(--ink)',
+    label: 'Client',
   },
   {
     name: 'HR & time tracking',
-    discipline: 'Full-stack (.NET + Angular)',
-    context: 'WeDoSoftware',
-    year: 'NDA',
-    meta: 'Full-stack (.NET + Angular) · WeDoSoftware',
-    glyph: 'HR',
-    bg: '#2a2d34',
-    ink: 'var(--paper)',
+    what: 'Web application for HR and time tracking',
+    stack: '.NET · Angular',
+    where: 'WeDoSoftware',
+    meta: 'Web app · .NET + Angular · WeDoSoftware',
+    logo: WDS_LOGO,
+    bg: 'var(--paper-2)',
+    ink: 'var(--ink)',
+    label: 'Client',
   },
   {
-    name: 'Mobile apps',
-    discipline: 'React Native',
-    context: 'WeDoSoftware',
-    year: 'NDA',
-    meta: 'React Native · WeDoSoftware',
-    glyph: 'Mobile',
-    bg: 'var(--rule-light)',
-    ink: 'var(--ink)',
+    name: 'Real estate app',
+    what: 'Mobile app for real estate',
+    stack: 'React Native',
+    where: 'WeDoSoftware',
+    meta: 'Mobile app · React Native · WeDoSoftware',
+    logo: WDS_LOGO,
+    bg: '#2a2d34',
+    ink: 'var(--paper)',
+    label: 'Client',
   },
 ];

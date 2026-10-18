@@ -3,7 +3,8 @@
  *
  * - [data-cs-plate]  hero plate unmasks from inset 18 % to full while it scrolls
  *                    from 90 % to 15 % of the viewport (scrub); the mock inside
- *                    settles from scale 1.06 to 1 with it.
+ *                    settles from scale 1.06 to 1 with it (2D transform, ends
+ *                    at exactly 1 so the screenshot is crisp at rest).
  * - [data-cs-arch]   architecture layers ([data-cs-layer]) stack in from the
  *                    left: 0.6 s expo.out, stagger 0.1, once at top 80 %.
  * - [data-cs-flow]   workflow progress line ([data-cs-fill]) fills on scroll
@@ -33,7 +34,7 @@ onPage((page) => {
       { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', scrollTrigger: scroll },
     );
     const mock = plate.querySelector<HTMLElement>('[data-cs-mock]');
-    if (mock) gsap.fromTo(mock, { scale: 1.06 }, { scale: 1, ease: 'none', scrollTrigger: { ...scroll } });
+    if (mock) gsap.fromTo(mock, { scale: 1.06 }, { scale: 1, ease: 'none', force3D: false, scrollTrigger: { ...scroll } });
   }
 
   // --- architecture layers ---

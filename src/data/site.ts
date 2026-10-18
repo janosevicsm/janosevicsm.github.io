@@ -13,6 +13,9 @@ export const SITE = {
   edition: '2026 © Edition',
 } as const;
 
+/** Intro loader greetings, in order (English and Serbian first). The loader's bars and counter follow the count. */
+export const LOADER_GREETINGS = ['Hello', 'Zdravo', 'Hola', 'Bonjour', 'Ciao', 'Hallo', 'Olá', '你好'] as const;
+
 /** Home page sections, in order (ids are the anchors used by the nav). */
 export const NAV_LINKS = [
   { label: 'Work', id: 'work', key: 'work' },

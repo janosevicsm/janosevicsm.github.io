@@ -3,19 +3,21 @@
  * Intro loader (Motion row 02). Animated by src/scripts/loader.ts.
  * Hidden before first paint on repeat visits (html.loader-skip) and without JS.
  */
+import { LOADER_GREETINGS } from '../data/site';
+const total = String(LOADER_GREETINGS.length).padStart(2, '0');
 ---
 
 <div class="loader" data-loader aria-hidden="true">
   <div class="bars">
-    {Array.from({ length: 6 }, () => <span class="bar" data-loader-bar />)}
+    {Array.from({ length: LOADER_GREETINGS.length }, () => <span class="bar" data-loader-bar />)}
   </div>
   <div class="centre" data-loader-centre>
     <div class="greet">
       <span class="dot"></span>
-      <span class="mask"><span class="word dsp" data-loader-word>Zdravo</span></span>
+      <span class="mask"><span class="word dsp" data-loader-word>{LOADER_GREETINGS[0]}</span></span>
     </div>
     <span class="lbl corner corner--l">Marko Janošević - Portfolio</span>
-    <span class="lbl corner corner--r"><span data-loader-count>01</span> / 06</span>
+    <span class="lbl corner corner--r"><span data-loader-count>01</span> / {total}</span>
   </div>
 </div>
 

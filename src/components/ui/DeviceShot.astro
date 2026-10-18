@@ -8,8 +8,10 @@
  * The frame fills its parent's width; the screenshot is cropped from the top
  * (object-fit: cover) when the parent gives the frame a fixed height, so the
  * viewport can be shorter than the full screenshot. Images are lazy
- * <Picture>s (avif + webp) from src/assets/. Colours come from the ink/paper
- * tokens so the frame reads on paper and on the accent.
+ * <Picture>s (avif + webp, quality 88) from src/assets/, with widths up to the
+ * source width so 2× screens get a sharp image — keep `sizes` equal to the
+ * rendered width. Colours come from the ink/paper tokens so the frame reads on
+ * paper and on the accent.
  */
 import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
@@ -20,13 +22,15 @@ interface Props {
   alt: string;
   sizes: string;
   widths?: number[];
+  quality?: number;
   /** address shown in the browser bar */
   url?: string;
   class?: string;
 }
-const { kind, src, alt, sizes, url = 'emachy.com', class: className } = Astro.props;
-const widths =
-  Astro.props.widths ?? (kind === 'browser' ? [640, 960, 1280, 1920, 2400] : [240, 360, 480, 640, 780]);
+const { kind, src, alt, sizes, url = 'emachy.com', quality = 88, class: className } = Astro.props;
+const wanted = Astro.props.widths ?? (kind === 'browser' ? [960, 1440, 1920, 2880] : [390, 780]);
+// never upscale; always offer the full source width as the largest candidate
+const widths = [...new Set([...wanted.filter((w) => w < src.width), src.width])];
 ---
 
 <div class:list={['shot', `shot--${kind}`, className]}>
@@ -50,6 +54,7 @@ const widths =
       fallbackFormat="webp"
       widths={widths.filter((w) => w <= src.width)}
       sizes={sizes}
+      quality={quality}
       loading="lazy"
       decoding="async"
       class="shot__img"

@@ -5,6 +5,7 @@
  *   (the design's `.plate` reveal). The pre-state is set in CSS (html.js).
  * - Inner parallax: the mock content drifts −40 px → +40 px (≈ ±14 px on mobile)
  *   while the plate crosses the viewport (scrubbed), so it lags the page slightly.
+ *   Whole pixels, 2D transform (force3D: false) so the screenshot stays crisp.
  * Reduced motion: no clip, no parallax — a 300 ms fade only.
  */
 import { gsap, EASE_IN_OUT } from '../gsap';
@@ -44,6 +45,8 @@ onPage((page) => {
       {
         y: () => amp(),
         ease: 'none',
+        force3D: false,
+        modifiers: { y: (v: string) => `${Math.round(parseFloat(v))}px` },
         scrollTrigger: { trigger: plate, start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true },
       },
     );

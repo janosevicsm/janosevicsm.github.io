@@ -9,6 +9,7 @@
  * Dates: the visible (counting) text is aria-hidden; screen readers get a
  * static sr-only copy with real <time> elements.
  * Reduced motion: fade only, dates static.
+ * Each entry has a small decorative logo (public/logos, alt="" — the heading names the place).
  */
 import { EXPERIENCE, EXPERIENCE_SUBTITLE, dateParts } from '../../data/experience';
 
@@ -60,6 +61,7 @@ const items = EXPERIENCE.map((x) => {
                   )}
                 </span>
               </p>
+              <img class="xp-logo" src={x.logo} width="48" height="48" alt="" aria-hidden="true" loading="lazy" decoding="async" />
               <div class="xp-body">
                 <h3 class="dsp xp-role">
                   {x.role}
@@ -162,12 +164,25 @@ const items = EXPERIENCE.map((x) => {
   }
   .xp-row {
     display: grid;
-    grid-template-columns: 190px minmax(0, 1fr);
-    gap: calc(var(--space-5) - var(--space-2)); /* 32 */
+    grid-template-columns: 168px 44px minmax(0, 1fr);
+    grid-template-areas: 'date logo body';
+    gap: var(--space-4);
   }
   .xp-date {
+    grid-area: date;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
+  }
+  /* consistent square box; the SVGs have different ratios */
+  .xp-logo {
+    grid-area: logo;
+    display: block;
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+  }
+  .xp-body {
+    grid-area: body;
   }
   .xp-body {
     display: flex;
@@ -224,9 +239,18 @@ const items = EXPERIENCE.map((x) => {
     .xp-rule {
       margin-bottom: 20px;
     }
+    /* logo and date on one line, the text full width below */
     .xp-row {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 12px;
+      grid-template-columns: 36px minmax(0, 1fr);
+      grid-template-areas:
+        'logo date'
+        'body body';
+      align-items: center;
+      gap: 14px 12px;
+    }
+    .xp-logo {
+      width: 36px;
+      height: 36px;
     }
     .xp-body {
       gap: 12px;

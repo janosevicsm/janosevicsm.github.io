@@ -29,7 +29,8 @@
   --fg: var(--paper);
 
   /* Type families (Fontsource variable builds, self-hosted) */
-  --font-display: 'Unbounded Variable', 'Unbounded', 'Arial Black', sans-serif;
+  --font-display: 'Unbounded Variable', 'Unbounded', 'Arial Black', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+    'Noto Sans CJK SC', sans-serif; /* CJK fallbacks: the loader's 你好 */
   --font-body: 'Onest Variable', 'Onest', 'Helvetica Neue', Arial, sans-serif;
 
   /* Type scale — fluid between the 390 px and 1440 px designs */

@@ -16,6 +16,8 @@ export interface ExperienceItem {
   desc: string;
   descShort?: string;
   tags?: string[];
+  /** small decorative logo next to the entry (public/logos; the text already names the place) */
+  logo: string;
 }
 
 export const EXPERIENCE_SUBTITLE = 'Work & education, 2016 - now';
@@ -26,6 +28,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     to: null,
     role: 'Co-founder & Tech Lead',
     org: 'eMachy',
+    logo: '/logos/emachy.svg',
     desc: 'Architecture, all repositories, the cross-repo workflow and AI-assisted development for a live industrial-machinery marketplace.',
     descShort: 'Architecture, all repositories, cross-repo workflow, AI-assisted development.',
     tags: ['.NET', 'Angular', 'PostgreSQL', 'Azure', 'Claude Code'],
@@ -36,6 +39,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     role: 'Software Engineer',
     org: 'WeDoSoftware',
     orgHref: 'https://wedosoftware.eu',
+    logo: '/logos/wedosoftware.svg',
     desc: 'Full-stack applications for agriculture, real estate, HR tracking and more - mostly .NET + Angular, plus mobile apps in React Native. Novi Sad.',
     descShort:
       'Full-stack applications for agriculture, real estate, HR tracking and more - mostly .NET + Angular, plus React Native apps.',
@@ -47,6 +51,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     role: 'Master’s studies',
     org: 'Faculty of Technical Sciences',
     orgShort: 'FTN Novi Sad',
+    logo: '/logos/ftn.svg',
     desc: 'Software Engineering and IT, Novi Sad. Thesis: agentic software development.',
     descShort: 'Software Engineering and IT. Thesis: agentic software development.',
   },
@@ -56,6 +61,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     role: 'Bachelor’s degree',
     org: 'Faculty of Technical Sciences',
     orgShort: 'FTN Novi Sad',
+    logo: '/logos/ftn.svg',
     desc: 'Software Engineering and IT, Novi Sad. GPA 9.20 / 10, “Dositej” scholarship.',
     descShort: 'Software Engineering and IT. GPA 9.20 / 10, “Dositej” scholarship.',
   },
@@ -63,6 +69,7 @@ export const EXPERIENCE: ExperienceItem[] = [
     from: '2016',
     to: '2020',
     role: 'Mitrovačka gimnazija',
+    logo: '/logos/mitrovacka-gimnazija.svg',
     desc: 'Sremska Mitrovica. Computer science programme.',
   },
 ];
