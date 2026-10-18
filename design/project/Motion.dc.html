@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Motion handoff - Marko Janošević</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500&amp;family=Onest:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#EFECE5}a:hover{color:#FFFFFF}
+</style>
+</helmet>
+<div style="width: 1440px; height: 2700px; box-sizing: border-box; background: #0E0F11; color: #EFECE5; font-family: 'Onest', 'Helvetica Neue', Arial, sans-serif; padding: 72px 80px; display: flex; flex-direction: column; gap: 40px">
+  <div style="display: flex; justify-content: space-between; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; color: #9C988F">
+    <span>MJ / Motion</span><span>Handoff to Claude Code</span><span>GSAP 3.13 · ScrollTrigger · SplitText · Lenis 1.x</span>
+  </div>
+  <div style="display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 48px; align-items: end">
+    <h1 style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 500; font-size: 88px; line-height: 0.95; letter-spacing: -0.045em">Motion<br>notes.</h1>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; font-size: 14px; line-height: 1.5">
+      <div><strong style="display: block; color: {{accent}}">ease-out</strong>expo.out / power4.out - entrances</div>
+      <div><strong style="display: block; color: {{accent}}">ease-in-out</strong>cubic-bezier(.65,0,.35,1) - fills, wipes</div>
+      <div><strong style="display: block; color: {{accent}}">return</strong>elastic.out(1, .4) - magnetic release</div>
+      <div><strong style="display: block; color: {{accent}}">reduced</strong>prefers-reduced-motion → opacity-only, ≤ 300 ms, no scroll-jacking</div>
+    </div>
+  </div>
+  <div role="table" aria-label="Animation specification" style="display: flex; flex-direction: column; border-top: 1px solid #EFECE5">
+    <div role="row" style="display: grid; grid-template-columns: 44px 200px minmax(0, 1.25fr) 210px minmax(0, 1fr) minmax(0, 0.8fr); gap: 20px; padding: 14px 0; border-bottom: 1px solid #3A3B3F; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; color: #9C988F">
+      <span role="columnheader">No.</span><span role="columnheader">Element</span><span role="columnheader">What moves · when</span><span role="columnheader">Timing</span><span role="columnheader">Build hint</span><span role="columnheader">Reduced motion</span>
+    </div>
+    <sc-for list="{{rows}}" as="r" hint-placeholder-count="16">
+      <div role="row" style="display: grid; grid-template-columns: 44px 200px minmax(0, 1.25fr) 210px minmax(0, 1fr) minmax(0, 0.8fr); gap: 20px; padding: 16px 0; border-bottom: 1px solid #2A2B2F; font-size: 14px; line-height: 1.45; align-items: start">
+        <span role="cell" style="font-family: 'Unbounded', sans-serif; font-size: 13px; color: {{accent}}">{{r.n}}</span>
+        <span role="cell" style="font-weight: 600; font-size: 15px">{{r.el}}</span>
+        <span role="cell">{{r.what}}</span>
+        <span role="cell" style="color: #C9C5BC">{{r.time}}</span>
+        <span role="cell" style="color: #C9C5BC">{{r.build}}</span>
+        <span role="cell" style="color: #9C988F">{{r.reduced}}</span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#2F3CFF","options":["#2F3CFF","#FF4F1F","#D4FF3A"]},"$preview":{"width":1440,"height":2700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const acc = this.props.accent ?? '#2F3CFF';
+    // cobalt is too dark as text on ink, so lift it for this sheet
+    const accent = acc.toUpperCase() === '#2F3CFF' ? '#8F97FF' : acc;
+    const rows = [
+      { n: '01', el: 'Smooth scroll', what: 'Whole page. Slightly weighted inertia on wheel and trackpad; touch stays native.', time: 'lerp 0.09 · duration 1.2', build: 'Lenis → lenis.on("scroll", ScrollTrigger.update); drive Lenis from gsap.ticker; lagSmoothing(0).', reduced: 'Lenis not started; native scroll.' },
+      { n: '02', el: 'Loader', what: 'Ink screen. “Zdravo · Hello · Hallo · Živjo · Здраво · Bok” swap in place, each sliding up 12 px from a mask; accent dot pulses; counter 01→06. Exit: the screen is six vertical bars (one per language) that lift away left→right.', time: 'Greeting 1: 280 ms, others 140 ms each · bars 0.7 s cubic(.76,0,.24,1), stagger 0.04 · total ≈ 1.9 s', build: 'One timeline; bars are 6 flex children, yPercent 0→-101. Skip on repeat visits within the session (sessionStorage).', reduced: '“Zdravo” fades in/out, 300 ms each.' },
+      { n: '03', el: 'Hero entrance', what: 'Starts as loader exits: photo scales 1.08→1 and fades in; labels and nav rise from line masks; marquee slides in from right.', time: '1.2 s power3.out · labels 0.8 s, stagger 0.08', build: 'Chained onto the loader timeline at “-=0.4”.', reduced: 'All fade together, 300 ms.' },
+      { n: '04', el: 'Name marquee', what: '“Marko Janošević -” runs endlessly. Direction follows scroll direction; speed rises with scroll velocity, then eases back. Track drifts down 80 px as the hero leaves.', time: 'Base: 1 loop / 22 s · boost × (1 + |v|·0.12), max 4× · ease back lerp 0.1', build: 'Two copies in a track; gsap.ticker updates xPercent with gsap.utils.wrap(-50, 0); direction = Math.sign(lenis.velocity).', reduced: 'Static name, no loop, no drift.' },
+      { n: '05', el: 'Hero photo', what: 'Parallax as the hero scrolls out; slight darken.', time: 'Scrub · yPercent 0→12, brightness 1→0.7', build: 'ScrollTrigger scrub: true, trigger hero, start top top.', reduced: 'Off.' },
+      { n: '06', el: 'Intro statement', what: 'Words go from 15% to 100% opacity as the paragraph scrolls through. The phrase “AI agents” gets an accent highlighter that sweeps left→right when reached.', time: 'Scrub · start top 80% → end bottom 55% · highlight 0.6 s', build: 'SplitText words; tween opacity with stagger inside one scrubbed timeline.', reduced: 'Full opacity; highlight static.' },
+      { n: '07', el: 'Headlines', what: 'All h2/h3 split into lines; each line slides up from its own mask on entering the viewport. Once.', time: '0.9 s power4.out · stagger 0.08 · start top 85%', build: 'SplitText({type:"lines", mask:"lines"}); re-split on resize (autoSplit).', reduced: 'Opacity 0→1, 300 ms.' },
+      { n: '08', el: 'Light / dark shift', what: 'Page background and text colour cross over when a section with a different data-tone reaches mid-screen.', time: '0.6 s power2.inOut', build: 'ScrollTrigger per section at top 50% / bottom 50%; tween CSS vars --bg / --fg on <html>.', reduced: 'Instant swap.' },
+      { n: '09', el: 'Magnetic buttons', what: 'Within a 40 px halo the round button pulls 35% toward the pointer, its label 50%. Accent fill rises from the bottom on hover, exits upward on leave.', time: 'follow quickTo 0.5 s power3 · release 0.9 s elastic.out(1,.4) · fill 0.6 s', build: 'gsap.quickTo for x/y; fill = oversized circle span, translate on enter/leave. Pointer-fine only.', reduced: 'No pull; fill is a 150 ms colour change.' },
+      { n: '10', el: 'Work list preview', what: 'Floating 400×300 card follows the pointer over the list; images sit in a vertical strip that slides to the hovered row. Small round “View” label trails slightly faster. Other rows dim to 40%.', time: 'card follow 0.6 s power3 · label 0.35 s · strip 0.5 s power3.inOut · scale in 0.4 s', build: 'quickTo x/y on pointermove of the list; strip yPercent = -100 × index. Touch: inline thumbnails, no card.', reduced: 'Card fixed on the right, crossfades.' },
+      { n: '11', el: 'Timeline entries', what: 'Desktop: section title stays sticky left. Entries rise one by one; each period’s years count up from −6 to the real year while the hairline above draws left→right.', time: 'entry 0.8 s power3.out, stagger 0.12 · count 0.8 s · rule 1 s', build: 'ScrollTrigger.batch at top 80%; counter via snap:"textContent"; position: sticky (no pin).', reduced: 'Fade only, dates static.' },
+      { n: '12', el: 'Skills', what: 'The four groups slide up 24 px in sequence.', time: '0.7 s power3.out · stagger 0.1', build: 'One ScrollTrigger, once.', reduced: 'Fade, 300 ms.' },
+      { n: '13', el: 'Footer reveal', what: 'Previous section lifts away (y −20%) so the dark footer appears from underneath; small photo scales 0.8→1; headline lines rise. Clock ticks each second.', time: 'Scrub · headline 0.9 s power4.out', build: 'Footer position sticky bottom 0 under main; Intl.DateTimeFormat(timeZone: "Europe/Belgrade").', reduced: 'No parallax.' },
+      { n: '14', el: 'Nav → menu', what: 'After the hero, the inline nav folds into a round “Menu” button (top right). Menu panel slides in from the right; links rise in sequence. Active section has an accent dot.', time: 'button 0.35 s back.out · panel 0.8 s expo.inOut · links stagger 0.06', build: 'ScrollTrigger on hero end toggles a class; panel traps focus, Esc closes.', reduced: 'Fade, 200 ms.' },
+      { n: '15', el: 'Page transition', what: 'Home → eMachy: an ink panel rises from the bottom carrying the word “eMachy”, the route changes, then the panel keeps going up while the case-study title lines rise. Back reverses it.', time: 'in 0.7 s expo.inOut · out 0.8 s expo.inOut · total ≈ 1.4 s', build: 'Astro <ClientRouter /> with astro:before-swap / astro:after-swap hooks running the GSAP timeline; re-init Lenis & ScrollTriggers after swap.', reduced: '200 ms crossfade.' },
+      { n: '16', el: 'Case-study details', what: 'Hero image unmasks from inset 18% to full while scrolling. Architecture layers stack in from left. Workflow steps light up in order as a progress line fills.', time: 'Scrub · layers 0.6 s, stagger 0.1', build: 'clip-path inset scrub; workflow progress = ScrollTrigger scrub on a scaleY line + class toggles per step.', reduced: 'All shown, no scrub.' }
+    ];
+    return { accent, rows };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "v": 3,
+  "createdOnFiles": {"v": 1, "at": "2026-10-18T16:30:00Z"},
+  "title": "Marko Janošević Portfolio",
+  "launch": {"view": "canvas"},
+  "pages": [],
+  "boards": {
+    "Main.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 2700, "title": "01 · Design system"},
+    "Motion.dc.html": {"x": 1520, "y": 0, "w": 1440, "h": 2700, "title": "06 · Motion handoff notes"},
+    "Home.dc.html": {"x": 0, "y": 3320, "w": 1440, "h": 8000, "title": "02 · Home — desktop (interactive)", "expand": "fill", "is_interactive": true},
+    "HomeMobile.dc.html": {"x": 1520, "y": 3320, "w": 390, "h": 8000, "title": "03 · Home — mobile"},
+    "CaseStudy.dc.html": {"x": 1990, "y": 3320, "w": 1440, "h": 7400, "title": "04 · eMachy case study — desktop (interactive)", "expand": "fill", "is_interactive": true},
+    "CaseStudyMobile.dc.html": {"x": 3510, "y": 3320, "w": 390, "h": 5800, "title": "05 · eMachy case study — mobile"}
+  },
+  "order": ["Main.dc.html", "Motion.dc.html", "Home.dc.html", "HomeMobile.dc.html", "CaseStudy.dc.html", "CaseStudyMobile.dc.html"],
+  "notes": {
+    "sys": {"x": 0, "y": -300, "text": "Foundations — system & motion", "kind": "title1", "maxW": 2960},
+    "pages": {"x": 0, "y": 3020, "text": "Pages — home & eMachy case study", "kind": "title1", "maxW": 3900}
+  },
+  "designSystems": []
+}

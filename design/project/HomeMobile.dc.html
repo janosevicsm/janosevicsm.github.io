@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Home - mobile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500&amp;family=Onest:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+.dsp{font-family:'Unbounded','Arial Black',sans-serif}
+.lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+@keyframes mqm{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mqm{display:flex;width:max-content;white-space:nowrap;animation:mqm 14s linear infinite}
+.mqm>span{padding-right:.18em}
+@media (prefers-reduced-motion:reduce){.mqm{animation:none}}
+.tag{height:28px;padding:0 11px;border-radius:999px;border:1px solid #4A4842;display:inline-flex;align-items:center;font-size:12px}
+</style>
+</helmet>
+<div style="width: 390px; min-height: 8000px; display: flex; flex-direction: column; font-family: 'Onest', 'Helvetica Neue', Arial, sans-serif; background: #0E0F11; color: #EFECE5">
+
+<!-- hero -->
+<header style="position: relative; height: 760px; overflow: hidden; background: #0E0F11">
+  <div style="position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; z-index: 3">
+    <span class="dsp" style="font-size: 14px; font-weight: 500">MJ<span style="color: {{accentDark}}">/</span>26</span>
+    <button type="button" style="width: 60px; height: 60px; border-radius: 999px; border: 0; background: {{accent}}; color: {{onAccent}}; font-family: inherit; font-size: 13px; font-weight: 500">Menu</button>
+  </div>
+  <div style="position: absolute; top: 112px; left: 20px; right: 20px; display: flex; justify-content: space-between; z-index: 2">
+    <div style="display: flex; flex-direction: column; gap: 10px"><span style="width: 8px; height: 8px; border-radius: 999px; background: {{accent}}"></span><span style="font-size: 15px; line-height: 1.3">Full-stack Engineer<br>&amp; Tech Lead</span></div>
+    <span style="font-size: 15px; line-height: 1.3; text-align: right">Based in<br>Novi Sad, Serbia</span>
+  </div>
+  <img src="/_blob/cc5f3cc2bfb3fd16eeb164ab05a7bed9" alt="Portrait of Marko Janošević" style="position: absolute; left: 0; bottom: 0; width: 390px; height: 560px; object-fit: cover; object-position: 50% 0">
+  <div style="position: absolute; left: 0; right: 0; bottom: 28px; z-index: 2" aria-hidden="true">
+    <div class="mqm dsp" style="font-size: 100px; font-weight: 500; letter-spacing: -0.045em; line-height: 0.9"><span>Marko Janošević ·</span><span>Marko Janošević ·</span></div>
+  </div>
+</header>
+
+<!-- intro -->
+<section style="background: #EFECE5; color: #0E0F11; padding: 96px 20px; display: flex; flex-direction: column; gap: 32px">
+  <span class="lbl">No. 01 - Intro</span>
+  <p style="margin: 0; font-size: 28px; line-height: 1.2; letter-spacing: -0.02em">I build full-stack products end to end - from .NET APIs to Angular and React Native apps. <span style="opacity: 0.16">Lately I lead a team that ships a live marketplace with</span> <span style="opacity: 0.16">AI agents as part of the workflow.</span></p>
+  <div style="display: flex; justify-content: space-between; align-items: end; gap: 16px">
+    <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #55524C; max-width: 200px">Words light up as you scroll.</p>
+    <a href="#" style="width: 124px; height: 124px; border-radius: 999px; background: #0E0F11; color: #EFECE5; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 15px; font-weight: 500; flex: none">About me</a>
+  </div>
+</section>
+
+<!-- eMachy -->
+<section style="background: #0E0F11; color: #EFECE5; padding: 96px 20px; display: flex; flex-direction: column; gap: 32px">
+  <div style="display: flex; justify-content: space-between; padding-bottom: 14px; border-bottom: 1px solid #3A3B3F"><span class="lbl">No. 02 - Featured</span><span class="lbl" style="color: #9C988F">Live · Sep 2026</span></div>
+  <h2 class="dsp" style="margin: 0; font-size: 74px; font-weight: 500; letter-spacing: -0.055em; line-height: 0.95">eMachy</h2>
+  <p style="margin: 0; font-size: 17px; line-height: 1.5">A B2B marketplace for new and used industrial machines - listings and lead generation, in six languages, with real sellers on it.</p>
+  <div style="background: #E2DED4; color: #0E0F11; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+    <span class="dsp" style="font-size: 14px; font-weight: 600">eMachy</span>
+    <span class="dsp" style="font-size: 24px; line-height: 1.05; letter-spacing: -0.03em">Find the Right Machine. Close the Deal Faster.</span>
+    <div style="display: flex; height: 44px; border: 1px solid #0E0F11; background: #F6F4EF"><span style="flex: 1; display: flex; align-items: center; padding: 0 12px; font-size: 13px; color: #55524C">Search machines…</span><span style="width: 76px; background: {{accent}}; color: {{onAccent}}; display: flex; align-items: center; justify-content: center; font-size: 13px">Search</span></div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px"><div style="height: 96px; background: #CBC6BA; font-size: 11px; color: #55524C; padding: 8px; box-sizing: border-box">[Listing photo]</div><div style="height: 96px; background: #CBC6BA; font-size: 11px; color: #55524C; padding: 8px; box-sizing: border-box">[Listing photo]</div></div>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 16px; border-top: 1px solid #3A3B3F; padding-top: 20px">
+    <div style="display: flex; flex-direction: column; gap: 6px"><span class="lbl" style="color: #9C988F">Live</span><span style="font-size: 16px">Since Sep 2026</span></div>
+    <div style="display: flex; flex-direction: column; gap: 6px"><span class="lbl" style="color: #9C988F">Reach</span><span style="font-size: 16px">Six languages</span></div>
+    <div style="display: flex; flex-direction: column; gap: 6px"><span class="lbl" style="color: #9C988F">Role</span><span style="font-size: 16px">Co-founder &amp; tech lead</span></div>
+    <div style="display: flex; flex-direction: column; gap: 6px"><span class="lbl" style="color: #9C988F">Stack</span><span style="font-size: 16px">.NET 8 · PostgreSQL · Angular 20 · Azure · OpenTofu</span></div>
+  </div>
+  <div style="display: flex; align-items: center; gap: 16px">
+    <a href="CaseStudyMobile.dc.html" style="width: 136px; height: 136px; border-radius: 999px; background: {{accent}}; color: {{onAccent}}; display: flex; align-items: center; justify-content: center; text-align: center; text-decoration: none; font-size: 15px; font-weight: 500; flex: none">Read the<br>case study</a>
+    <a href="https://emachy.com" style="height: 52px; padding: 0 20px; border-radius: 999px; border: 1px solid #4A4842; display: inline-flex; align-items: center; text-decoration: none; font-size: 15px">emachy.com ↗</a>
+  </div>
+</section>
+
+<!-- work -->
+<section style="background: #EFECE5; color: #0E0F11; padding: 96px 20px; display: flex; flex-direction: column; gap: 32px">
+  <h2 class="dsp" style="margin: 0; font-size: 48px; font-weight: 500; letter-spacing: -0.045em; line-height: 0.95">Selected<br>work</h2>
+  <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #55524C">Client projects are under NDA, so they are named by domain. On touch, each row shows its image inline - no floating preview.</p>
+  <div style="display: flex; flex-direction: column; border-bottom: 1px solid #0E0F11">
+    <div style="border-top: 1px solid #0E0F11; padding: 24px 0; display: flex; flex-direction: column; gap: 10px">
+      <div style="height: 150px; background: {{accent}}; color: {{onAccent}}; padding: 14px; box-sizing: border-box; display: flex; align-items: flex-end" class="dsp"><span style="font-size: 26px; letter-spacing: -0.03em">eMachy</span></div>
+      <span class="dsp" style="font-size: 26px; letter-spacing: -0.03em">eMachy</span>
+      <span style="font-size: 14px; color: #55524C">Industrial machines marketplace · Tech lead · 2026</span>
+    </div>
+    <div style="border-top: 1px solid #0E0F11; padding: 24px 0; display: flex; flex-direction: column; gap: 10px">
+      <div style="height: 150px; background: #3E5238; color: #EFECE5; padding: 14px; box-sizing: border-box; font-size: 11px">Placeholder image</div>
+      <span class="dsp" style="font-size: 26px; letter-spacing: -0.03em">Agriculture platform</span>
+      <span style="font-size: 14px; color: #55524C">Full-stack (.NET + Angular) · WeDoSoftware</span>
+    </div>
+    <div style="border-top: 1px solid #0E0F11; padding: 24px 0; display: flex; flex-direction: column; gap: 10px">
+      <div style="height: 150px; background: #B8A98D; color: #0E0F11; padding: 14px; box-sizing: border-box; font-size: 11px">Placeholder image</div>
+      <span class="dsp" style="font-size: 26px; letter-spacing: -0.03em">Real estate platform</span>
+      <span style="font-size: 14px; color: #55524C">Full-stack (.NET + Angular) · WeDoSoftware</span>
+    </div>
+    <div style="border-top: 1px solid #0E0F11; padding: 24px 0; display: flex; flex-direction: column; gap: 10px">
+      <div style="height: 150px; background: #2A2D34; color: #EFECE5; padding: 14px; box-sizing: border-box; font-size: 11px">Placeholder image</div>
+      <span class="dsp" style="font-size: 26px; letter-spacing: -0.03em">HR &amp; time tracking</span>
+      <span style="font-size: 14px; color: #55524C">Full-stack (.NET + Angular) · WeDoSoftware</span>
+    </div>
+    <div style="border-top: 1px solid #0E0F11; padding: 24px 0; display: flex; flex-direction: column; gap: 10px">
+      <div style="height: 150px; background: #C9C4B8; color: #0E0F11; padding: 14px; box-sizing: border-box; font-size: 11px">Placeholder image</div>
+      <span class="dsp" style="font-size: 26px; letter-spacing: -0.03em">Mobile apps</span>
+      <span style="font-size: 14px; color: #55524C">React Native · WeDoSoftware</span>
+    </div>
+  </div>
+</section>
+
+<!-- experience -->
+<section style="background: #0E0F11; color: #EFECE5; padding: 96px 20px; display: flex; flex-direction: column; gap: 40px">
+  <div style="display: flex; flex-direction: column; gap: 12px"><span class="lbl" style="color: #9C988F">No. 03</span><h2 class="dsp" style="margin: 0; font-size: 48px; font-weight: 500; letter-spacing: -0.045em; line-height: 0.95">Experience</h2></div>
+  <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 40px">
+    <li style="display: flex; flex-direction: column; gap: 12px; border-top: 1px solid #EFECE5; padding-top: 20px"><span class="lbl" style="color: #9C988F">Feb 2026 - Present</span><h3 class="dsp" style="margin: 0; font-size: 21px; font-weight: 400; letter-spacing: -0.02em; line-height: 1.15">Co-founder &amp; Tech Lead <span style="color: {{accentDark}}">·</span> eMachy</h3><p style="margin: 0; font-size: 15px; line-height: 1.5; color: #C9C5BC">Architecture, all repositories, cross-repo workflow, AI-assisted development.</p><div style="display: flex; gap: 6px; flex-wrap: wrap"><span class="tag">.NET</span><span class="tag">Angular</span><span class="tag">PostgreSQL</span><span class="tag">Azure</span><span class="tag">Claude Code</span></div></li>
+    <li style="display: flex; flex-direction: column; gap: 12px; border-top: 1px solid #EFECE5; padding-top: 20px"><span class="lbl" style="color: #9C988F">Jun 2025 - Present</span><h3 class="dsp" style="margin: 0; font-size: 21px; font-weight: 400; letter-spacing: -0.02em; line-height: 1.15">Software Engineer <span style="color: {{accentDark}}">·</span> WeDoSoftware</h3><p style="margin: 0; font-size: 15px; line-height: 1.5; color: #C9C5BC">Full-stack applications for agriculture, real estate, HR tracking and more - mostly .NET + Angular, plus React Native apps.</p><div style="display: flex; gap: 6px; flex-wrap: wrap"><span class="tag">.NET</span><span class="tag">C#</span><span class="tag">Angular</span><span class="tag">React Native</span><span class="tag">SQL</span></div></li>
+    <li style="display: flex; flex-direction: column; gap: 12px; border-top: 1px solid #EFECE5; padding-top: 20px"><span class="lbl" style="color: #9C988F">2024 - Present</span><h3 class="dsp" style="margin: 0; font-size: 21px; font-weight: 400; letter-spacing: -0.02em; line-height: 1.15">Master’s studies <span style="color: {{accentDark}}">·</span> FTN Novi Sad</h3><p style="margin: 0; font-size: 15px; line-height: 1.5; color: #C9C5BC">Software Engineering and IT. Thesis: agentic software development.</p></li>
+    <li style="display: flex; flex-direction: column; gap: 12px; border-top: 1px solid #EFECE5; padding-top: 20px"><span class="lbl" style="color: #9C988F">2020 - 2024</span><h3 class="dsp" style="margin: 0; font-size: 21px; font-weight: 400; letter-spacing: -0.02em; line-height: 1.15">Bachelor’s degree <span style="color: {{accentDark}}">·</span> FTN Novi Sad</h3><p style="margin: 0; font-size: 15px; line-height: 1.5; color: #C9C5BC">Software Engineering and IT. GPA 9.20 / 10, “Dositej” scholarship.</p></li>
+    <li style="display: flex; flex-direction: column; gap: 12px; border-top: 1px solid #EFECE5; padding-top: 20px"><span class="lbl" style="color: #9C988F">2016 - 2020</span><h3 class="dsp" style="margin: 0; font-size: 21px; font-weight: 400; letter-spacing: -0.02em; line-height: 1.15">Mitrovačka gimnazija</h3><p style="margin: 0; font-size: 15px; line-height: 1.5; color: #C9C5BC">Sremska Mitrovica. Computer science programme.</p></li>
+  </ol>
+</section>
+
+<!-- skills -->
+<section style="background: #EFECE5; color: #0E0F11; padding: 96px 20px; display: flex; flex-direction: column; gap: 32px">
+  <h2 class="dsp" style="margin: 0; font-size: 48px; font-weight: 500; letter-spacing: -0.045em; line-height: 0.95; padding-bottom: 16px; border-bottom: 1px solid #0E0F11">Toolbox</h2>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 16px">
+    <div style="display: flex; flex-direction: column; gap: 12px"><h3 class="lbl" style="margin: 0; color: #55524C">Backend</h3><p style="margin: 0; font-size: 19px; line-height: 1.4">.NET / C#<br>Java / Spring<br>Python<br>Go<br>SQL</p></div>
+    <div style="display: flex; flex-direction: column; gap: 12px"><h3 class="lbl" style="margin: 0; color: #55524C">Frontend</h3><p style="margin: 0; font-size: 19px; line-height: 1.4">Angular<br>React<br>TypeScript</p></div>
+    <div style="display: flex; flex-direction: column; gap: 12px"><h3 class="lbl" style="margin: 0; color: #55524C">Mobile</h3><p style="margin: 0; font-size: 19px; line-height: 1.4">React Native<br>Android</p></div>
+    <div style="display: flex; flex-direction: column; gap: 12px"><h3 class="lbl" style="margin: 0; color: #55524C">Tools</h3><p style="margin: 0; font-size: 19px; line-height: 1.4">Docker<br>Azure<br>GitHub Actions<br>Claude Code<br>Figma</p></div>
+  </div>
+</section>
+
+<!-- footer -->
+<footer style="flex: 1; background: #0E0F11; color: #EFECE5; padding: 96px 20px 32px; display: flex; flex-direction: column; gap: 40px">
+  <div style="display: flex; flex-direction: column; gap: 16px">
+    <img src="/_blob/095765123d0ecddfe489e93ece9c32b5" alt="" style="width: 72px; height: 72px; border-radius: 999px; object-fit: cover; object-position: 50% 18%">
+    <h2 class="dsp" style="margin: 0; font-size: 56px; font-weight: 500; letter-spacing: -0.05em; line-height: 0.95">Let’s work together<span style="color: {{accentDark}}">.</span></h2>
+  </div>
+  <div style="display: flex; gap: 14px">
+    <a href="mailto:markojanosevicsm7@gmail.com" style="width: 132px; height: 132px; border-radius: 999px; background: {{accent}}; color: {{onAccent}}; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 15px; font-weight: 500">Email me</a>
+    <a href="https://linkedin.com/in/marko-janosevic" style="width: 132px; height: 132px; border-radius: 999px; background: #1B1D21; border: 1px solid #3A3B3F; box-sizing: border-box; color: #EFECE5; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 15px; font-weight: 500">LinkedIn</a>
+  </div>
+  <a href="mailto:markojanosevicsm7@gmail.com" style="font-size: 18px; text-decoration: underline; text-underline-offset: 4px">markojanosevicsm7@gmail.com</a>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; border-top: 1px solid #3A3B3F; padding-top: 20px; font-size: 14px">
+    <div style="display: flex; flex-direction: column; gap: 6px"><span class="lbl" style="color: #9C988F">Version</span><span>2026 © Edition<br>build 1.0.0</span></div>
+    <div style="display: flex; flex-direction: column; gap: 6px"><span class="lbl" style="color: #9C988F">Local time</span><span>Novi Sad<br>live clock</span></div>
+  </div>
+  <div style="display: flex; gap: 20px; font-size: 14px"><a href="https://github.com/janosevicsm">GitHub</a><a href="https://linkedin.com/in/marko-janosevic">LinkedIn</a><a href="mailto:markojanosevicsm7@gmail.com">Email</a></div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#2F3CFF","options":["#2F3CFF","#FF4F1F","#D4FF3A"]},"$preview":{"width":390,"height":8000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#2F3CFF';
+    const A = accent.toUpperCase();
+    return { accent, onAccent: A === '#2F3CFF' ? '#FFFFFF' : '#0E0F11', accentDark: A === '#2F3CFF' ? '#8F97FF' : accent };
+  }
+}
+</script>
+</body>
+</html>

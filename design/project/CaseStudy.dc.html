@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>eMachy - case study - Marko Janošević</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600&amp;family=Onest:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#0E0F11}
+a{color:inherit}a:hover{color:inherit}
+@property --fg{syntax:'<color>';inherits:true;initial-value:#EFECE5}
+@property --bg{syntax:'<color>';inherits:true;initial-value:#0E0F11}
+.mj{--fg:#EFECE5;--bg:#0E0F11}
+[data-tone=dark]{--fg:#EFECE5;--bg:#0E0F11}
+[data-tone=light]{--fg:#0E0F11;--bg:#EFECE5}
+.mj.live.tone-dark,.mj.live.tone-dark [data-tone]:not([data-fixed]){--fg:#EFECE5;--bg:#0E0F11}
+.mj.live.tone-light,.mj.live.tone-light [data-tone]:not([data-fixed]){--fg:#0E0F11;--bg:#EFECE5}
+.mj,[data-tone]{--mu:color-mix(in srgb,var(--fg) 62%,var(--bg));--mu2:color-mix(in srgb,var(--fg) 80%,var(--bg));--line:color-mix(in srgb,var(--fg) 22%,var(--bg));background:var(--bg);color:var(--fg);transition:--fg .7s cubic-bezier(.65,0,.35,1),--bg .7s cubic-bezier(.65,0,.35,1)}
+.mj{font-family:'Onest','Helvetica Neue',Arial,sans-serif;position:relative;overflow-x:clip}
+.dsp{font-family:'Unbounded','Arial Black',sans-serif}
+.wrap{max-width:1600px;margin:0 auto;padding:0 64px;box-sizing:border-box}
+.g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}
+.sec{padding:176px 0;position:relative}
+.lbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.ul{position:relative;text-decoration:none}
+.ul::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s cubic-bezier(.65,0,.35,1)}
+.ul:hover::after,.ul:focus-visible::after{transform:scaleX(1);transform-origin:left}
+a:focus-visible,button:focus-visible{outline:2px solid currentColor;outline-offset:5px}
+.mag{position:relative;overflow:hidden;isolation:isolate;border-radius:999px;display:flex;align-items:center;justify-content:center;text-decoration:none;will-change:transform;text-align:center}
+.mag .fill{position:absolute;left:-10%;width:120%;height:150%;top:105%;border-radius:50%;z-index:-1;transition:top .6s cubic-bezier(.65,0,.35,1)}
+.mag:hover .fill{top:-25%}
+.mag .t{display:block;transition:color .35s}
+.inv{background:var(--fg);color:var(--bg)}
+.f-acc-ink:hover .t{color:#0E0F11}.f-acc-white:hover .t{color:#FFFFFF}
+.mega{font-size:min(20vw,288px)}
+.rv{opacity:0;transform:translateY(56px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.rv.is-in{opacity:1;transform:none}
+.ln{display:block;overflow:hidden;padding-bottom:.16em;margin-bottom:-.16em}
+.ln>span{display:block;transform:translateY(110%);transition:transform 1s cubic-bezier(.16,1,.3,1)}
+.is-in .ln>span{transform:none}
+.is-in .ln:nth-child(2)>span{transition-delay:.08s}
+.is-in .ln:nth-child(3)>span{transition-delay:.16s}
+.layer{opacity:0;transform:translateX(-40px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+.is-in .layer{opacity:1;transform:none}
+.is-in .layer:nth-child(2){transition-delay:.1s}.is-in .layer:nth-child(3){transition-delay:.2s}.is-in .layer:nth-child(4){transition-delay:.3s}
+.step{opacity:.28;transition:opacity .5s}
+.step.lit{opacity:1}
+.step .dot{transition:background-color .4s,transform .4s}
+.step.lit .dot{transform:scale(1.25)}
+.enter{position:fixed;inset:0;z-index:100;background:#0E0F11;color:#EFECE5;display:flex;align-items:flex-end;padding:64px;box-sizing:border-box;transition:transform .8s cubic-bezier(.76,0,.24,1)}
+.enter.out{transform:translateY(-101%)}
+.enter .w{transition:transform .7s cubic-bezier(.76,0,.24,1)}
+.enter.out .w{transform:translateY(-60%)}
+.hero-in{opacity:0;transform:translateY(40px);transition:opacity 1s cubic-bezier(.16,1,.3,1) .3s,transform 1s cubic-bezier(.16,1,.3,1) .3s}
+.entered .hero-in{opacity:1;transform:none}
+.mj:not(.live) .rv,.mj:not(.live) .layer,.mj:not(.live) .hero-in{opacity:1;transform:none}
+.mj:not(.live) .ln>span{transform:none}
+.mj:not(.live) .step{opacity:1}
+.rm .rv,.rm .layer,.rm .hero-in{transform:none!important;transition:opacity .3s linear!important}
+.rm .ln>span{transform:none!important}
+.rm .step{opacity:1}
+.rm .enter{transition:opacity .2s}.rm .enter.out{transform:none;opacity:0}
+.c-l{grid-column:1/span 4}.c-r{grid-column:6/span 7}.c-m{grid-column:1/span 8}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.arch{display:grid;grid-template-columns:minmax(0,1fr) 72px minmax(0,1.3fr) 72px minmax(0,1fr);align-items:stretch}
+.roles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
+@media (max-width:760px){
+.wrap{padding:0 20px}.sec{padding:96px 0}
+.g12{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:16px}.g12>*{grid-column:1/-1!important}
+.facts,.roles{grid-template-columns:1fr}.arch{grid-template-columns:1fr}.arch .arrow{transform:rotate(90deg);height:56px}
+.bigh{font-size:48px!important}.mega{font-size:24vw!important}
+}
+</style>
+</helmet>
+
+<div class="mj {{rootCls}}" style="min-height: 100%">
+
+<sc-if value="{{grain}}" hint-placeholder-val="{{ true }}">
+<svg aria-hidden="true" style="position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.12; mix-blend-mode: overlay; z-index: 30"><filter id="cgrain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter><rect width="100%" height="100%" filter="url(#cgrain)"></rect></svg>
+</sc-if>
+
+<!-- page transition: arriving panel -->
+<sc-if value="{{showEnter}}" hint-placeholder-val="{{ false }}">
+<div class="enter {{enterCls}}" aria-hidden="true">
+  <div class="w" style="display: flex; align-items: center; gap: 20px">
+    <span style="width: 14px; height: 14px; border-radius: 999px; background: {{accent}}"></span>
+    <span class="dsp" style="font-size: 88px; font-weight: 500; letter-spacing: -0.05em">eMachy</span>
+  </div>
+</div>
+</sc-if>
+
+<!-- ============ HERO (dark) ============ -->
+<header data-tone="dark" data-fixed="1" style="padding-bottom: 120px">
+  <div class="wrap" style="display: flex; justify-content: space-between; align-items: center; padding-top: 32px; padding-bottom: 32px">
+    <a href="Home.dc.html" class="ul" style="font-size: 16px">← Back to home</a>
+    <span class="dsp" style="font-size: 15px; font-weight: 500">MJ<span style="color: {{accentDark}}">/</span>26</span>
+    <a href="https://emachy.com" class="ul" style="font-size: 16px">emachy.com ↗</a>
+  </div>
+  <div class="wrap hero-in" style="display: flex; flex-direction: column; gap: 40px; padding-top: 96px">
+    <div style="display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-bottom: 20px; border-bottom: 1px solid var(--line)">
+      <span class="lbl">Case study No. 01</span><span class="lbl" style="color: var(--mu)">Co-founder &amp; Tech Lead</span><span class="lbl" style="color: var(--mu)">Feb 2026 - live Sep 2026</span>
+    </div>
+    <h1 class="dsp mega" style="margin: 0; font-weight: 500; letter-spacing: -0.06em; line-height: 0.82">eMachy</h1>
+    <div class="g12" style="row-gap: 24px">
+      <p class="c-m" style="margin: 0; font-size: 40px; line-height: 1.18; letter-spacing: -0.02em">A B2B marketplace for new and used industrial machines - built by a small team and a software factory of AI agents.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding-top: 96px">
+    <div ref="{{setHeroPlate}}" style="background: {{accent}}; color: {{onAccent}}; height: 720px; position: relative; overflow: hidden; clip-path: inset({{clipV}}% {{clipH}}% {{clipV}}% {{clipH}}%); display: flex; align-items: center; justify-content: center">
+      <div style="width: 78%; height: 76%; background: #EFECE5; color: #0E0F11; padding: 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px; box-shadow: 0 40px 80px rgba(0,0,0,.25)">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid #C9C4B8"><span class="dsp" style="font-size: 20px; font-weight: 600">eMachy</span><span style="font-size: 13px; color: #6A665F">Machines · Sellers · For sellers</span></div>
+        <span class="dsp" style="font-size: 44px; line-height: 1; letter-spacing: -0.04em; max-width: 640px">Find the Right Machine. Close the Deal Faster.</span>
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; flex: 1">
+          <div style="background: #D9D4C9; padding: 12px; font-size: 12px; color: var(--mu)">[Listing photo]</div><div style="background: #D9D4C9; padding: 12px; font-size: 12px; color: var(--mu)">[Listing photo]</div><div style="background: #D9D4C9; padding: 12px; font-size: 12px; color: var(--mu)">[Listing photo]</div><div style="background: #D9D4C9; padding: 12px; font-size: 12px; color: var(--mu)">[Listing photo]</div>
+        </div>
+      </div>
+      <span class="lbl" style="position: absolute; left: 24px; bottom: 20px">Placeholder - replace with a real screen recording</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ OVERVIEW + PROBLEM (light) ============ -->
+<section data-tone="light" class="sec">
+  <div class="wrap" style="display: flex; flex-direction: column; gap: 120px">
+    <div class="facts rv" style="border-top: 1px solid var(--fg); padding-top: 24px">
+      <div style="display: flex; flex-direction: column; gap: 8px"><span class="lbl" style="color: var(--mu)">Role</span><span style="font-size: 19px; line-height: 1.4">Co-founder &amp; tech lead</span></div>
+      <div style="display: flex; flex-direction: column; gap: 8px"><span class="lbl" style="color: var(--mu)">Timeline</span><span style="font-size: 19px; line-height: 1.4">Feb 2026 - live since Sep 2026</span></div>
+      <div style="display: flex; flex-direction: column; gap: 8px"><span class="lbl" style="color: var(--mu)">Product</span><span style="font-size: 19px; line-height: 1.4">Listings &amp; lead generation, six languages</span></div>
+      <div style="display: flex; flex-direction: column; gap: 8px"><span class="lbl" style="color: var(--mu)">Stack</span><span style="font-size: 19px; line-height: 1.4">.NET 8 · PostgreSQL · Angular 20 · Azure · OpenTofu</span></div>
+    </div>
+    <div class="g12" style="row-gap: 40px; align-items: start">
+      <div class="c-l rv" style="display: flex; flex-direction: column; gap: 16px">
+        <span class="lbl">01 - The problem</span>
+        <h2 class="dsp bigh" style="margin: 0; font-size: 64px; font-weight: 500; letter-spacing: -0.045em; line-height: 0.98"><span class="ln"><span>Machines</span></span><span class="ln"><span>change hands</span></span><span class="ln"><span>slowly.</span></span></h2>
+      </div>
+      <div class="c-r rv" style="display: flex; flex-direction: column; gap: 24px; font-size: 21px; line-height: 1.5">
+        <p style="margin: 0">Buying a used press or a machining centre usually means digging through scattered dealer sites, in several languages, then chasing sellers by phone.</p>
+        <p style="margin: 0; color: var(--mu)">eMachy puts new and used industrial machines in one place, in six languages: buyers contact sellers directly, and sellers get leads in a built-in inbox instead of paying commission.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MY ROLE (dark) ============ -->
+<section data-tone="dark" class="sec">
+  <div class="wrap" style="display: flex; flex-direction: column; gap: 72px">
+    <div class="g12 rv" style="row-gap: 24px; align-items: end">
+      <div class="c-l" style="display: flex; flex-direction: column; gap: 16px">
+        <span class="lbl" style="color: var(--mu)">02 - My role</span>
+        <h2 class="dsp bigh" style="margin: 0; font-size: 64px; font-weight: 500; letter-spacing: -0.045em; line-height: 0.98"><span class="ln"><span>From the</span></span><span class="ln"><span>first commit.</span></span></h2>
+      </div>
+      <p class="c-r" style="margin: 0; font-size: 21px; line-height: 1.5; color: var(--mu2)">As co-founder and tech lead I owned the technical side end to end - and the way the team works.</p>
+    </div>
+    <ol class="roles" style="list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line)">
+      <li class="rv" style="padding: 40px 40px 48px 0; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px"><span class="dsp" style="font-size: 15px; color: {{accentDark}}">01</span><h3 class="dsp" style="margin: 0; font-size: 30px; font-weight: 400; letter-spacing: -0.03em">Every repository</h3><p style="margin: 0; font-size: 17px; line-height: 1.55; color: var(--mu2)">Created and structured all of the product’s repositories and the cross-repo workflow that ties them together.</p></li>
+      <li class="rv" style="padding: 40px 0 48px 40px; border-bottom: 1px solid var(--line); border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px"><span class="dsp" style="font-size: 15px; color: {{accentDark}}">02</span><h3 class="dsp" style="margin: 0; font-size: 30px; font-weight: 400; letter-spacing: -0.03em">Architecture calls</h3><p style="margin: 0; font-size: 17px; line-height: 1.55; color: var(--mu2)">.NET 8 with Clean Architecture, PostgreSQL, an Angular 20 front end - chosen and set up for a small team to move fast.</p></li>
+      <li class="rv" style="padding: 40px 40px 48px 0; display: flex; flex-direction: column; gap: 14px"><span class="dsp" style="font-size: 15px; color: {{accentDark}}">03</span><h3 class="dsp" style="margin: 0; font-size: 30px; font-weight: 400; letter-spacing: -0.03em">Infrastructure as code</h3><p style="margin: 0; font-size: 17px; line-height: 1.55; color: var(--mu2)">Azure, provisioned with OpenTofu, so environments are reproducible rather than hand-built.</p></li>
+      <li class="rv" style="padding: 40px 0 48px 40px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px"><span class="dsp" style="font-size: 15px; color: {{accentDark}}">04</span><h3 class="dsp" style="margin: 0; font-size: 30px; font-weight: 400; letter-spacing: -0.03em">How the team builds</h3><p style="margin: 0; font-size: 17px; line-height: 1.55; color: var(--mu2)">Set up Claude Code as an agentic software factory - shared automation, code review and release workflows.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ ARCHITECTURE (light) ============ -->
+<section data-tone="light" class="sec">
+  <div class="wrap" style="display: flex; flex-direction: column; gap: 72px">
+    <div class="g12 rv" style="row-gap: 24px; align-items: end">
+      <div class="c-l" style="display: flex; flex-direction: column; gap: 16px">
+        <span class="lbl">03 - Architecture</span>
+        <h2 class="dsp bigh" style="margin: 0; font-size: 64px; font-weight: 500; letter-spacing: -0.045em; line-height: 0.98"><span class="ln"><span>Boring where</span></span><span class="ln"><span>it should be.</span></span></h2>
+      </div>
+      <p class="c-r" style="margin: 0; font-size: 21px; line-height: 1.5; color: var(--mu)">A simplified view. Swap in the real diagram once the details are confirmed.</p>
+    </div>
+    <div class="rv" style="display: flex; flex-direction: column; gap: 20px">
+      <div class="arch">
+        <div class="layer" style="border: 1px solid var(--fg); padding: 28px; display: flex; flex-direction: column; gap: 12px"><span class="lbl" style="color: var(--mu)">Client</span><span class="dsp" style="font-size: 28px; letter-spacing: -0.03em">Angular 20</span><span style="font-size: 15px; line-height: 1.5; color: var(--mu)">Web app for buyers and sellers, six languages.</span></div>
+        <div class="arrow" aria-hidden="true" style="display: flex; align-items: center; justify-content: center"><svg width="48" height="16" viewBox="0 0 48 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 8h46M38 1l8 7-8 7"></path></svg></div>
+        <div class="layer" data-tone="dark" data-fixed="1" style="padding: 28px; display: flex; flex-direction: column; gap: 14px"><span class="lbl" style="color: var(--mu)">API · Clean Architecture</span><span class="dsp" style="font-size: 28px; letter-spacing: -0.03em">.NET 8</span>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; font-size: 14px">
+            <span style="border: 1px solid var(--line); padding: 10px 12px">API</span><span style="border: 1px solid var(--line); padding: 10px 12px">Application</span><span style="border: 1px solid {{accentDark}}; padding: 10px 12px">Domain</span><span style="border: 1px solid var(--line); padding: 10px 12px">Infrastructure</span>
+          </div>
+        </div>
+        <div class="arrow" aria-hidden="true" style="display: flex; align-items: center; justify-content: center"><svg width="48" height="16" viewBox="0 0 48 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 8h46M38 1l8 7-8 7"></path></svg></div>
+        <div class="layer" style="border: 1px solid var(--fg); padding: 28px; display: flex; flex-direction: column; gap: 12px"><span class="lbl" style="color: var(--mu)">Data</span><span class="dsp" style="font-size: 28px; letter-spacing: -0.03em">PostgreSQL</span><span style="font-size: 15px; line-height: 1.5; color: var(--mu)">Listings, sellers, leads.</span></div>
+      </div>
+      <div class="layer" style="border: 1px dashed var(--fg); padding: 18px 28px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 15px"><span><strong>Azure</strong> - hosting for every layer</span><span><strong>OpenTofu</strong> - infrastructure as code</span><span style="color: var(--mu)">One pipeline per repository</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AGENTIC WORKFLOW (dark) ============ -->
+<section data-tone="dark" class="sec">
+  <div class="wrap g12" style="row-gap: 64px; align-items: start">
+    <div class="c-l rv" style="display: flex; flex-direction: column; gap: 20px; position: sticky; top: 120px">
+      <span class="lbl" style="color: var(--mu)">04 - The agentic workflow</span>
+      <h2 class="dsp bigh" style="margin: 0; font-size: 64px; font-weight: 500; letter-spacing: -0.045em; line-height: 0.98"><span class="ln"><span>A software</span></span><span class="ln"><span>factory of</span></span><span class="ln"><span style="color: {{accentDark}}">agents.</span></span></h2>
+      <p style="margin: 0; font-size: 18px; line-height: 1.55; color: var(--mu2)">Claude Code isn’t a side tool here - it is part of how every change moves from idea to production. The setup is also the subject of my master’s thesis.</p>
+    </div>
+    <div class="c-r" ref="{{setFlow}}" style="position: relative; padding-left: 56px">
+      <div aria-hidden="true" style="position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: var(--line)"></div>
+      <div aria-hidden="true" style="position: absolute; left: 11px; top: 8px; width: 2px; height: {{flowH}}%; background: {{accent}}; transition: height .2s linear"></div>
+      <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 72px">
+        <sc-for list="{{steps}}" as="s" hint-placeholder-count="4">
+          <li class="step {{s.cls}}" style="position: relative; display: flex; flex-direction: column; gap: 14px">
+            <span class="dot" style="position: absolute; left: -53px; top: 6px; width: 18px; height: 18px; border-radius: 999px; border: 2px solid {{accent}}; background: {{s.dotBg}}; box-sizing: border-box"></span>
+            <span class="lbl" style="color: var(--mu)">{{s.n}}</span>
+            <h3 class="dsp" style="margin: 0; font-size: 36px; font-weight: 400; letter-spacing: -0.035em; line-height: 1.05">{{s.title}}</h3>
+            <p style="margin: 0; font-size: 18px; line-height: 1.55; color: var(--mu2); max-width: 560px">{{s.body}}</p>
+          </li>
+        </sc-for>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OUTCOME (light) ============ -->
+<section data-tone="light" class="sec">
+  <div class="wrap" style="display: flex; flex-direction: column; gap: 72px">
+    <div class="rv" style="display: flex; flex-direction: column; gap: 16px">
+      <span class="lbl">05 - Outcome</span>
+      <h2 class="dsp bigh" style="margin: 0; font-size: 112px; font-weight: 500; letter-spacing: -0.05em; line-height: 0.92"><span class="ln"><span>Live, with</span></span><span class="ln"><span>real sellers.</span></span></h2>
+    </div>
+    <div class="facts rv" style="border-top: 1px solid var(--fg); padding-top: 28px">
+      <div style="display: flex; flex-direction: column; gap: 10px"><span class="dsp" style="font-size: 44px; letter-spacing: -0.04em">Sep 2026</span><span style="font-size: 16px; color: var(--mu)">Public launch</span></div>
+      <div style="display: flex; flex-direction: column; gap: 10px"><span class="dsp" style="font-size: 44px; letter-spacing: -0.04em">6</span><span style="font-size: 16px; color: var(--mu)">Languages at launch</span></div>
+      <div style="display: flex; flex-direction: column; gap: 10px"><span class="dsp" style="font-size: 44px; letter-spacing: -0.04em; color: var(--mu)">[Metric]</span><span style="font-size: 16px; color: var(--mu)">[Add one you can share]</span></div>
+      <div style="display: flex; flex-direction: column; gap: 10px"><span class="dsp" style="font-size: 44px; letter-spacing: -0.04em; color: var(--mu)">[Metric]</span><span style="font-size: 16px; color: var(--mu)">[e.g. listings or sellers]</span></div>
+    </div>
+    <div class="rv" style="display: flex; align-items: center; gap: 32px; flex-wrap: wrap">
+      <a href="https://emachy.com" class="mag inv {{fAccent}}" onMouseMove="{{magMove}}" onMouseLeave="{{magLeave}}" style="width: 200px; height: 200px; font-size: 18px; font-weight: 500"><span class="fill" style="background: {{accent}}"></span><span class="t">Visit<br>emachy.com ↗</span></a>
+      <p style="margin: 0; max-width: 420px; font-size: 17px; line-height: 1.55; color: var(--mu)">See it working - search a machine, open a seller profile, send an inquiry.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEXT (dark) ============ -->
+<footer data-tone="dark" data-fixed="1" style="padding: 160px 0 40px">
+  <div class="wrap" style="display: flex; flex-direction: column; gap: 96px">
+    <a href="Home.dc.html" class="rv" style="text-decoration: none; display: flex; flex-direction: column; gap: 20px">
+      <span class="lbl" style="color: var(--mu)">Next</span>
+      <span class="dsp bigh" style="font-size: 120px; font-weight: 500; letter-spacing: -0.05em; line-height: 0.92">All work <span style="color: {{accentDark}}">→</span></span>
+    </a>
+    <div style="display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 24px; font-size: 15px">
+      <span>2026 © Edition · build 1.0.0</span>
+      <div style="display: flex; gap: 24px"><a class="ul" href="https://github.com/janosevicsm">GitHub</a><a class="ul" href="https://linkedin.com/in/marko-janosevic">LinkedIn</a><a class="ul" href="mailto:markojanosevicsm7@gmail.com">Email</a></div>
+    </div>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#2F3CFF","options":["#2F3CFF","#FF4F1F","#D4FF3A"]},"grain":{"editor":"boolean","default":true},"transition":{"editor":"boolean","default":true},"reducedMotion":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":7400}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const live = typeof window !== 'undefined' && window.innerHeight < 1800;
+    this.state = { live, enterOut: false, enterGone: !live, entered: !live, tone: 'dark', clip: live ? 1 : 0, flow: live ? 0 : 1 };
+    this.prevTop = null; this.frame = 0;
+    this.setHeroPlate = (el) => { this.plate = el; };
+    this.setFlow = (el) => { this.flowEl = el; };
+    this.magMove = (e) => {
+      if (this.reduced()) return;
+      const el = e.currentTarget; const r = el.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+      el.style.transition = 'transform .3s cubic-bezier(.16,1,.3,1)';
+      el.style.transform = 'translate(' + dx * 0.35 + 'px,' + dy * 0.35 + 'px)';
+      const t = el.querySelector('.t'); if (t) { t.style.transition = 'transform .3s cubic-bezier(.16,1,.3,1)'; t.style.transform = 'translate(' + dx * 0.15 + 'px,' + dy * 0.15 + 'px)'; }
+    };
+    this.magLeave = (e) => {
+      const el = e.currentTarget; el.style.transition = 'transform .9s cubic-bezier(.34,1.9,.5,1)'; el.style.transform = '';
+      const t = el.querySelector('.t'); if (t) { t.style.transition = 'transform .9s cubic-bezier(.34,1.9,.5,1)'; t.style.transform = ''; }
+    };
+  }
+  reduced() {
+    if (this.props.reducedMotion) return true;
+    try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; }
+  }
+  componentDidMount() {
+    this.timers = [];
+    const later = (fn, ms) => this.timers.push(setTimeout(fn, ms));
+    if (this.state.live && (this.props.transition ?? true)) {
+      later(() => this.setState({ enterOut: true }), this.reduced() ? 150 : 450);
+      later(() => this.setState({ entered: true }), this.reduced() ? 150 : 650);
+      later(() => this.setState({ enterGone: true }), 1400);
+    } else this.setState({ enterGone: true, entered: true });
+    this.onResize = () => { const live = window.innerHeight < 1800; if (live !== this.state.live) this.setState({ live }); };
+    window.addEventListener('resize', this.onResize);
+    const loop = () => { this.step(); this.raf = requestAnimationFrame(loop); };
+    this.raf = requestAnimationFrame(loop);
+  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); (this.timers || []).forEach(clearTimeout); window.removeEventListener('resize', this.onResize); }
+  step() {
+    if (!this.state.live || !this.plate) return;
+    const root = this.plate.closest('.mj'); if (!root) return;
+    const vh = window.innerHeight; const top = root.getBoundingClientRect().top;
+    const moved = this.prevTop === null || Math.abs(this.prevTop - top) > 0.1; this.prevTop = top; this.frame++;
+    if (!moved && this.frame % 20 !== 0) return;
+    root.querySelectorAll('.rv:not(.is-in)').forEach((el) => { if (el.getBoundingClientRect().top < vh * 0.88) el.classList.add('is-in'); });
+    let tone = this.state.tone;
+    root.querySelectorAll('[data-tone]').forEach((s) => { const r = s.getBoundingClientRect(); if (r.top <= vh * 0.6 && r.bottom > vh * 0.6) tone = s.getAttribute('data-tone'); });
+    const pr = this.plate.getBoundingClientRect();
+    let clip = Math.min(1, Math.max(0, (pr.top - vh * 0.15) / (vh * 0.75)));
+    clip = this.reduced() ? 0 : Math.round(clip * 100) / 100;
+    let flow = this.state.flow;
+    if (this.flowEl) { const r = this.flowEl.getBoundingClientRect(); flow = Math.min(1, Math.max(0, (vh * 0.6 - r.top) / r.height)); flow = Math.round(flow * 100) / 100; }
+    if (tone !== this.state.tone || clip !== this.state.clip || flow !== this.state.flow) this.setState({ tone, clip, flow });
+  }
+  renderVals() {
+    const accent = this.props.accent ?? '#2F3CFF';
+    const A = accent.toUpperCase();
+    const onAccent = A === '#2F3CFF' ? '#FFFFFF' : '#0E0F11';
+    const accentDark = A === '#2F3CFF' ? '#8F97FF' : accent;
+    const s = this.state; const rm = this.reduced();
+    const flow = rm ? 1 : s.flow;
+    const stepsData = [
+      { n: 'Step 01 · Plan', title: 'Issue in, plan out', body: 'Work starts as a written issue. An agent drafts the plan against the repository’s own conventions before any code is written.' },
+      { n: 'Step 02 · Build', title: 'Shared automation', body: 'The same commands, rules and context live in every repository, so agents build features across the .NET API and the Angular app consistently.' },
+      { n: 'Step 03 · Review', title: 'Code review, twice', body: 'An agent review pass runs on every pull request; a human signs off. Architecture rules are checked, not remembered.' },
+      { n: 'Step 04 · Release', title: 'Release workflows', body: 'Release steps are scripted end to end - from versioning to deploying on Azure - so shipping is a routine, not an event.' }
+    ];
+    const steps = stepsData.map((d, i) => { const lit = flow >= (i + 0.2) / stepsData.length; return { ...d, cls: lit ? 'lit' : '', dotBg: lit ? accent : 'var(--bg)' }; });
+    const clipH = (s.clip * 8).toFixed(2), clipV = (s.clip * 14).toFixed(2);
+    return {
+      accent, onAccent, accentDark, fAccent: onAccent === '#FFFFFF' ? 'f-acc-white' : 'f-acc-ink',
+      rootCls: [s.live ? 'live' : '', s.entered ? 'entered' : '', rm ? 'rm' : '', 'tone-' + s.tone].join(' '),
+      grain: this.props.grain ?? true,
+      showEnter: !s.enterGone, enterCls: s.enterOut ? 'out' : '',
+      steps, flowH: Math.round(flow * 100), clipH, clipV,
+      setHeroPlate: this.setHeroPlate, setFlow: this.setFlow, magMove: this.magMove, magLeave: this.magLeave
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Design system - Marko Janošević</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700&amp;family=Onest:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0E0F11}a:hover{color:#0E0F11}
+.ds-link{position:relative;text-decoration:none;color:inherit}
+.ds-link::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s cubic-bezier(.65,0,.35,1)}
+.ds-link:hover::after,.ds-link.is-hover::after{transform:scaleX(1);transform-origin:left}
+.ds-round{position:relative;overflow:hidden;isolation:isolate}
+.ds-round .fill{position:absolute;left:-10%;width:120%;height:150%;top:100%;border-radius:50%;z-index:-1;transition:top .6s cubic-bezier(.65,0,.35,1)}
+.ds-round:hover .fill,.ds-round.is-hover .fill{top:-25%}
+.ds-pill{position:relative;overflow:hidden;isolation:isolate}
+.ds-pill .fill{position:absolute;left:-10%;width:120%;height:300%;top:100%;border-radius:50%;z-index:-1;transition:top .55s cubic-bezier(.65,0,.35,1)}
+.ds-pill:hover .fill,.ds-pill.is-hover .fill{top:-100%}
+.ds-focus{outline:2px solid currentColor;outline-offset:5px}
+</style>
+</helmet>
+<div style="width: 1440px; height: 2700px; box-sizing: border-box; background: #EFECE5; color: #0E0F11; font-family: 'Onest', 'Helvetica Neue', Arial, sans-serif; position: relative; overflow: hidden">
+
+<sc-if value="{{grain}}" hint-placeholder-val="{{ true }}">
+<svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.09; mix-blend-mode: multiply; z-index: 5"><filter id="dsgrain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter><rect width="100%" height="100%" filter="url(#dsgrain)"></rect></svg>
+</sc-if>
+
+<!-- Header -->
+<header style="padding: 72px 80px 56px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; border-bottom: 1px solid #0E0F11">
+  <div style="grid-column: span 12; display: flex; justify-content: space-between; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500">
+    <span>MJ / System</span><span>Version 1.0 - Oct 2026</span><span>Static · Astro + GSAP + Lenis</span>
+  </div>
+  <h1 style="grid-column: span 9; margin: 64px 0 0; font-family: 'Unbounded', 'Arial Black', sans-serif; font-weight: 500; font-size: 112px; line-height: 0.92; letter-spacing: -0.045em">Spec sheet<br>for a person.</h1>
+  <div style="grid-column: 10 / span 3; align-self: end; display: flex; flex-direction: column; gap: 16px; font-size: 16px; line-height: 1.5">
+    <p style="margin: 0"><strong>Direction - “Industrial editorial.”</strong> Huge, wide display type set against hairline rules and small machine-plate labels (No. / Model / Year). A nod to eMachy’s industrial world without a single gear icon.</p>
+    <p style="margin: 0; color: #55524C">Light paper alternates with deep ink sections. One accent, used sparingly: dots, fills, one highlighted word.</p>
+  </div>
+</header>
+
+<!-- Colour -->
+<section style="padding: 56px 80px; display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 40px; border-bottom: 1px solid #0E0F11">
+  <div style="display: flex; flex-direction: column; gap: 12px">
+    <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500">No. 01</span>
+    <h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 500; font-size: 40px; letter-spacing: -0.03em">Colour</h2>
+    <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #55524C">Neutrals are warm and slightly toned. Pick one accent - the Tweaks panel swaps it everywhere.</p>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 28px">
+    <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 10px"><div style="height: 120px; background: #EFECE5; border: 1px solid #0E0F11"></div><strong style="font-size: 14px">Paper</strong><span style="font-size: 13px; color: #55524C">#EFECE5 · light ground</span></div>
+      <div style="display: flex; flex-direction: column; gap: 10px"><div style="height: 120px; background: #E2DED4"></div><strong style="font-size: 14px">Paper 2</strong><span style="font-size: 13px; color: #55524C">#E2DED4 · tags, panels</span></div>
+      <div style="display: flex; flex-direction: column; gap: 10px"><div style="height: 120px; background: #55524C"></div><strong style="font-size: 14px">Mute / light</strong><span style="font-size: 13px; color: #55524C">#55524C · 6.4:1 on paper</span></div>
+      <div style="display: flex; flex-direction: column; gap: 10px"><div style="height: 120px; background: #0E0F11"></div><strong style="font-size: 14px">Ink</strong><span style="font-size: 13px; color: #55524C">#0E0F11 · dark ground, text</span></div>
+      <div style="display: flex; flex-direction: column; gap: 10px"><div style="height: 120px; background: #1B1D21"></div><strong style="font-size: 14px">Ink 2</strong><span style="font-size: 13px; color: #55524C">#1B1D21 · rules on dark</span></div>
+      <div style="display: flex; flex-direction: column; gap: 10px"><div style="height: 120px; background: #9C988F"></div><strong style="font-size: 14px">Mute / dark</strong><span style="font-size: 13px; color: #55524C">#9C988F · 6.9:1 on ink</span></div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 0; border: 1px solid #0E0F11">
+        <div style="height: 150px; background: #2F3CFF; color: #FFFFFF; padding: 20px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: flex-end"><span style="font-family: 'Unbounded', sans-serif; font-size: 32px; letter-spacing: -0.03em">A</span><span style="font-size: 13px">Recommended</span></div>
+        <div style="padding: 16px 20px; display: flex; flex-direction: column; gap: 6px"><strong style="font-size: 15px">Cobalt · #2F3CFF</strong><span style="font-size: 13px; line-height: 1.45; color: #55524C">Engineering-blueprint blue. Works as text on paper (6.4:1) and as fills on ink. White on it.</span></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 0; border: 1px solid #0E0F11">
+        <div style="height: 150px; background: #FF4F1F; color: #0E0F11; padding: 20px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: flex-end"><span style="font-family: 'Unbounded', sans-serif; font-size: 32px; letter-spacing: -0.03em">B</span><span style="font-size: 13px">Safety orange</span></div>
+        <div style="padding: 16px 20px; display: flex; flex-direction: column; gap: 6px"><strong style="font-size: 15px">Vermilion · #FF4F1F</strong><span style="font-size: 13px; line-height: 1.45; color: #55524C">Machine-floor signal colour, closest to eMachy’s world. Fills only on paper; ink text on it.</span></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 0; border: 1px solid #0E0F11">
+        <div style="height: 150px; background: #D4FF3A; color: #0E0F11; padding: 20px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: flex-end"><span style="font-family: 'Unbounded', sans-serif; font-size: 32px; letter-spacing: -0.03em">C</span><span style="font-size: 13px">Loudest</span></div>
+        <div style="padding: 16px 20px; display: flex; flex-direction: column; gap: 6px"><strong style="font-size: 15px">Chartreuse · #D4FF3A</strong><span style="font-size: 13px; line-height: 1.45; color: #55524C">Electric on ink, a highlighter on paper. Never as text on light; always ink text on it.</span></div>
+      </div>
+    </div>
+    <div style="display: flex; height: 64px; border: 1px solid #0E0F11">
+      <div style="flex: 1; background: #0E0F11; color: #EFECE5; display: flex; align-items: center; padding: 0 16px; font-size: 13px">Hero · dark</div>
+      <div style="flex: 1; background: #EFECE5; display: flex; align-items: center; padding: 0 16px; font-size: 13px">Intro · light</div>
+      <div style="flex: 1; background: #0E0F11; color: #EFECE5; display: flex; align-items: center; padding: 0 16px; font-size: 13px">eMachy · dark</div>
+      <div style="flex: 1; background: #EFECE5; display: flex; align-items: center; padding: 0 16px; font-size: 13px">Work · light</div>
+      <div style="flex: 1; background: #0E0F11; color: #EFECE5; display: flex; align-items: center; padding: 0 16px; font-size: 13px">Experience · dark</div>
+      <div style="flex: 1; background: #EFECE5; display: flex; align-items: center; padding: 0 16px; font-size: 13px">Skills · light</div>
+      <div style="flex: 1; background: {{accent}}; color: {{onAccent}}; display: flex; align-items: center; padding: 0 16px; font-size: 13px">Contact · ink + accent</div>
+    </div>
+  </div>
+</section>
+
+<!-- Type -->
+<section style="padding: 56px 80px; display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 40px; border-bottom: 1px solid #0E0F11">
+  <div style="display: flex; flex-direction: column; gap: 12px">
+    <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500">No. 02</span>
+    <h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 500; font-size: 40px; letter-spacing: -0.03em">Type</h2>
+    <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #55524C"><strong style="color: #0E0F11">Unbounded</strong> (display) + <strong style="color: #0E0F11">Onest</strong> (body). Both free on Google Fonts, both cover Latin Extended and Cyrillic - so “Janošević” and the “Здраво” loader render in the real font.</p>
+    <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #55524C">Alternative: Clash Display + General Sans (Fontshare). Sharper, but no Cyrillic.</p>
+  </div>
+  <div style="display: flex; flex-direction: column">
+    <div style="display: grid; grid-template-columns: 200px minmax(0, 1fr); align-items: baseline; gap: 24px; padding: 8px 0 20px; border-bottom: 1px solid #C9C4B8">
+      <span style="font-size: 13px; color: #55524C">Display XXL · hero name<br>Unbounded 500 · 15vw / 0.9<br>−0.045em · mobile 26vw</span>
+      <span style="font-family: 'Unbounded', sans-serif; font-weight: 500; font-size: 150px; line-height: 0.9; letter-spacing: -0.045em; white-space: nowrap">Janošević</span>
+    </div>
+    <div style="display: grid; grid-template-columns: 200px minmax(0, 1fr); align-items: baseline; gap: 24px; padding: 20px 0; border-bottom: 1px solid #C9C4B8">
+      <span style="font-size: 13px; color: #55524C">Display XL · 128 / 0.95<br>mobile 56</span>
+      <span style="font-family: 'Unbounded', sans-serif; font-weight: 500; font-size: 96px; line-height: 0.95; letter-spacing: -0.04em">Let’s work</span>
+    </div>
+    <div style="display: grid; grid-template-columns: 200px minmax(0, 1fr); align-items: baseline; gap: 24px; padding: 20px 0; border-bottom: 1px solid #C9C4B8">
+      <span style="font-size: 13px; color: #55524C">Display L · h2 · 72 / 1<br>mobile 40</span>
+      <span style="font-family: 'Unbounded', sans-serif; font-weight: 500; font-size: 72px; line-height: 1; letter-spacing: -0.035em">Experience</span>
+    </div>
+    <div style="display: grid; grid-template-columns: 200px minmax(0, 1fr); align-items: baseline; gap: 24px; padding: 20px 0; border-bottom: 1px solid #C9C4B8">
+      <span style="font-size: 13px; color: #55524C">Display M · h3 · 40 / 1.05<br>mobile 28</span>
+      <span style="font-family: 'Unbounded', sans-serif; font-weight: 400; font-size: 40px; line-height: 1.05; letter-spacing: -0.025em">Agriculture platform</span>
+    </div>
+    <div style="display: grid; grid-template-columns: 200px minmax(0, 1fr); align-items: baseline; gap: 24px; padding: 20px 0; border-bottom: 1px solid #C9C4B8">
+      <span style="font-size: 13px; color: #55524C">Statement · Onest 400<br>44 / 1.18 · −0.02em · mobile 28</span>
+      <span style="font-size: 44px; line-height: 1.18; letter-spacing: -0.02em">I build full-stack products end to end.</span>
+    </div>
+    <div style="display: grid; grid-template-columns: 200px minmax(0, 1fr); align-items: baseline; gap: 24px; padding: 20px 0; border-bottom: 1px solid #C9C4B8">
+      <span style="font-size: 13px; color: #55524C">Body L · 20 / 1.5<br>Body · 17 / 1.55</span>
+      <span style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 20px; line-height: 1.5">Co-founder and tech lead. I created every repository and made the architecture calls.</span><span style="font-size: 17px; line-height: 1.55; color: #55524C">Full-stack applications for agriculture, real estate and HR tracking, mostly .NET + Angular.</span></span>
+    </div>
+    <div style="display: grid; grid-template-columns: 200px minmax(0, 1fr); align-items: baseline; gap: 24px; padding: 20px 0 0">
+      <span style="font-size: 13px; color: #55524C">Label · Onest 500 · 12<br>uppercase · +0.14em</span>
+      <span style="display: flex; gap: 40px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500"><span>Full-stack Engineer &amp; Tech Lead</span><span>No. 01 - Featured</span><span>Feb 2026 – Present</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- Spacing & grid -->
+<section style="padding: 56px 80px; display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 40px; border-bottom: 1px solid #0E0F11">
+  <div style="display: flex; flex-direction: column; gap: 12px">
+    <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500">No. 03</span>
+    <h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 500; font-size: 40px; letter-spacing: -0.03em">Space &amp; grid</h2>
+    <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #55524C">4px base. Sections breathe: 176 px vertical on desktop, 96 on mobile.</p>
+  </div>
+  <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px">
+    <div style="display: flex; align-items: flex-end; gap: 14px">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px"><div style="width: 24px; height: 4px; background: #0E0F11"></div><span style="font-size: 12px">4</span></div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px"><div style="width: 24px; height: 8px; background: #0E0F11"></div><span style="font-size: 12px">8</span></div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px"><div style="width: 24px; height: 16px; background: #0E0F11"></div><span style="font-size: 12px">16</span></div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px"><div style="width: 24px; height: 24px; background: #0E0F11"></div><span style="font-size: 12px">24</span></div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px"><div style="width: 24px; height: 40px; background: #0E0F11"></div><span style="font-size: 12px">40</span></div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px"><div style="width: 24px; height: 64px; background: #0E0F11"></div><span style="font-size: 12px">64</span></div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px"><div style="width: 24px; height: 96px; background: #0E0F11"></div><span style="font-size: 12px">96</span></div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px"><div style="width: 24px; height: 128px; background: #0E0F11"></div><span style="font-size: 12px">128</span></div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px"><div style="width: 24px; height: 176px; background: {{accent}}"></div><span style="font-size: 12px">176</span></div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 13px; color: #55524C">Desktop · 12 col · margin 64 · gutter 24 · max 1600</span><div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 6px; height: 64px; padding: 0 16px; border-left: 1px solid #0E0F11; border-right: 1px solid #0E0F11"><div style="background: #E2DED4"></div><div style="background: #E2DED4"></div><div style="background: #E2DED4"></div><div style="background: #E2DED4"></div><div style="background: #E2DED4"></div><div style="background: #E2DED4"></div><div style="background: #E2DED4"></div><div style="background: #E2DED4"></div><div style="background: #E2DED4"></div><div style="background: #E2DED4"></div><div style="background: #E2DED4"></div><div style="background: #E2DED4"></div></div></div>
+      <div style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 13px; color: #55524C">Mobile · 4 col · margin 20 · gutter 16</span><div style="width: 180px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; height: 64px; padding: 0 8px; border-left: 1px solid #0E0F11; border-right: 1px solid #0E0F11"><div style="background: #E2DED4"></div><div style="background: #E2DED4"></div><div style="background: #E2DED4"></div><div style="background: #E2DED4"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Components -->
+<section style="padding: 56px 80px; display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 40px">
+  <div style="display: flex; flex-direction: column; gap: 12px">
+    <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500">No. 04</span>
+    <h2 style="margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 500; font-size: 40px; letter-spacing: -0.03em">Controls</h2>
+    <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #55524C">Default and hover side by side. Hover any control to see it live. Fills rise from below in the accent, 600 ms, ease <span style="white-space: nowrap">cubic-bezier(.65,0,.35,1)</span>.</p>
+  </div>
+  <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0; border: 1px solid #0E0F11">
+    <div style="padding: 32px; display: flex; flex-direction: column; gap: 28px; border-right: 1px solid #0E0F11">
+      <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500">On paper</span>
+      <div style="display: flex; gap: 24px; align-items: center">
+        <a href="#" class="ds-round" style="width: 160px; height: 160px; border-radius: 999px; background: #0E0F11; color: #EFECE5; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 16px; font-weight: 500"><span class="fill" style="background: {{accent}}"></span>About me</a>
+        <a href="#" class="ds-round is-hover" style="width: 160px; height: 160px; border-radius: 999px; background: #0E0F11; color: {{onAccent}}; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 16px; font-weight: 500; transform: translate(8px, -6px)"><span class="fill" style="background: {{accent}}"></span>About me</a>
+        <span style="font-size: 13px; line-height: 1.5; color: #55524C">Magnetic round · 160 (desktop) / 120 (mobile). Hover: pulls 35% toward cursor, label 20% more.</span>
+      </div>
+      <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap">
+        <a href="#" class="ds-pill" style="height: 56px; padding: 0 28px; border-radius: 999px; border: 1px solid #0E0F11; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #0E0F11; font-size: 16px; font-weight: 500"><span class="fill" style="background: #0E0F11"></span>emachy.com ↗</a>
+        <a href="#" class="ds-pill is-hover" style="height: 56px; padding: 0 28px; border-radius: 999px; border: 1px solid #0E0F11; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #EFECE5; font-size: 16px; font-weight: 500"><span class="fill" style="background: #0E0F11"></span>emachy.com ↗</a>
+        <span style="font-size: 13px; color: #55524C">Pill · 56 high</span>
+      </div>
+      <div style="display: flex; gap: 40px; align-items: center; font-size: 17px">
+        <a href="#" class="ds-link">Text link</a>
+        <a href="#" class="ds-link is-hover">Text link</a>
+        <a href="#" class="ds-link ds-focus" style="border-radius: 2px">Focus</a>
+      </div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap">
+        <span style="height: 32px; padding: 0 14px; border-radius: 999px; border: 1px solid #0E0F11; display: inline-flex; align-items: center; font-size: 13px">.NET</span>
+        <span style="height: 32px; padding: 0 14px; border-radius: 999px; border: 1px solid #0E0F11; display: inline-flex; align-items: center; font-size: 13px">Angular</span>
+        <span style="height: 32px; padding: 0 14px; border-radius: 999px; border: 1px solid #0E0F11; display: inline-flex; align-items: center; font-size: 13px">PostgreSQL</span>
+        <span style="height: 32px; padding: 0 14px; border-radius: 999px; background: #E2DED4; display: inline-flex; align-items: center; font-size: 13px">Tag · solid</span>
+      </div>
+    </div>
+    <div style="padding: 32px; display: flex; flex-direction: column; gap: 28px; background: #0E0F11; color: #EFECE5">
+      <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500">On ink</span>
+      <div style="display: flex; gap: 24px; align-items: center">
+        <a href="#" class="ds-round" style="width: 160px; height: 160px; border-radius: 999px; background: {{accent}}; color: {{onAccent}}; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 16px; font-weight: 500"><span class="fill" style="background: #EFECE5"></span>Get in touch</a>
+        <a href="#" class="ds-round is-hover" style="width: 160px; height: 160px; border-radius: 999px; background: {{accent}}; color: #0E0F11; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 16px; font-weight: 500; transform: translate(-8px, 6px)"><span class="fill" style="background: #EFECE5"></span>Get in touch</a>
+      </div>
+      <div style="display: flex; gap: 16px; align-items: center">
+        <a href="#" class="ds-pill" style="height: 56px; padding: 0 28px; border-radius: 999px; border: 1px solid #4A4842; display: inline-flex; align-items: center; text-decoration: none; color: #EFECE5; font-size: 16px; font-weight: 500"><span class="fill" style="background: {{accent}}"></span>LinkedIn</a>
+        <a href="#" class="ds-pill is-hover" style="height: 56px; padding: 0 28px; border-radius: 999px; border: 1px solid {{accent}}; display: inline-flex; align-items: center; text-decoration: none; color: {{onAccent}}; font-size: 16px; font-weight: 500"><span class="fill" style="background: {{accent}}"></span>LinkedIn</a>
+      </div>
+      <nav aria-label="Nav sample" style="display: flex; gap: 28px; font-size: 16px">
+        <a href="#" class="ds-link" style="color: #EFECE5">Work</a>
+        <a href="#" class="ds-link is-hover" style="color: #EFECE5; display: inline-flex; align-items: center; gap: 8px"><span style="width: 6px; height: 6px; border-radius: 999px; background: {{accent}}"></span>Experience</a>
+        <a href="#" class="ds-link" style="color: #EFECE5">About</a>
+        <a href="#" class="ds-link" style="color: #EFECE5">Contact</a>
+      </nav>
+      <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #9C988F">Nav: active section gets an accent dot that slides between items. Links underline left→right on hover, retract right on leave.</p>
+    </div>
+  </div>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#2F3CFF","options":["#2F3CFF","#FF4F1F","#D4FF3A"]},"grain":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":2700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#2F3CFF';
+    const a = accent.toUpperCase();
+    const onAccent = a === '#2F3CFF' ? '#FFFFFF' : '#0E0F11';
+    return { accent, onAccent, grain: this.props.grain ?? true };
+  }
+}
+</script>
+</body>
+</html>
