@@ -1,8 +1,8 @@
 ---
 /**
  * FeaturedEmachy — No. 02 featured case (design: Home.dc.html "FEATURED: eMachy",
- * HomeMobile.dc.html "eMachy"): label row, mega "eMachy", description, stylised
- * product plate (placeholder for a real screen recording), facts, and the
+ * HomeMobile.dc.html "eMachy"): label row, mega "eMachy", description, product
+ * plate (real emachy.com screenshot in a browser window; a phone on mobile), facts, and the
  * "Read the case study" magnetic button + emachy.com pill.
  * Motion: headline line mask (data-split-lines, row 07), fade-ups (data-reveal),
  * plate unmask + inner parallax (src/scripts/home/emachy.ts).
@@ -11,10 +11,12 @@
  */
 import MagneticButton from '../ui/MagneticButton.astro';
 import Pill from '../ui/Pill.astro';
+import DeviceShot from '../ui/DeviceShot.astro';
 import { SITE } from '../../data/site';
+import shotDesktop from '../../assets/emachy/emachy-desktop.png';
+import shotMobile from '../../assets/emachy/emachy-mobile.png';
 
 const CASE = '/work/emachy';
-const LISTINGS = ['Metal Working Machines', 'Parts for Automation', 'Machines for Plastic', 'Verified sellers'];
 ---
 
 <section id="emachy" class="section FeaturedEmachy" data-tone="dark" aria-labelledby="emachy-title">
@@ -38,7 +40,7 @@ const LISTINGS = ['Metal Working Machines', 'Parts for Automation', 'Machines fo
       </p>
     </div>
 
-    <!-- Plate: stylised product view (placeholder for real screenshots). Decorative duplicate of the CTA link. -->
+    <!-- Plate: emachy.com screenshot (desktop: browser window, mobile: phone). Decorative duplicate of the CTA link. -->
     <a
       href={CASE}
       class="plate"
@@ -48,29 +50,21 @@ const LISTINGS = ['Metal Working Machines', 'Parts for Automation', 'Machines fo
       aria-hidden="true"
     >
       <div class="plate-in" data-emachy-plate-in>
-        <div class="p-bar">
-          <span class="p-logo dsp">eMachy</span>
-          <span class="p-nav"><span>Machines</span><span>Sellers</span><span>For sellers</span><span>6 languages</span></span>
-        </div>
-        <div class="p-hero">
-          <span class="p-head dsp">Find the Right Machine. Close the Deal Faster.</span>
-          <div class="p-search">
-            <span class="p-q">Search machines<span class="d-only">, brands, models</span>…</span>
-            <span class="p-btn">Search</span>
-          </div>
-        </div>
-        <div class="p-grid">
-          {
-            LISTINGS.map((name) => (
-              <div class="p-card">
-                <div class="p-photo">[Listing photo]</div>
-                <span class="p-name">{name}</span>
-              </div>
-            ))
-          }
-        </div>
+        <DeviceShot
+          kind="browser"
+          class="plate-d"
+          src={shotDesktop}
+          alt="The eMachy home page: search for industrial machines"
+          sizes="(max-width: 760px) 100vw, min(calc(100vw - 240px), 1200px)"
+        />
+        <DeviceShot
+          kind="phone"
+          class="plate-m"
+          src={shotMobile}
+          alt="The eMachy home page on a phone: search for industrial machines"
+          sizes="200px"
+        />
       </div>
-      <span class="p-note lbl">Placeholder - swap for a real screen recording</span>
     </a>
 
     <dl class="facts" data-reveal data-reveal-y="24">
@@ -159,96 +153,14 @@ const LISTINGS = ['Metal Working Machines', 'Parts for Automation', 'Machines fo
     clip-path: inset(10% 6% 10% 6%);
   }
   .plate-in {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(16px, 9.31px + 1.714vw, 32px);
     will-change: transform;
   }
-  .p-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--rule-light);
+  /* browser window: same height as the design's stylised view (474 px inside the 586 px plate at 1440) */
+  .plate-in > :global(.plate-d) {
+    aspect-ratio: 1200 / 474;
   }
-  .p-logo {
-    font-size: clamp(14px, 11.03px + 0.762vw, 22px);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-  }
-  .p-nav {
-    display: flex;
-    gap: 20px;
-    font-size: 14px;
-    color: var(--mute-light);
-  }
-  .p-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-    gap: 48px;
-    align-items: end;
-  }
-  .p-head {
-    font-size: clamp(24px, 13.6px + 2.667vw, 52px);
-    font-weight: 500;
-    line-height: 1;
-    letter-spacing: -0.04em;
-  }
-  .p-search {
-    display: flex;
-    height: 60px;
-    border: 1px solid var(--ink);
-    background: color-mix(in srgb, var(--paper) 50%, #fff);
-    font-size: 15px;
-  }
-  .p-q {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    min-width: 0;
-    padding: 0 20px;
-    color: var(--mute-light);
-    white-space: nowrap;
-    overflow: hidden;
-  }
-  .p-btn {
-    flex: none;
-    width: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--accent);
-    color: var(--on-accent);
-    font-weight: 500;
-  }
-  .p-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: var(--space-3);
-  }
-  .p-card {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .p-photo {
-    height: clamp(96px, 64.91px + 7.97vw, 180px);
-    display: flex;
-    align-items: flex-end;
-    padding: 12px;
-    background: var(--paper-3);
-    color: var(--mute-light);
-    font-size: var(--fs-label);
-  }
-  .p-name {
-    font-size: 14px;
-    font-weight: 500;
-  }
-  .p-note {
-    position: absolute;
-    right: 20px;
-    bottom: 16px;
-    color: var(--mute-light);
+  .plate-in > :global(.plate-m) {
+    display: none;
   }
 
   /* ---- Facts ---- */
@@ -279,17 +191,6 @@ const LISTINGS = ['Metal Working Machines', 'Parts for Automation', 'Machines fo
     gap: var(--space-4);
   }
 
-  /* ---- Mid widths: stack the plate's hero row before it gets cramped ---- */
-  @media (max-width: 1100px) {
-    .p-hero {
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-    .p-search {
-      max-width: 520px;
-    }
-  }
-
   /* ---- Mobile (390 design) ---- */
   @media (max-width: 760px) {
     .d-only {
@@ -308,38 +209,20 @@ const LISTINGS = ['Metal Working Machines', 'Parts for Automation', 'Machines fo
       width: auto;
       margin-left: 0;
     }
-    .p-bar {
+    /* phone rising from the bottom edge of the plate (plate height as in the 390 design) */
+    .plate {
       padding-bottom: 0;
-      border-bottom: 0;
     }
-    .p-nav,
-    .p-name,
-    .p-note,
-    .p-card:nth-child(n + 3) {
+    .plate-in {
+      height: 293px;
+    }
+    .plate-in > :global(.plate-d) {
       display: none;
     }
-    .p-hero {
-      gap: 16px;
-    }
-    .p-search {
-      height: 44px;
-      font-size: 13px;
-    }
-    .p-q {
-      padding: 0 12px;
-    }
-    .p-btn {
-      width: 76px;
-      font-weight: 400;
-    }
-    .p-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-    .p-photo {
-      align-items: flex-start;
-      padding: 8px;
-      font-size: 11px;
+    .plate-in > :global(.plate-m) {
+      display: flex;
+      width: 200px;
+      margin: 0 auto;
     }
     .facts {
       grid-template-columns: repeat(2, minmax(0, 1fr));

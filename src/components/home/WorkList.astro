@@ -4,7 +4,7 @@
  * Design: design/project/Home.dc.html (desktop) + HomeMobile.dc.html (390 px).
  *
  * - Fine pointer (≥ 761 px): a 400×300 card follows the pointer over the list;
- *   its vertical strip of placeholder panels slides to the hovered row, a round
+ *   its vertical strip of colour panels slides to the hovered row, a round
  *   label trails slightly faster, the other rows dim to 40 % (CSS :has()).
  *   Driven by src/scripts/home/work-preview.ts.
  * - Touch / coarse pointer / mobile: inline thumbnails, no card.
@@ -56,7 +56,7 @@ import { SITE } from '../../data/site';
                 </p>
                 <p class="wmeta mu">{w.meta}</p>
                 <div class:list={['wthumb', w.href && 'wthumb--glyph']} aria-hidden="true">
-                  {w.href ? <span class="dsp">{w.glyph}</span> : <span>Placeholder image</span>}
+                  {w.href && <span class="dsp">{w.glyph}</span>}
                 </div>
               </div>
             </li>
@@ -77,7 +77,6 @@ import { SITE } from '../../data/site';
         {
           WORK.map((w) => (
             <div class="wpv__panel" style={`--w-bg:${w.bg};--w-ink:${w.ink}`}>
-              <span class="lbl wpv__lbl">Placeholder image</span>
               <span class="dsp wpv__glyph">{w.glyph}</span>
               <span class="wpv__ring" />
             </div>
@@ -258,8 +257,10 @@ import { SITE } from '../../data/site';
     .wrow__grid {
       display: flex;
       flex-direction: column;
+      align-items: stretch; /* .wgrid centres items; here that would shrink and centre each row */
       gap: 10px;
       padding-block: var(--space-4);
+      text-align: left;
     }
     .wdisc,
     .wctx {
@@ -327,10 +328,7 @@ import { SITE } from '../../data/site';
     padding: var(--space-4);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-  }
-  .wpv__lbl {
-    opacity: 0.8;
+    justify-content: flex-end;
   }
   .wpv__glyph {
     position: relative;

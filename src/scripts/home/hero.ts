@@ -35,7 +35,7 @@ onPage((page) => {
   if (page.reduced) {
     const els = [photo, mq, ...labels].filter((el): el is HTMLElement => !!el);
     gsap.set(els, { opacity: 0 });
-    gsap.set(lines, { yPercent: 0 });
+    gsap.set(lines, { y: 0, yPercent: 0 });
     if (track) gsap.set(track, { xPercent: -4 });
     const fade = gsap.to(els, { opacity: 1, duration: 0.3, ease: 'none', paused: true });
     page.revealed.then(() => fade.play());
@@ -53,7 +53,15 @@ onPage((page) => {
     tl.fromTo(mq, { xPercent: 12 }, { xPercent: 0, duration: 1.4, ease: 'expo.out' }, 0.1);
   }
   if (lines.length) {
-    tl.fromTo(lines, { yPercent: 110 }, { yPercent: 0, duration: 0.8, ease: 'power4.out', stagger: 0.08 }, 0.25);
+    // The pre-reveal CSS hides the lines with `transform: translateY(110%)`. GSAP parses that
+    // computed matrix into a pixel `y`, so `y` must be reset too — tweening only yPercent would
+    // leave the lines stuck ~110 % down inside their masks (invisible labels).
+    tl.fromTo(
+      lines,
+      { y: 0, yPercent: 110 },
+      { y: 0, yPercent: 0, duration: 0.8, ease: 'power4.out', stagger: 0.08 },
+      0.25,
+    );
   }
   page.revealed.then(() => tl.play());
 

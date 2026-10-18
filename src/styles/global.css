@@ -81,6 +81,8 @@
   /* Radii */
   --radius-0: 0;
   --radius-pill: 999px;
+  --radius-window: 8px; /* browser-window frame around product screenshots */
+  --radius-phone: 28px; /* phone frame around mobile product screenshots */
 
   /* Control sizes */
   --round-xl: 188px; /* magnetic round, feature / footer (mobile 132–136) */
@@ -506,10 +508,12 @@ html.js [data-reveal='children'] > * {
 html.js [data-split-lines] {
   visibility: hidden;
 }
-/* SplitText line masks: padded so diacritics (š, ć, Ž) and descenders are not clipped */
+/* SplitText line masks: padded (and pulled back by the same negative margin, so layout is
+   unchanged) so diacritics (š, ć, Ž), descenders and the right overhang of Unbounded's tight
+   tracking ("Selected", "work") are not clipped */
 .split-line-mask {
-  padding-block: 0.1em 0.16em;
-  margin-block: -0.1em -0.16em;
+  padding: 0.1em 0.12em 0.16em;
+  margin: -0.1em -0.12em -0.16em;
 }
 
 /* ---------- Reduced motion ---------- */
