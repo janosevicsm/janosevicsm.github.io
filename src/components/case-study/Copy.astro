@@ -1,0 +1,41 @@
+---
+/**
+ * Breakpoint copy: the case-study design shortens some strings on mobile.
+ * Renders the desktop text above 760 px and the mobile text below it (the
+ * hidden variant is display:none, so screen readers only read one).
+ *
+ *   <Copy d="Feb 2026 - live since Sep 2026" m="Feb 2026 - live Sep 2026" />
+ */
+interface Props {
+  /** desktop text */
+  d: string;
+  /** mobile text (defaults to the desktop text) */
+  m?: string;
+}
+const { d, m = d } = Astro.props;
+---
+
+{
+  d === m ? (
+    d
+  ) : (
+    <>
+      <span class="cp-d">{d}</span>
+      <span class="cp-m">{m}</span>
+    </>
+  )
+}
+
+<style>
+  .cp-m {
+    display: none;
+  }
+  @media (max-width: 760px) {
+    .cp-d {
+      display: none;
+    }
+    .cp-m {
+      display: inline;
+    }
+  }
+</style>

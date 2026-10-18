@@ -1,12 +1,18 @@
 ---
 /**
- * eMachy case study — TODO(phase 2c): build from design/project/CaseStudy.dc.html
- * and CaseStudyMobile.dc.html. Put section components in src/components/case-study/.
- * The case study has its own "Next / All work →" footer (not the home Footer).
- * Title lines should rise with the page transition: use
- * data-split-lines data-motion-on="reveal" on the h1.
+ * eMachy case study (design/project/CaseStudy.dc.html + CaseStudyMobile.dc.html).
+ * Sections live in src/components/case-study/; scroll effects (Motion row 16)
+ * in src/scripts/case-study.ts. The page has its own "Next / All work →"
+ * footer instead of the home contact Footer.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseHero from '../../components/case-study/CaseHero.astro';
+import CaseOverview from '../../components/case-study/CaseOverview.astro';
+import CaseRole from '../../components/case-study/CaseRole.astro';
+import CaseArchitecture from '../../components/case-study/CaseArchitecture.astro';
+import CaseWorkflow from '../../components/case-study/CaseWorkflow.astro';
+import CaseOutcome from '../../components/case-study/CaseOutcome.astro';
+import CaseFooter from '../../components/case-study/CaseFooter.astro';
 import { SITE } from '../../data/site';
 ---
 
@@ -16,11 +22,15 @@ import { SITE } from '../../data/site';
   nav="page"
   navExternal={{ href: SITE.emachy, label: 'emachy.com ↗' }}
 >
-  <header id="hero" class="section" data-tone="dark" data-tone-fixed style="min-height: 100svh">
-    <div class="wrap">
-      <!-- TODO: case-study hero -->
-      <p class="lbl">Case study No. 01</p>
-      <h1 class="dsp" data-split-lines data-motion-on="reveal">eMachy</h1>
-    </div>
-  </header>
+  <CaseHero />
+  <CaseOverview />
+  <CaseRole />
+  <CaseArchitecture />
+  <CaseWorkflow />
+  <CaseOutcome />
+  <CaseFooter slot="footer" />
 </BaseLayout>
+
+<script>
+  import '../../scripts/case-study';
+</script>

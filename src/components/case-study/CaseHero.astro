@@ -1,0 +1,211 @@
+---
+/**
+ * Case-study hero (design: CaseStudy / CaseStudyMobile header).
+ * Label row, "eMachy" title (lines rise on page reveal, Motion row 15), lede
+ * and the product mock on an accent plate. The plate unmasks from inset 18 %
+ * to full while scrolling (Motion row 16) — src/scripts/case-study.ts.
+ * The top bar (← Back to home · MJ/26 · emachy.com ↗) comes from Nav (nav="page").
+ */
+import Copy from './Copy.astro';
+---
+
+<header id="hero" class="hero" data-tone="dark" data-tone-fixed aria-labelledby="cs-title">
+  <div class="wrap intro">
+    <div class="meta" data-reveal data-reveal-y="40" data-motion-on="reveal" data-motion-delay="0.3">
+      <p class="lbl">Case study No. 01</p>
+      <p class="lbl mu d-only">Co-founder &amp; Tech Lead</p>
+      <p class="lbl mu"><Copy d="Feb 2026 - live Sep 2026" m="2026" /></p>
+    </div>
+    <h1 id="cs-title" class="dsp title" data-split-lines data-motion-on="reveal" data-motion-delay="0.1">eMachy</h1>
+    <div class="grid">
+      <p class="lede" data-reveal data-reveal-y="40" data-motion-on="reveal" data-motion-delay="0.35">
+        A B2B marketplace for new and used industrial machines - built by a small team and a software factory of AI
+        agents.
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap" data-reveal="fade" data-motion-on="reveal" data-motion-delay="0.45">
+    <figure class="plate" data-cs-plate>
+      <div class="mock" data-cs-mock aria-hidden="true">
+        <div class="mock-bar">
+          <span class="dsp mock-logo">eMachy</span>
+          <span class="mock-nav">Machines · Sellers · For sellers</span>
+        </div>
+        <span class="dsp mock-h">Find the Right Machine. Close the Deal Faster.</span>
+        <div class="mock-grid">
+          {
+            [0, 1, 2, 3].map((i) => (
+              <div class:list={['mock-card', i > 1 && 'mock-card--wide']}>
+                <span class="mock-photo" />
+                <span class="mock-line" />
+                <span class="mock-line mock-line--short" />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <figcaption class="sr-only">
+        The eMachy home page: the headline “Find the Right Machine. Close the Deal Faster.” above a row of machine
+        listings.
+      </figcaption>
+    </figure>
+  </div>
+</header>
+
+<style>
+  .hero {
+    padding-top: clamp(144px, 130.63px + 3.429vw, 180px);
+    padding-bottom: clamp(72px, 54.17px + 4.571vw, 120px);
+  }
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(28px, 23.54px + 1.143vw, 40px);
+  }
+
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .title {
+    font-size: min(20vw, 288px);
+    font-weight: 500;
+    letter-spacing: -0.06em;
+    line-height: 0.82;
+  }
+  .lede {
+    grid-column: 1 / span 8;
+    font-size: clamp(22px, 15.31px + 1.714vw, 40px);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+  }
+
+  /* ---- plate + product mock ---- */
+  .plate {
+    position: relative;
+    margin-top: clamp(28px, 2.74px + 6.476vw, 96px);
+    height: clamp(300px, 144px + 40vw, 720px);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  /* pre-JS state of the scroll unmask (the script takes over on init) */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.js) .plate {
+      clip-path: inset(18% 18% 18% 18%);
+    }
+  }
+  .mock {
+    width: 78%;
+    height: 76%;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(12px, 6.06px + 1.524vw, 28px);
+    padding: clamp(16px, 7.09px + 2.286vw, 40px);
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 0 40px 80px rgb(0 0 0 / 0.25);
+    transform-origin: 50% 50%;
+  }
+  .mock-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--rule-light);
+  }
+  .mock-logo {
+    font-size: clamp(12px, 9.03px + 0.762vw, 20px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .mock-nav {
+    font-size: var(--fs-caption);
+    color: var(--mute-light);
+  }
+  .mock-h {
+    max-width: 640px;
+    font-size: clamp(17px, 6.97px + 2.571vw, 44px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .mock-grid {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .mock-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 0;
+  }
+  .mock-photo {
+    flex: 1;
+    min-height: 0;
+    background: var(--paper-2);
+  }
+  .mock-line {
+    height: 8px;
+    width: 72%;
+    background: var(--rule-light);
+  }
+  .mock-line--short {
+    width: 40%;
+  }
+
+  @media (max-width: 760px) {
+    .meta {
+      padding-top: var(--space-4);
+      padding-bottom: 14px;
+      border-bottom-color: var(--rule-dark);
+    }
+    .d-only {
+      display: none;
+    }
+    .title {
+      line-height: 0.95;
+    }
+    .lede {
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+    }
+    .mock {
+      width: 82%;
+      height: 72%;
+      box-shadow: none;
+    }
+    .mock-bar {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+    .mock-nav {
+      display: none;
+    }
+    .mock-h {
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+    .mock-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .mock-card--wide {
+      display: none;
+    }
+    .mock-line {
+      display: none;
+    }
+  }
+</style>

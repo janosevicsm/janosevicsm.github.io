@@ -1,0 +1,220 @@
+---
+/**
+ * "03 - Architecture" (light): Client → API (Clean Architecture) → Data, plus
+ * the hosting note. Markup is an ordered list so the request flow reads in
+ * order for screen readers; the arrows are decorative. Layers stack in from
+ * the left (Motion row 16) — src/scripts/case-study.ts.
+ */
+import CaseHeading from './CaseHeading.astro';
+
+const apiLayers = ['API', 'Application', 'Domain', 'Infrastructure'];
+---
+
+<section class="sec" data-tone="light" aria-labelledby="arch-title">
+  <div class="wrap stack">
+    <div class="grid head">
+      <div class="left">
+        <p class="lbl" data-reveal="fade">03 - Architecture</p>
+        <CaseHeading id="arch-title" lines={['Boring where', 'it should be.']} />
+      </div>
+      <p class="right mu" data-reveal>A simplified view - from the browser to the database.</p>
+    </div>
+
+    <div class="diagram" data-cs-arch>
+      <ol role="list" class="arch" aria-label="Request flow, from the client to the database">
+        <li class="box box--line" data-cs-layer>
+          <span class="lbl mu">Client</span>
+          <span class="dsp name">Angular 20</span>
+          <span class="desc">Web app for buyers and sellers, six languages.</span>
+          <svg class="arrow" aria-hidden="true" width="48" height="16" viewBox="0 0 48 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M0 8h46M38 1l8 7-8 7"></path>
+          </svg>
+        </li>
+        <li class="box box--dark" data-tone="dark" data-tone-fixed data-cs-layer>
+          <span class="lbl mu">API · Clean Architecture</span>
+          <span class="dsp name">.NET 8</span>
+          <ul role="list" class="layers" aria-label="Clean Architecture layers">
+            {apiLayers.map((l) => <li class:list={[l === 'Domain' && 'core']}>{l}</li>)}
+          </ul>
+          <svg class="arrow" aria-hidden="true" width="48" height="16" viewBox="0 0 48 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M0 8h46M38 1l8 7-8 7"></path>
+          </svg>
+        </li>
+        <li class="box box--line" data-cs-layer>
+          <span class="lbl mu">Data</span>
+          <span class="dsp name">PostgreSQL</span>
+          <span class="desc">Listings, sellers, leads.</span>
+        </li>
+      </ol>
+
+      <p class="infra" data-cs-layer>
+        <span class="d-only"><strong>Azure</strong> - hosting for every layer</span>
+        <span class="d-only"><strong>OpenTofu</strong> - infrastructure as code</span>
+        <span class="d-only mu">One pipeline per repository</span>
+        <span class="m-only"><strong>Azure</strong> hosting · <strong>OpenTofu</strong> infrastructure as code</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sec {
+    padding-block: clamp(88px, 55.31px + 8.381vw, 176px);
+  }
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(28px, 11.66px + 4.19vw, 72px);
+  }
+  .head {
+    row-gap: var(--space-4);
+    align-items: end;
+  }
+  .left {
+    grid-column: 1 / span 4;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .right {
+    grid-column: 6 / span 7;
+    font-size: clamp(17px, 15.51px + 0.381vw, 21px);
+    line-height: 1.5;
+  }
+
+  .diagram {
+    /* the outer (light) ink, resolved here so it survives inside the dark box */
+    --arch-ink: var(--fg);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .arch {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1fr);
+    column-gap: 72px;
+    align-items: stretch;
+  }
+  .box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 28px;
+  }
+  .box--line {
+    border: 1px solid var(--arch-ink);
+  }
+  .box--dark {
+    gap: 14px;
+  }
+  .name {
+    font-size: clamp(20px, 17.03px + 0.762vw, 28px);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .desc {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--mu);
+  }
+  .layers {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    font-size: 14px;
+  }
+  .layers li {
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+  }
+  .layers .core {
+    border-color: var(--accent-dark);
+  }
+  .arrow {
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 12px);
+    margin-top: -8px;
+    color: var(--arch-ink);
+  }
+  .infra {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    padding: 18px 28px;
+    border: 1px dashed var(--fg);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .infra strong {
+    font-weight: 600;
+  }
+  .m-only {
+    display: none;
+  }
+
+  /* layers stack in from the left (pre-JS state; the script animates them in) */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.js) [data-cs-layer] {
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .head {
+      row-gap: 28px;
+    }
+    .left {
+      gap: 28px;
+    }
+    .right,
+    .desc,
+    .d-only {
+      display: none;
+    }
+    .m-only {
+      display: inline;
+    }
+    .diagram {
+      gap: 16px;
+    }
+    .arch {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 40px;
+    }
+    .box {
+      gap: 6px;
+      padding: 18px;
+    }
+    .box--dark {
+      gap: 10px;
+    }
+    .layers {
+      gap: 6px;
+      font-size: 13px;
+    }
+    .layers li {
+      padding: 8px;
+    }
+    .arrow {
+      display: none;
+    }
+    /* vertical connector in the 40 px gap */
+    .box:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      width: 1px;
+      height: 40px;
+      background: var(--arch-ink);
+    }
+    .infra {
+      display: block;
+      padding: 14px 18px;
+      font-size: 14px;
+    }
+  }
+</style>
