@@ -1,15 +1,370 @@
 ---
 /**
- * FeaturedEmachy — No. 02 featured eMachy case: mega title, plate, facts, 'Read the case study' (links to /work/emachy).
- * TODO(phase 2): build from design/project/Home.dc.html + HomeMobile.dc.html.
- * Keep the root element, its id and data-tone. Use the motion data attributes
- * (data-split-lines, data-reveal, data-magnetic) before writing custom JS.
+ * FeaturedEmachy — No. 02 featured case (design: Home.dc.html "FEATURED: eMachy",
+ * HomeMobile.dc.html "eMachy"): label row, mega "eMachy", description, stylised
+ * product plate (placeholder for a real screen recording), facts, and the
+ * "Read the case study" magnetic button + emachy.com pill.
+ * Motion: headline line mask (data-split-lines, row 07), fade-ups (data-reveal),
+ * plate unmask + inner parallax (src/scripts/home/emachy.ts).
+ * Desktop-only / mobile-only copy variants use .d-only / .m-only (the 390 design
+ * uses shorter strings).
  */
+import MagneticButton from '../ui/MagneticButton.astro';
+import Pill from '../ui/Pill.astro';
+import { SITE } from '../../data/site';
+
+const CASE = '/work/emachy';
+const LISTINGS = ['Metal Working Machines', 'Parts for Automation', 'Machines for Plastic', 'Verified sellers'];
 ---
 
-<section id="emachy" class="section FeaturedEmachy" data-tone="dark">
-  <div class="wrap">
-    <!-- TODO: FeaturedEmachy content -->
-    <p class="lbl">FeaturedEmachy</p>
+<section id="emachy" class="section FeaturedEmachy" data-tone="dark" aria-labelledby="emachy-title">
+  <div class="wrap stack">
+    <div class="meta" data-reveal data-reveal-y="24">
+      <span class="lbl">No. 02 - Featured<span class="d-only"> case</span></span>
+      <span class="lbl mu d-only">Co-founder &amp; Tech Lead</span>
+      <span class="lbl mu">Live<span class="d-only"> since</span><span class="m-only" aria-hidden="true"> ·</span> Sep 2026</span>
+    </div>
+
+    <h2 id="emachy-title" class="title dsp" data-split-lines>eMachy</h2>
+
+    <div class="desc" data-reveal>
+      <p>
+        A B2B marketplace for new and used industrial machines - listings and lead generation, in six languages, with
+        real sellers on it.
+      </p>
+      <p class="mu">
+        I created every repository, made the architecture calls and set up how the team builds: Claude Code as an
+        agentic software factory.
+      </p>
+    </div>
+
+    <!-- Plate: stylised product view (placeholder for real screenshots). Decorative duplicate of the CTA link. -->
+    <a
+      href={CASE}
+      class="plate"
+      data-emachy-plate
+      data-transition-word="eMachy"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="plate-in" data-emachy-plate-in>
+        <div class="p-bar">
+          <span class="p-logo dsp">eMachy</span>
+          <span class="p-nav"><span>Machines</span><span>Sellers</span><span>For sellers</span><span>6 languages</span></span>
+        </div>
+        <div class="p-hero">
+          <span class="p-head dsp">Find the Right Machine. Close the Deal Faster.</span>
+          <div class="p-search">
+            <span class="p-q">Search machines<span class="d-only">, brands, models</span>…</span>
+            <span class="p-btn">Search</span>
+          </div>
+        </div>
+        <div class="p-grid">
+          {
+            LISTINGS.map((name) => (
+              <div class="p-card">
+                <div class="p-photo">[Listing photo]</div>
+                <span class="p-name">{name}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <span class="p-note lbl">Placeholder - swap for a real screen recording</span>
+    </a>
+
+    <dl class="facts" data-reveal data-reveal-y="24">
+      <div class="fact">
+        <dt class="lbl mu">Live</dt>
+        <dd>Since Sep<span class="d-only">tember</span> 2026</dd>
+      </div>
+      <div class="fact">
+        <dt class="lbl mu">Reach</dt>
+        <dd>Six languages<span class="d-only">, real sellers</span></dd>
+      </div>
+      <div class="fact">
+        <dt class="lbl mu">Role</dt>
+        <dd>Co-founder &amp; tech lead</dd>
+      </div>
+      <div class="fact">
+        <dt class="lbl mu">Stack</dt>
+        <dd>.NET 8 · PostgreSQL · Angular 20 · Azure · OpenTofu</dd>
+      </div>
+    </dl>
+
+    <div class="ctas" data-reveal data-reveal-y="24">
+      <MagneticButton href={CASE} attrs={{ 'data-transition-word': 'eMachy' }}>Read the<br />case study</MagneticButton>
+      <Pill href={SITE.emachy} attrs={{ target: '_blank' }}>
+        <span class="d-only">Visit </span>emachy.com{' '}<span aria-hidden="true">↗</span>
+        <span class="sr-only">{' '}(opens in a new tab)</span>
+      </Pill>
+    </div>
   </div>
 </section>
+
+<script>
+  import '../../scripts/home/emachy';
+</script>
+
+<style>
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(32px, 23.09px + 2.286vw, 56px);
+  }
+  .m-only {
+    display: none;
+  }
+
+  /* ---- Label row ---- */
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* ---- Mega title: 300 px at 1440, 74 px at 390 (design uses 19vw on both) ---- */
+  .title {
+    font-size: min(19vw, 300px);
+    line-height: 0.9;
+    letter-spacing: -0.055em;
+  }
+
+  /* ---- Description: right half on desktop ---- */
+  .desc {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-left: auto;
+    width: calc((100% - 11 * var(--grid-gutter)) / 2 + 5 * var(--grid-gutter));
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+  }
+
+  /* ---- Product plate (light panel on ink) ---- */
+  .plate {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: clamp(20px, 6.63px + 3.429vw, 56px);
+    background: var(--paper-2);
+    color: var(--ink);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  :global(html.js) .plate[data-emachy-plate] {
+    clip-path: inset(10% 6% 10% 6%);
+  }
+  .plate-in {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(16px, 9.31px + 1.714vw, 32px);
+    will-change: transform;
+  }
+  .p-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--rule-light);
+  }
+  .p-logo {
+    font-size: clamp(14px, 11.03px + 0.762vw, 22px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+  .p-nav {
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+    color: var(--mute-light);
+  }
+  .p-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: end;
+  }
+  .p-head {
+    font-size: clamp(24px, 13.6px + 2.667vw, 52px);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .p-search {
+    display: flex;
+    height: 60px;
+    border: 1px solid var(--ink);
+    background: color-mix(in srgb, var(--paper) 50%, #fff);
+    font-size: 15px;
+  }
+  .p-q {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    padding: 0 20px;
+    color: var(--mute-light);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .p-btn {
+    flex: none;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 500;
+  }
+  .p-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+  .p-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .p-photo {
+    height: clamp(96px, 64.91px + 7.97vw, 180px);
+    display: flex;
+    align-items: flex-end;
+    padding: 12px;
+    background: var(--paper-3);
+    color: var(--mute-light);
+    font-size: var(--fs-label);
+  }
+  .p-name {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .p-note {
+    position: absolute;
+    right: 20px;
+    bottom: 16px;
+    color: var(--mute-light);
+  }
+
+  /* ---- Facts ---- */
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin: 0;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+  .fact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .fact dd {
+    margin: 0;
+    font-size: var(--fs-body-l);
+    line-height: 1.4;
+  }
+
+  /* ---- CTAs ---- */
+  .ctas {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  /* ---- Mid widths: stack the plate's hero row before it gets cramped ---- */
+  @media (max-width: 1100px) {
+    .p-hero {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .p-search {
+      max-width: 520px;
+    }
+  }
+
+  /* ---- Mobile (390 design) ---- */
+  @media (max-width: 760px) {
+    .d-only {
+      display: none;
+    }
+    .m-only {
+      display: inline;
+    }
+    .meta {
+      padding-bottom: 14px;
+    }
+    .title {
+      line-height: 0.95;
+    }
+    .desc {
+      width: auto;
+      margin-left: 0;
+    }
+    .p-bar {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+    .p-nav,
+    .p-name,
+    .p-note,
+    .p-card:nth-child(n + 3) {
+      display: none;
+    }
+    .p-hero {
+      gap: 16px;
+    }
+    .p-search {
+      height: 44px;
+      font-size: 13px;
+    }
+    .p-q {
+      padding: 0 12px;
+    }
+    .p-btn {
+      width: 76px;
+      font-weight: 400;
+    }
+    .p-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .p-photo {
+      align-items: flex-start;
+      padding: 8px;
+      font-size: 11px;
+    }
+    .facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px var(--space-3);
+      padding-top: 20px;
+    }
+    .fact {
+      gap: 6px;
+    }
+    .fact dd {
+      font-size: 16px;
+    }
+    .ctas {
+      gap: var(--space-3);
+      flex-wrap: nowrap;
+    }
+    .ctas :global(.pill) {
+      padding: 0 20px;
+      font-size: 15px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html.js) .plate[data-emachy-plate] {
+      clip-path: none;
+    }
+  }
+</style>
