@@ -20,20 +20,23 @@ default branch is `dev` and `main` is for releases.
 | # | Phase | Owner | Status |
 |---|---|---|---|
 | 0 | Repo, `main` → `dev`, GitHub remote | orchestrator | ✅ done |
-| 1 | Astro scaffold, design tokens, layout, motion core, loader, menu, footer, page transition | subagent | ✅ done (not yet checked in a browser) |
-| 2a | Home: hero, intro, eMachy feature | subagent | ⏳ |
-| 2b | Home: selected work, experience timeline, toolbox | subagent | ⏳ |
-| 2c | eMachy case study page | subagent | ⏳ |
-| 3 | Browser check (desktop + mobile, reduced motion), fixes | orchestrator | ⏳ |
+| 1 | Astro scaffold, design tokens, layout, motion core, loader, menu, footer, page transition | subagent | ✅ done |
+| 2a | Home: hero, intro, eMachy feature | subagent | ✅ done |
+| 2b | Home: selected work, experience timeline, toolbox | subagent | ✅ done |
+| 2c | eMachy case study page | subagent | ✅ done |
+| 3 | Browser check (desktop + mobile, reduced motion), fixes | orchestrator | ✅ done |
 | 4 | GitHub Pages deploy | with you | ⏳ |
 
 ## Open items for you
 
-- The case study's **Outcome** section has two `[Metric]` placeholders. Give two real numbers
-  (for example listings, sellers or countries), or we drop them.
+- The case study's **Outcome** section shows two numbers (launch date, 6 languages); the design
+  had room for two more. emachy.com currently shows 1,468 listings, 7 verified sellers, 6 countries
+  and 90 categories. Say which, if any, to add (they will go stale unless updated).
 - The work-list images are placeholders. Add real screenshots later if NDAs allow.
 
 ## Log
 
 - 2026-10-18: Repo created and design handoff saved under `design/`.
 - 2026-10-18: Phase 1 foundation built: Astro 7, GSAP, Lenis, tokens, loader, nav/menu, footer, page transition, motion data attributes. Build and type check pass.
+- 2026-10-18: Phase 2 built by three parallel subagents: hero, intro, featured eMachy, work list, experience, toolbox, case study.
+- 2026-10-18: Browser review at 1440 and 390 px. Fixed: hero labels stuck hidden, line-mask clipping, narrow work-list layout, designer notes in the mockups. The mockups now use real emachy.com screenshots. Menu, page transition (home ↔ case study), back-link to #work and reduced motion checked.
