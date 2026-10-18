@@ -1,0 +1,127 @@
+---
+/**
+ * "05 - Outcome" (light): headline, metrics and the "Visit emachy.com ↗"
+ * magnetic button (Motion row 09).
+ * TODO: the design has two more metric cells ("[Metric]" placeholders) — add
+ * them to `metrics` once the numbers are confirmed; the grid takes one column
+ * per metric on desktop (2 → halves, 4 → quarters as in the design).
+ */
+import Copy from './Copy.astro';
+import CaseHeading from './CaseHeading.astro';
+import MagneticButton from '../ui/MagneticButton.astro';
+import { SITE } from '../../data/site';
+
+const metrics: { value: string; d: string; m?: string }[] = [
+  { value: 'Sep 2026', d: 'Public launch' },
+  { value: '0%', d: 'Commission on any sale', m: 'Commission on a sale' },
+];
+---
+
+<section class="sec" data-tone="light" aria-labelledby="outcome-title">
+  <div class="wrap stack">
+    <div class="head">
+      <p class="lbl" data-reveal="fade">05 - Outcome</p>
+      <CaseHeading id="outcome-title" lines={['Live, with', 'real sellers.']} size="xl" />
+    </div>
+
+    <dl class="metrics" style={`--cols: ${metrics.length}`} data-reveal>
+      {
+        metrics.map((x) => (
+          <div class="metric">
+            <dt>
+              <Copy d={x.d} m={x.m} />
+            </dt>
+            <dd class="dsp value">{x.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <div class="cta" data-reveal>
+      <MagneticButton
+        href={SITE.emachy}
+        variant="inv"
+        size="clamp(148px, 128.69px + 4.952vw, 200px)"
+        class="visit"
+        attrs={{ target: '_blank', rel: 'noopener', 'aria-label': 'Visit emachy.com (opens in a new tab)' }}
+      >
+        Visit<br />emachy.com ↗
+      </MagneticButton>
+      <p class="note">See it working - search a machine, open a seller profile, send an inquiry.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sec {
+    padding-block: clamp(88px, 55.31px + 8.381vw, 176px);
+  }
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(32px, 17.14px + 3.81vw, 72px);
+  }
+  .head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
+    gap: var(--space-4);
+    padding-top: 28px;
+    border-top: 1px solid var(--fg);
+  }
+  /* value first visually, label first in the source (dt before dd) */
+  .metric {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  .metric dt {
+    font-size: clamp(14px, 13.26px + 0.19vw, 16px);
+    color: var(--mu);
+  }
+  .value {
+    margin: 0;
+    font-size: clamp(28px, 22.06px + 1.524vw, 44px);
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+  }
+
+  .cta {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .cta :global(.visit) {
+    font-size: clamp(15px, 13.89px + 0.286vw, 18px);
+  }
+  .note {
+    max-width: 420px;
+    font-size: var(--fs-body);
+    line-height: 1.55;
+    color: var(--mu);
+  }
+
+  @media (max-width: 760px) {
+    .head {
+      gap: 32px;
+    }
+    .metrics {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-4) var(--space-3);
+      padding-top: 20px;
+    }
+    .metric {
+      gap: 6px;
+    }
+    .note {
+      display: none;
+    }
+  }
+</style>

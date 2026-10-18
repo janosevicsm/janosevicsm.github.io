@@ -1,0 +1,82 @@
+---
+/**
+ * Magnetic round button (design: "Magnetic round", Motion row 09).
+ * Renders `.mag[data-magnetic]` with the fill and label spans; the pull and
+ * fill are run by src/scripts/motion/magnetic.ts.
+ *
+ *   <MagneticButton href="mailto:…" label="Email me" />                 accent → paper/ink fill
+ *   <MagneticButton href="#experience" label="About me" variant="inv" size="var(--round-l)" />
+ *   <MagneticButton as="button" label="Menu" attrs={{ type: 'button' }} />
+ *
+ * Variants (colours follow the design's Controls sheet):
+ *   accent  accent ground, white label; fill = current --fg, label → --bg   (default)
+ *   inv     --fg ground, --bg label;  fill = accent, label → white
+ *   dark    ink-2 ground with hairline; fill = accent, label → white (footer LinkedIn)
+ * Or pass bg / fg / fill / fillFg directly (any CSS colour or var()).
+ * Labels may contain <br> via the default slot instead of `label`.
+ */
+type Variant = 'accent' | 'inv' | 'dark';
+
+interface Props {
+  href?: string;
+  as?: 'a' | 'button';
+  label?: string;
+  variant?: Variant;
+  /** diameter, e.g. "188px" or "var(--round-l)" (default var(--round-xl)) */
+  size?: string;
+  bg?: string;
+  fg?: string;
+  fill?: string;
+  fillFg?: string;
+  class?: string;
+  /** extra attributes for the root element (aria-*, data-*, target, rel, type…) */
+  attrs?: Record<string, string | undefined>;
+}
+
+const VARIANTS: Record<Variant, { bg: string; fg: string; fill: string; fillFg: string }> = {
+  accent: { bg: 'var(--accent)', fg: 'var(--on-accent)', fill: 'var(--fg)', fillFg: 'var(--bg)' },
+  inv: { bg: 'var(--fg)', fg: 'var(--bg)', fill: 'var(--accent)', fillFg: 'var(--on-accent)' },
+  dark: { bg: 'var(--ink-2)', fg: 'var(--paper)', fill: 'var(--accent)', fillFg: 'var(--on-accent)' },
+};
+
+const { href, as, label, variant = 'accent', size, bg, fg, fill, fillFg, class: className, attrs = {} } = Astro.props;
+const v = VARIANTS[variant];
+const { type: buttonType = 'button', ...rest } = attrs;
+const isLink = (as ?? (href ? 'a' : 'button')) === 'a';
+const classes = ['mag', variant === 'dark' && 'mag--outline', className];
+const style = [
+  size && `--mag-size:${size}`,
+  `--mag-bg:${bg ?? v.bg}`,
+  `--mag-fg:${fg ?? v.fg}`,
+  `--mag-fill:${fill ?? v.fill}`,
+  `--mag-fill-fg:${fillFg ?? v.fillFg}`,
+]
+  .filter(Boolean)
+  .join(';');
+---
+
+{
+  isLink ? (
+    <a class:list={classes} href={href} data-magnetic style={style} {...rest}>
+      <span class="fill" aria-hidden="true" />
+      <span class="t">
+        {label}
+        <slot />
+      </span>
+    </a>
+  ) : (
+    <button class:list={classes} type={buttonType as 'button' | 'submit' | 'reset'} data-magnetic style={style} {...rest}>
+      <span class="fill" aria-hidden="true" />
+      <span class="t">
+        {label}
+        <slot />
+      </span>
+    </button>
+  )
+}
+
+<style>
+  .mag--outline {
+    border: 1px solid var(--line);
+  }
+</style>

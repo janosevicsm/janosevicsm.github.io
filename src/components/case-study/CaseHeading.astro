@@ -1,0 +1,65 @@
+---
+/**
+ * Case-study section headline (h2). Lines break as in the desktop design and
+ * flow naturally on mobile; each line rises from its mask (data-split-lines,
+ * Motion row 07).
+ *
+ *   <CaseHeading id="problem-title" lines={['Machines', 'change hands', 'slowly.']} />
+ *   <CaseHeading lines={['A software', 'factory of', 'agents.']} accentLast />
+ *   <CaseHeading lines={['Live, with', 'real sellers.']} size="xl" />
+ */
+interface Props {
+  lines: string[];
+  id?: string;
+  /** colour the last line with the accent (on ink) */
+  accentLast?: boolean;
+  /** l: 64 / 40 px · xl: 112 / 48 px (desktop / mobile) */
+  size?: 'l' | 'xl';
+}
+const { lines, id, accentLast = false, size = 'l' } = Astro.props;
+const last = lines.length - 1;
+---
+
+<h2 id={id} class:list={['dsp', 'h', `h--${size}`]} data-split-lines>
+  {
+    lines.map((line, i) => (
+      <>
+        <span class:list={['hl', accentLast && i === last && 'acc']}>{line}</span>
+        {i < last && ' '}
+      </>
+    ))
+  }
+</h2>
+
+<style>
+  .h {
+    font-weight: 500;
+  }
+  .h--l {
+    font-size: clamp(40px, 31.09px + 2.286vw, 64px);
+    letter-spacing: -0.045em;
+    line-height: 0.98;
+  }
+  .h--xl {
+    font-size: clamp(48px, 24.23px + 6.095vw, 112px);
+    letter-spacing: -0.05em;
+    line-height: 0.92;
+  }
+  .hl {
+    display: block;
+  }
+  .acc {
+    color: var(--accent-dark);
+  }
+  @media (max-width: 760px) {
+    .h--l {
+      line-height: 1;
+    }
+    .h--xl {
+      line-height: 0.95;
+    }
+    .hl {
+      display: inline;
+    }
+  }
+</style>

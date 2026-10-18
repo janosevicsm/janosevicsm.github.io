@@ -1,0 +1,225 @@
+---
+/**
+ * Home footer / contact (design: Home + HomeMobile footer, Motion row 13).
+ * Behaviour (parallax reveal, photo scale, live clock): src/scripts/footer.ts.
+ */
+import { Image } from 'astro:assets';
+import portrait from '../assets/portrait.jpg';
+import MagneticButton from './ui/MagneticButton.astro';
+import { SITE, SOCIALS } from '../data/site';
+---
+
+<footer class="footer" id="contact" data-tone="dark" data-tone-fixed data-footer>
+  <div class="inner" data-footer-inner>
+    <div class="wrap stack">
+      <div class="head">
+        <Image
+          src={portrait}
+          alt=""
+          width={208}
+          widths={[104, 208, 312]}
+          sizes="(max-width: 760px) 72px, 104px"
+          class="photo"
+          data-footer-photo
+          loading="lazy"
+        />
+        <h2 class="dsp title">
+          <span class="line line--1" data-split-lines>Let’s work</span>
+          <span class="line" data-split-lines>together<span class="acc">.</span></span>
+        </h2>
+      </div>
+
+      <div class="cta">
+        <div class="rule" aria-hidden="true"></div>
+        <div class="buttons">
+          <MagneticButton href={`mailto:${SITE.email}`} label="Email me" variant="accent" />
+          <MagneticButton href={SITE.linkedin} label="LinkedIn" variant="dark" attrs={{ rel: 'noopener' }} />
+        </div>
+        <a href={`mailto:${SITE.email}`} class="ul email">{SITE.email}</a>
+      </div>
+
+      <div class="meta">
+        <div class="facts">
+          <div class="fact">
+            <span class="lbl mu">Local time</span>
+            <span class="time">Novi Sad - <time data-clock>--:--:--</time></span>
+          </div>
+        </div>
+        <div class="fact">
+          <span class="lbl mu">Socials</span>
+          <ul role="list" class="socials">
+            {
+              SOCIALS.map((s) => (
+                <li>
+                  <a class="ul" href={s.href} target={s.href.startsWith('http') ? '_blank' : undefined}
+                rel={s.href.startsWith('http') ? 'noopener' : undefined}>
+                    {s.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  import '../scripts/footer';
+</script>
+
+<style>
+  .footer {
+    position: relative;
+    overflow: clip;
+  }
+  .inner {
+    padding-block: var(--space-9) 40px;
+  }
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
+  }
+
+  /* headline: photo sits in front of line 1 */
+  .head {
+    position: relative;
+  }
+  .title {
+    font-size: var(--fs-xl);
+    letter-spacing: -0.05em;
+    line-height: 0.92;
+  }
+  .line {
+    display: block;
+  }
+  .line--1 {
+    padding-left: calc(104px + 28px);
+  }
+  .acc {
+    color: var(--accent-dark);
+  }
+  .head :global(.photo) {
+    position: absolute;
+    left: 0;
+    top: calc(var(--fs-xl) * 0.46 - 52px);
+    width: 104px;
+    height: 104px;
+    border-radius: var(--radius-pill);
+    object-fit: cover;
+    object-position: 50% 18%;
+  }
+
+  .cta {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .rule {
+    height: 1px;
+    background: var(--line);
+  }
+  .buttons {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    /* centres the round buttons on the hairline */
+    margin-top: calc(-40px - var(--round-xl) / 2);
+  }
+  .email {
+    align-self: flex-start;
+    font-size: clamp(18px, 14.29px + 0.952vw, 28px);
+    letter-spacing: -0.01em;
+  }
+
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+    flex-wrap: wrap;
+    padding-top: 24px;
+    font-size: 15px;
+  }
+  .facts {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .fact {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .time {
+    font-variant-numeric: tabular-nums;
+  }
+  .socials {
+    display: flex;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (max-width: 760px) {
+    .inner {
+      padding-block: var(--space-7) 32px;
+    }
+    .stack {
+      gap: 40px;
+    }
+    .head {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .head :global(.photo) {
+      position: static;
+      width: 72px;
+      height: 72px;
+    }
+    .title {
+      line-height: 0.95;
+    }
+    .line--1 {
+      padding-left: 0;
+    }
+    .buttons {
+      margin-top: 0;
+      justify-content: flex-start;
+      gap: 14px;
+      order: -1;
+    }
+    .rule {
+      display: none;
+    }
+    .email {
+      font-size: 18px;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+    .meta {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 20px;
+      padding-top: 0;
+      font-size: 14px;
+    }
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      border-top: 1px solid var(--rule-dark);
+      padding-top: 20px;
+    }
+    .socials {
+      gap: 20px;
+    }
+  }
+</style>

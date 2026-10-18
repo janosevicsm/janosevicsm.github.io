@@ -1,0 +1,151 @@
+---
+/**
+ * Case-study hero (design: CaseStudy / CaseStudyMobile header).
+ * Label row, "eMachy" title (lines rise on page reveal, Motion row 15), lede
+ * and the product (emachy.com screenshot in a browser window; a phone on mobile) on an accent plate. The plate unmasks from inset 18 %
+ * to full while scrolling (Motion row 16) — src/scripts/case-study.ts.
+ * The top bar (← Back to home · MJ/26 · emachy.com ↗) comes from Nav (nav="page").
+ */
+import Copy from './Copy.astro';
+import DeviceShot from '../ui/DeviceShot.astro';
+import shotDesktop from '../../assets/emachy/emachy-desktop.png';
+import shotMobile from '../../assets/emachy/emachy-mobile.png';
+---
+
+<header id="hero" class="hero" data-tone="dark" data-tone-fixed aria-labelledby="cs-title">
+  <div class="wrap intro">
+    <div class="meta" data-reveal data-reveal-y="40" data-motion-on="reveal" data-motion-delay="0.3">
+      <p class="lbl">Case study No. 01</p>
+      <p class="lbl mu d-only">Co-founder &amp; Tech Lead</p>
+      <p class="lbl mu"><Copy d="Feb 2026 - live Sep 2026" m="2026" /></p>
+    </div>
+    <h1 id="cs-title" class="dsp title" data-split-lines data-motion-on="reveal" data-motion-delay="0.1">eMachy</h1>
+    <div class="grid">
+      <p class="lede" data-reveal data-reveal-y="40" data-motion-on="reveal" data-motion-delay="0.35">
+        A B2B marketplace for new and used industrial machines - built by a small team and a software factory of AI
+        agents.
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap" data-reveal="fade" data-motion-on="reveal" data-motion-delay="0.45">
+    <figure class="plate" data-cs-plate>
+      <div class="mock" data-cs-mock>
+        <DeviceShot
+          kind="browser"
+          class="mock-d"
+          src={shotDesktop}
+          alt="The eMachy home page: search for industrial machines"
+          sizes="(max-width: 760px) 100vw, min(calc(78vw - 100px), 1149px)"
+        />
+        <DeviceShot
+          kind="phone"
+          class="mock-m"
+          src={shotMobile}
+          alt="The eMachy home page on a phone: search for industrial machines"
+          sizes="166px"
+        />
+      </div>
+    </figure>
+  </div>
+</header>
+
+<style>
+  .hero {
+    padding-top: clamp(144px, 130.63px + 3.429vw, 180px);
+    padding-bottom: clamp(72px, 54.17px + 4.571vw, 120px);
+  }
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(28px, 23.54px + 1.143vw, 40px);
+  }
+
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .title {
+    font-size: min(20vw, 288px);
+    font-weight: 500;
+    letter-spacing: -0.06em;
+    line-height: 0.82;
+  }
+  .lede {
+    grid-column: 1 / span 8;
+    font-size: clamp(22px, 15.31px + 1.714vw, 40px);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+  }
+
+  /* ---- plate + product mock ---- */
+  .plate {
+    position: relative;
+    margin-top: clamp(28px, 2.74px + 6.476vw, 96px);
+    height: clamp(300px, 144px + 40vw, 720px);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  /* pre-JS state of the scroll unmask (the script takes over on init) */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.js) .plate {
+      clip-path: inset(18% 18% 18% 18%);
+    }
+  }
+  /* browser window: 78 % × 76 % of the plate (the design's stylised view) */
+  .mock {
+    width: 78%;
+    height: 76%;
+    display: flex;
+    transform-origin: 50% 50%;
+  }
+  .mock > :global(.mock-d) {
+    flex: 1;
+    min-width: 0;
+  }
+  .mock > :global(.mock-m) {
+    display: none;
+  }
+
+  @media (max-width: 760px) {
+    .meta {
+      padding-top: var(--space-4);
+      padding-bottom: 14px;
+      border-bottom-color: var(--rule-dark);
+    }
+    .d-only {
+      display: none;
+    }
+    .title {
+      line-height: 0.95;
+    }
+    .lede {
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+    }
+    /* phone rising from the bottom edge of the plate */
+    .plate {
+      align-items: flex-start;
+    }
+    .mock {
+      width: 180px;
+      height: auto;
+      margin-top: 12%;
+    }
+    .mock > :global(.mock-d) {
+      display: none;
+    }
+    .mock > :global(.mock-m) {
+      display: flex;
+      flex: 1;
+    }
+  }
+</style>

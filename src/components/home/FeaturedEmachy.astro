@@ -1,0 +1,251 @@
+---
+/**
+ * FeaturedEmachy — No. 02 featured case (design: Home.dc.html "FEATURED: eMachy",
+ * HomeMobile.dc.html "eMachy"): label row, mega "eMachy", description, product
+ * plate (real emachy.com screenshot in a browser window; a phone on mobile), facts, and the
+ * "Read the case study" magnetic button + emachy.com pill.
+ * Motion: headline line mask (data-split-lines, row 07), fade-ups (data-reveal),
+ * plate unmask + inner parallax (src/scripts/home/emachy.ts).
+ * Desktop-only / mobile-only copy variants use .d-only / .m-only (the 390 design
+ * uses shorter strings).
+ */
+import MagneticButton from '../ui/MagneticButton.astro';
+import Pill from '../ui/Pill.astro';
+import DeviceShot from '../ui/DeviceShot.astro';
+import { SITE } from '../../data/site';
+import shotDesktop from '../../assets/emachy/emachy-desktop.png';
+import shotMobile from '../../assets/emachy/emachy-mobile.png';
+
+const CASE = '/work/emachy';
+---
+
+<section id="emachy" class="section FeaturedEmachy" data-tone="dark" aria-labelledby="emachy-title">
+  <div class="wrap stack">
+    <div class="meta" data-reveal data-reveal-y="24">
+      <span class="lbl">No. 02 - Featured<span class="d-only"> case</span></span>
+      <span class="lbl mu d-only">Co-founder &amp; Tech Lead</span>
+      <span class="lbl mu">Live<span class="d-only"> since</span><span class="m-only" aria-hidden="true"> ·</span> Sep 2026</span>
+    </div>
+
+    <h2 id="emachy-title" class="title dsp" data-split-lines>eMachy</h2>
+
+    <div class="desc" data-reveal>
+      <p>
+        A B2B marketplace for new and used industrial machines - buyers contact sellers directly, with no middlemen
+        and no commission.
+      </p>
+      <p class="mu">
+        I created every repository, made the architecture calls and set up how the team builds: Claude Code as an
+        agentic software factory.
+      </p>
+    </div>
+
+    <!-- Plate: emachy.com screenshot (desktop: browser window, mobile: phone). Decorative duplicate of the CTA link. -->
+    <a
+      href={CASE}
+      class="plate"
+      data-emachy-plate
+      data-transition-word="eMachy"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="plate-in" data-emachy-plate-in>
+        <DeviceShot
+          kind="browser"
+          class="plate-d"
+          src={shotDesktop}
+          alt="The eMachy home page: search for industrial machines"
+          sizes="(max-width: 760px) 100vw, min(calc(93.14vw - 141.26px), 1360px)"
+        />
+        <DeviceShot
+          kind="phone"
+          class="plate-m"
+          src={shotMobile}
+          alt="The eMachy home page on a phone: search for industrial machines"
+          sizes="184px"
+        />
+      </div>
+    </a>
+
+    <dl class="facts" data-reveal data-reveal-y="24">
+      <div class="fact">
+        <dt class="lbl mu">Live</dt>
+        <dd>Since Sep<span class="d-only">tember</span> 2026</dd>
+      </div>
+      <div class="fact">
+        <dt class="lbl mu">Model</dt>
+        <dd>No commission<span class="d-only">, free for buyers</span></dd>
+      </div>
+      <div class="fact">
+        <dt class="lbl mu">Role</dt>
+        <dd>Co-founder &amp; tech lead</dd>
+      </div>
+      <div class="fact">
+        <dt class="lbl mu">Stack</dt>
+        <dd>.NET 8 · PostgreSQL · Angular 20 · Azure · OpenTofu</dd>
+      </div>
+    </dl>
+
+    <div class="ctas" data-reveal data-reveal-y="24">
+      <MagneticButton href={CASE} attrs={{ 'data-transition-word': 'eMachy' }}>Read the<br />case study</MagneticButton>
+      <Pill href={SITE.emachy} attrs={{ target: '_blank' }}>
+        <span class="d-only">Visit </span>emachy.com{' '}<span aria-hidden="true">↗</span>
+        <span class="sr-only">{' '}(opens in a new tab)</span>
+      </Pill>
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/home/emachy';
+</script>
+
+<style>
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(32px, 23.09px + 2.286vw, 56px);
+  }
+  .m-only {
+    display: none;
+  }
+
+  /* ---- Label row ---- */
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* ---- Mega title: 300 px at 1440, 74 px at 390 (design uses 19vw on both) ---- */
+  .title {
+    font-size: min(19vw, 300px);
+    line-height: 0.9;
+    letter-spacing: -0.055em;
+  }
+
+  /* ---- Description: right half on desktop ---- */
+  .desc {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-left: auto;
+    width: calc((100% - 11 * var(--grid-gutter)) / 2 + 5 * var(--grid-gutter));
+    font-size: var(--fs-body-l);
+    line-height: var(--lh-body-l);
+  }
+
+  /* ---- Product plate (light panel on ink) ---- */
+  .plate {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: clamp(20px, 6.63px + 3.429vw, 56px);
+    background: var(--paper-2);
+    color: var(--ink);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  :global(html.js) .plate[data-emachy-plate] {
+    clip-path: inset(10% 6% 10% 6%);
+  }
+  /* no will-change: a promoted layer moved by sub-pixels resamples (blurs) the screenshot */
+  /* browser window: same height as the design's stylised view (474 px inside the 586 px plate at 1440) */
+  .plate-in > :global(.plate-d) {
+    aspect-ratio: 1200 / 474;
+  }
+  .plate-in > :global(.plate-m) {
+    display: none;
+  }
+
+  /* ---- Facts ---- */
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin: 0;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+  .fact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .fact dd {
+    margin: 0;
+    font-size: var(--fs-body-l);
+    line-height: 1.4;
+  }
+
+  /* ---- CTAs ---- */
+  .ctas {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  /* ---- Mobile (390 design) ---- */
+  @media (max-width: 760px) {
+    .d-only {
+      display: none;
+    }
+    .m-only {
+      display: inline;
+    }
+    .meta {
+      padding-bottom: 14px;
+    }
+    .title {
+      line-height: 0.95;
+    }
+    .desc {
+      width: auto;
+      margin-left: 0;
+    }
+    /* phone rising from the bottom edge of the plate (plate height as in the 390 design) */
+    .plate {
+      padding-bottom: 0;
+    }
+    .plate-in {
+      height: 293px;
+    }
+    .plate-in > :global(.plate-d) {
+      display: none;
+    }
+    .plate-in > :global(.plate-m) {
+      display: flex;
+      width: 200px;
+      margin: 0 auto;
+    }
+    .facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px var(--space-3);
+      padding-top: 20px;
+    }
+    .fact {
+      gap: 6px;
+    }
+    .fact dd {
+      font-size: 16px;
+    }
+    .ctas {
+      gap: var(--space-3);
+      flex-wrap: nowrap;
+    }
+    .ctas :global(.pill) {
+      padding: 0 20px;
+      font-size: 15px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html.js) .plate[data-emachy-plate] {
+      clip-path: none;
+    }
+  }
+</style>

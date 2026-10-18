@@ -1,0 +1,174 @@
+---
+/**
+ * Intro — No. 01 statement (design: Home.dc.html "INTRO", HomeMobile.dc.html "intro").
+ * Motion row 06 (src/scripts/home/intro.ts): the statement's words go from 15 % to
+ * 100 % opacity while it scrolls through (scrubbed); "AI agents" gets an accent
+ * highlighter that sweeps left → right when reached.
+ * Screen readers get the sentence once from the .sr-only copy; the split visual
+ * copy is aria-hidden. Without JS / reduced motion: full opacity, highlight static.
+ */
+import MagneticButton from '../ui/MagneticButton.astro';
+import { SITE } from '../../data/site';
+
+const BEFORE =
+  'I build full-stack products end to end - from .NET APIs to Angular and React Native apps. Lately I lead a team that ships a live marketplace with';
+const HIGHLIGHT = 'AI agents';
+const AFTER = 'as part of the workflow.';
+---
+
+<section id="about" class="section Intro" data-tone="light">
+  <div class="wrap layout">
+    <h2 class="head" data-reveal data-reveal-y="24">
+      <span class="lbl">No. 01</span><span class="sep lbl mu" aria-hidden="true"> - </span><span class="lbl mu">Intro</span>
+    </h2>
+
+    <p class="stmt" data-intro-stmt>
+      <span class="sr-only">{BEFORE} {HIGHLIGHT} {AFTER}</span>
+      <span class="stmt-vis" aria-hidden="true" data-intro-words>
+        {BEFORE}{' '}<span class="hl" data-intro-hl>{HIGHLIGHT}</span>{' '}{AFTER}
+      </span>
+    </p>
+
+    <div class="cta" data-reveal data-reveal-y="24">
+      <MagneticButton href="#experience" label="About me" variant="inv" size="var(--round-l)" class="cta-btn" />
+    </div>
+
+    <p class="more mu" data-reveal data-reveal-y="24">
+      Currently tech lead and co-founder at <a class="inl" href={SITE.emachy} target="_blank" rel="noopener">eMachy</a>, software engineer at <a class="inl" href={SITE.wedosoftware} target="_blank" rel="noopener">WeDoSoftware</a>, and a master’s student writing
+      about agentic software development.
+    </p>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/home/intro';
+</script>
+
+<style>
+  /* inline links in the muted note: full-strength colour and a hairline underline that thickens on hover */
+  .inl {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+    transition: text-decoration-color 0.25s;
+  }
+  .inl:hover,
+  .inl:focus-visible {
+    text-decoration-color: currentColor;
+  }
+  /* Desktop: 12-col grid — label 1–2 · statement 3–10 · button 11–12; text below in 3–10 */
+  .layout {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+    row-gap: 48px;
+    align-items: start;
+  }
+  .head {
+    grid-column: 1 / span 2;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    font: inherit;
+  }
+  .sep {
+    display: none;
+  }
+  .stmt {
+    grid-column: 3 / span 8;
+    font-size: var(--fs-statement);
+    line-height: var(--lh-statement);
+    letter-spacing: var(--ls-statement);
+    text-wrap: pretty;
+  }
+  .stmt-vis {
+    display: block;
+  }
+  .cta {
+    grid-column: 11 / span 2;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: var(--space-2);
+  }
+  .cta :global(.cta-btn) {
+    font-size: 16px;
+  }
+  .more {
+    grid-column: 3 / span 8;
+    max-width: 520px;
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+  }
+
+  /* Highlighter on "AI agents": accent band sweeps left → right (background-size),
+     box-decoration-break keeps it right if the phrase wraps. Static "on" by default. */
+  .hl {
+    padding: 0 0.1em;
+    margin: 0 -0.05em;
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+    background-size: 100% 100%;
+    color: var(--on-accent);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  .hl[data-hl-anim] {
+    transition:
+      background-size 0.6s var(--ease-in-out),
+      color 0.3s linear;
+  }
+  .hl[data-hl-anim]:not(.is-on) {
+    background-size: 0% 100%;
+    color: inherit;
+  }
+  .hl[data-hl-anim].is-on {
+    transition:
+      background-size 0.6s var(--ease-in-out),
+      color 0.3s linear 0.15s;
+  }
+
+  /* Mobile (390 design): single-line label, statement, then text + button side by side */
+  @media (max-width: 760px) {
+    .layout {
+      grid-template-columns: minmax(0, 1fr) auto;
+      column-gap: var(--space-3);
+      row-gap: 32px;
+    }
+    .head {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      gap: 0;
+      white-space: pre;
+    }
+    .sep {
+      display: inline;
+    }
+    .head .mu {
+      color: inherit;
+    }
+    .stmt {
+      grid-column: 1 / -1;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    .more {
+      grid-column: 1;
+      grid-row: 3;
+      align-self: end;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    .cta {
+      grid-column: 2;
+      grid-row: 3;
+      align-self: end;
+      padding-top: 0;
+    }
+    .cta :global(.cta-btn) {
+      font-size: 15px;
+    }
+  }
+</style>

@@ -1,0 +1,103 @@
+---
+/**
+ * Case-study footer (design: "NEXT" block): "Next / All work →" back to the
+ * home work list, plus a copyright line and socials. Replaces the home
+ * Footer on this page (the design has no contact block here).
+ */
+import { SITE, SOCIALS } from '../../data/site';
+---
+
+<footer class="foot" data-tone="dark" data-tone-fixed>
+  <div class="wrap stack">
+    <a href="/#work" class="next" data-transition-word="Home" data-reveal>
+      <span class="lbl mu">Next</span>
+      <span class="dsp big">All work <span class="arr" aria-hidden="true">→</span></span>
+    </a>
+    <div class="meta">
+      <span>© {new Date().getFullYear()} {SITE.name}</span>
+      <ul role="list" class="socials" aria-label="Socials">
+        {
+          SOCIALS.map((s) => (
+            <li>
+              <a class="ul" href={s.href} target={s.href.startsWith('http') ? '_blank' : undefined}
+                rel={s.href.startsWith('http') ? 'noopener' : undefined}>
+                {s.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    position: relative;
+    padding-block: clamp(88px, 61.26px + 6.857vw, 160px) clamp(32px, 29.03px + 0.762vw, 40px);
+  }
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(56px, 41.14px + 3.81vw, 96px);
+  }
+  .next {
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-decoration: none;
+  }
+  .big {
+    font-size: clamp(52px, 26.74px + 6.476vw, 120px);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    line-height: 0.92;
+  }
+  .arr {
+    display: inline-block;
+    color: var(--accent-dark);
+    transition: transform 0.6s var(--ease-out);
+  }
+  .next:hover .arr,
+  .next:focus-visible .arr {
+    transform: translateX(0.22em);
+  }
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line);
+    font-size: var(--fs-small);
+  }
+  .socials {
+    display: flex;
+    gap: var(--space-4);
+  }
+
+  @media (max-width: 760px) {
+    .next {
+      gap: 14px;
+    }
+    .big {
+      line-height: 0.95;
+    }
+    .meta {
+      flex-direction: column;
+      gap: 14px;
+      padding-top: 18px;
+      border-top-color: var(--rule-dark);
+    }
+    .socials {
+      gap: 20px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .next:hover .arr,
+    .next:focus-visible .arr {
+      transform: none;
+    }
+  }
+</style>

@@ -1,0 +1,120 @@
+---
+/**
+ * Facts grid (Role, Timeline, Product, Stack) + "01 - The problem" (light).
+ */
+import Copy from './Copy.astro';
+import CaseHeading from './CaseHeading.astro';
+
+const facts = [
+  { label: 'Role', d: 'Co-founder & tech lead' },
+  { label: 'Timeline', d: 'Feb 2026 - live since Sep 2026', m: 'Feb 2026 - live Sep 2026' },
+  { label: 'Product', d: 'Listings & lead generation, no commission', m: 'Listings & leads, no commission' },
+  { label: 'Stack', d: '.NET 8 · PostgreSQL · Angular 20 · Azure · OpenTofu' },
+];
+---
+
+<section class="sec" data-tone="light" aria-labelledby="problem-title">
+  <div class="wrap stack">
+    <dl class="facts" data-reveal>
+      {
+        facts.map((f) => (
+          <div class="fact">
+            <dt class="lbl mu">{f.label}</dt>
+            <dd>
+              <Copy d={f.d} m={f.m} />
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <div class="grid problem">
+      <div class="left">
+        <p class="lbl" data-reveal="fade">01 - The problem</p>
+        <CaseHeading id="problem-title" lines={['Machines', 'change hands', 'slowly.']} />
+      </div>
+      <div class="right" data-reveal>
+        <p>
+          Buying a used press or a machining centre usually means digging through scattered dealer sites - a separate
+          one for every country - then chasing sellers by phone.
+        </p>
+        <p class="mu">
+          eMachy puts new and used industrial machines in one catalogue: buyers contact sellers directly, with no
+          middlemen, and sellers get every enquiry in a built-in inbox instead of paying commission.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sec {
+    padding-block: clamp(88px, 55.31px + 8.381vw, 176px);
+  }
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(48px, 21.26px + 6.857vw, 120px);
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--fg);
+  }
+  .fact {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .fact dd {
+    margin: 0;
+    font-size: clamp(16px, 14.89px + 0.286vw, 19px);
+    line-height: 1.4;
+  }
+
+  .problem {
+    row-gap: var(--space-5);
+    align-items: start;
+  }
+  .left {
+    grid-column: 1 / span 4;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .right {
+    grid-column: 6 / span 7;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    font-size: clamp(17px, 15.51px + 0.381vw, 21px);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 760px) {
+    .facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px 16px;
+      padding-top: 18px;
+    }
+    .fact {
+      gap: 6px;
+    }
+    .fact dd {
+      line-height: 1.35;
+    }
+    .problem {
+      row-gap: 18px;
+    }
+    .left {
+      gap: 18px;
+    }
+    .right {
+      gap: 18px;
+      line-height: 1.55;
+    }
+  }
+</style>

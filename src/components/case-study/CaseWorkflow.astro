@@ -1,0 +1,201 @@
+---
+/**
+ * "04 - The agentic workflow" (dark). Sticky intro on the left; on the right
+ * Plan / Build / Review / Release light up in order as the progress line fills
+ * on scroll (Motion row 16) — src/scripts/case-study.ts.
+ * Reduced motion / no JS: line full, every step lit.
+ */
+import Copy from './Copy.astro';
+import CaseHeading from './CaseHeading.astro';
+
+const steps = [
+  {
+    n: 'Plan',
+    title: 'Issue in, plan out',
+    d: 'Work starts as a written issue. An agent drafts the plan against the repository’s own conventions before any code is written.',
+    m: 'An agent drafts the plan against the repo’s conventions before code is written.',
+  },
+  {
+    n: 'Build',
+    title: 'Shared automation',
+    d: 'The same commands, rules and context live in every repository, so agents build features across the .NET API and the Angular app consistently.',
+    m: 'Same commands, rules and context in every repository.',
+  },
+  {
+    n: 'Review',
+    title: 'Code review, twice',
+    d: 'An agent review pass runs on every pull request; a human signs off. Architecture rules are checked, not remembered.',
+    m: 'Agent review on every pull request; a human signs off.',
+  },
+  {
+    n: 'Release',
+    title: 'Release workflows',
+    d: 'Release steps are scripted end to end - from versioning to deploying on Azure - so shipping is a routine, not an event.',
+    m: 'Scripted from versioning to deploying on Azure.',
+  },
+];
+---
+
+<section class="sec" data-tone="dark" aria-labelledby="flow-title">
+  <div class="wrap grid layout">
+    <div class="left">
+      <p class="lbl mu" data-reveal="fade">04 - The agentic workflow</p>
+      <CaseHeading id="flow-title" lines={['A software', 'factory of', 'agents.']} accentLast />
+      <p class="intro" data-reveal>
+        <Copy
+          d="Claude Code isn’t a side tool here - it is part of how every change moves from idea to production. The setup is also the subject of my master’s thesis."
+          m="Part of how every change moves to production - and the subject of my master’s thesis."
+        />
+      </p>
+    </div>
+
+    <div class="flow" data-cs-flow>
+      <div class="track" aria-hidden="true"><span class="fill" data-cs-fill></span></div>
+      <ol role="list" class="steps">
+        {
+          steps.map((s, i) => {
+            const n = String(i + 1).padStart(2, '0');
+            return (
+              <li class="step" data-cs-step>
+                <span class="dot" aria-hidden="true" />
+                <p class="lbl mu">
+                  <Copy d={`Step ${n} · ${s.n}`} m={`${n} · ${s.n}`} />
+                </p>
+                <h3 class="dsp step-title">{s.title}</h3>
+                <p class="step-body">
+                  <Copy d={s.d} m={s.m} />
+                </p>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sec {
+    padding-block: clamp(88px, 55.31px + 8.381vw, 176px);
+  }
+  .layout {
+    row-gap: var(--space-6);
+    align-items: start;
+  }
+  .left {
+    grid-column: 1 / span 4;
+    position: sticky;
+    top: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .intro {
+    font-size: clamp(16px, 15.26px + 0.19vw, 18px);
+    line-height: 1.55;
+    color: var(--mu2);
+  }
+
+  .flow {
+    grid-column: 6 / span 7;
+    position: relative;
+    padding-left: 56px;
+  }
+  .track {
+    position: absolute;
+    left: 11px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--line);
+  }
+  .fill {
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform-origin: 50% 0;
+  }
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(40px, 28.11px + 3.048vw, 72px);
+  }
+  .step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: opacity 0.5s var(--ease-in-out);
+  }
+  .dot {
+    position: absolute;
+    left: -53px;
+    top: 6px;
+    width: 18px;
+    height: 18px;
+    border-radius: var(--radius-pill);
+    border: 2px solid var(--accent);
+    background: var(--accent);
+    transition:
+      background-color 0.4s,
+      transform 0.4s var(--ease-out);
+  }
+  .step-title {
+    font-size: clamp(22px, 16.8px + 1.333vw, 36px);
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+  }
+  .step-body {
+    max-width: 560px;
+    font-size: clamp(15px, 13.89px + 0.286vw, 18px);
+    line-height: 1.55;
+    color: var(--mu2);
+  }
+
+  /* JS on + motion allowed: the script fills the line and lights the steps */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.js) .fill {
+      transform: scaleY(0);
+    }
+    :global(html.js) .step:not(.is-lit) {
+      opacity: 0.28;
+    }
+    :global(html.js) .step:not(.is-lit) .dot {
+      background: var(--bg);
+    }
+    :global(html.js) .step.is-lit .dot {
+      transform: scale(1.25);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .layout {
+      row-gap: 32px;
+    }
+    .left {
+      position: static;
+      gap: 32px;
+    }
+    .flow {
+      padding-left: 40px;
+    }
+    .track {
+      left: 8px;
+      top: 6px;
+      bottom: 6px;
+    }
+    .step {
+      gap: 8px;
+    }
+    .dot {
+      left: -39px;
+      top: 3px;
+      width: 16px;
+      height: 16px;
+    }
+    .step-body {
+      line-height: 1.5;
+    }
+  }
+</style>

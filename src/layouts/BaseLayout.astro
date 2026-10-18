@@ -1,0 +1,102 @@
+---
+/**
+ * Base layout: head/meta, fonts, ClientRouter, grain, loader, nav/menu,
+ * page-transition panel and the motion runtime (src/scripts/main.ts).
+ *
+ *   <BaseLayout title="…" description="…" nav="home">
+ *     …sections…
+ *     <Footer slot="footer" />
+ *   </BaseLayout>
+ */
+import { ClientRouter } from 'astro:transitions';
+import { getImage } from 'astro:assets';
+import '@fontsource-variable/unbounded';
+import '@fontsource-variable/onest';
+import unboundedLatin from '@fontsource-variable/unbounded/files/unbounded-latin-wght-normal.woff2?url';
+import onestLatin from '@fontsource-variable/onest/files/onest-latin-wght-normal.woff2?url';
+import '../styles/global.css';
+import Loader from '../components/Loader.astro';
+import Nav from '../components/Nav.astro';
+import PageTransition from '../components/PageTransition.astro';
+import portraitHero from '../assets/portrait-hero.webp';
+import { SITE } from '../data/site';
+import { LOADER_SEEN_KEY } from '../scripts/env';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** "home": in-page anchors; "page": back link + /#… anchors */
+  nav?: 'home' | 'page';
+  /** right-hand link in the "page" top bar */
+  navExternal?: { href: string; label: string };
+  /** keep the page out of search results (404) */
+  noindex?: boolean;
+}
+
+const { title = SITE.title, description = SITE.description, nav = 'home', navExternal, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = await getImage({ src: portraitHero, width: 1200, format: 'jpg', quality: 80 });
+const ogImageUrl = new URL(ogImage.src, Astro.site);
+
+// Runs before first paint: marks JS on and skips the loader on repeat visits.
+const bootScript = `(function(){var d=document.documentElement;d.classList.add('js');try{if(sessionStorage.getItem('${LOADER_SEEN_KEY}'))d.classList.add('loader-skip')}catch(e){}})();`;
+---
+
+<!doctype html>
+<html lang="en" transition:animate="none">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="author" content={SITE.name} />
+    <meta name="theme-color" content="#0E0F11" />
+    <meta name="color-scheme" content="dark light" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content="Portrait of Marko Janošević" />
+    <meta property="og:locale" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href={unboundedLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={onestLatin} as="font" type="font/woff2" crossorigin />
+
+    <script is:inline set:html={bootScript} />
+    <ClientRouter />
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-no-smooth>Skip to content</a>
+    <Loader />
+    <Nav variant={nav} external={navExternal} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <slot name="footer" />
+    <div class="grain" aria-hidden="true"></div>
+    <PageTransition />
+    <script>
+      import '../scripts/main';
+    </script>
+  </body>
+</html>
+
+<style>
+  main {
+    position: relative;
+    z-index: var(--z-content);
+  }
+  main:focus {
+    outline: none;
+  }
+</style>

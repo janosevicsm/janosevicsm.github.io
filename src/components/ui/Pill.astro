@@ -1,0 +1,26 @@
+---
+/**
+ * Pill link (design: "Pill · 56 high" — outline that follows the tone; the
+ * fill rises from below on hover/focus). CSS lives in global.css (.pill).
+ *
+ *   <Pill href="https://emachy.com" label="Visit emachy.com ↗" />
+ *   <Pill href="…" label="LinkedIn" fill="var(--accent)" fillFg="var(--on-accent)" />
+ */
+interface Props {
+  href: string;
+  label?: string;
+  /** fill colour (default var(--fg)) and the label colour on it (default var(--bg)) */
+  fill?: string;
+  fillFg?: string;
+  class?: string;
+  attrs?: Record<string, string | undefined>;
+}
+const { href, label, fill, fillFg, class: className, attrs = {} } = Astro.props;
+const external = /^https?:/.test(href);
+const style = [fill && `--pill-fill:${fill}`, fillFg && `--pill-fill-fg:${fillFg}`].filter(Boolean).join(';') || undefined;
+---
+
+<a class:list={['pill', className]} href={href} style={style} rel={external ? 'noopener' : undefined} {...attrs}>
+  <span class="fill" aria-hidden="true"></span>
+  <span>{label}<slot /></span>
+</a>

@@ -1,0 +1,383 @@
+---
+/**
+ * WorkList — "Selected work" list with a floating pointer preview (Motion row 10).
+ * Design: design/project/Home.dc.html (desktop) + HomeMobile.dc.html (390 px).
+ *
+ * - Fine pointer (≥ 761 px): a 400×300 card follows the pointer over the list;
+ *   its vertical strip of colour panels slides to the hovered row, a round
+ *   label trails slightly faster, the other rows dim to 40 % (CSS :has()).
+ *   Driven by src/scripts/home/work-preview.ts.
+ * - Touch / coarse pointer / mobile: inline thumbnails, no card.
+ * - Reduced motion: the card sits fixed on the right and crossfades.
+ * Columns: Project | What it is | Stack | Where. Panels and thumbnails carry the
+ * eMachy / WeDoSoftware logo. eMachy links to its case study; client rows link to wedosoftware.eu (new tab).
+ */
+import Pill from '../ui/Pill.astro';
+import { WORK } from '../../data/work';
+import { SITE } from '../../data/site';
+---
+
+<section id="work" class="section WorkList" data-tone="light" aria-labelledby="work-title">
+  <div class="wrap work">
+    <header class="work__head">
+      <h2 id="work-title" class="dsp work__title" data-split-lines>Selected<br />work</h2>
+    </header>
+
+    <div class="work__table">
+      <div class="wgrid lbl work__cols" aria-hidden="true">
+        <span>Project</span><span>What it is</span><span>Stack</span><span>Where</span>
+      </div>
+      <ul role="list" class="wlist" data-work-list>
+        {
+          WORK.map((w, i) => (
+            <li
+              class:list={['wrow', w.href && 'wrow--link']}
+              data-work-row={i}
+              data-work-label={w.label}
+              style={`--w-bg:${w.bg};--w-ink:${w.ink}`}
+            >
+              <div class="wgrid wrow__grid">
+                <h3 class="wname dsp">
+                  {w.href ? (
+                    w.external ? (
+                      <a class="wlink" href={w.href} target="_blank" rel="noopener">
+                        <span class="wname__t">{w.name}</span>
+                        <span class="sr-only">, built at {w.where} (opens {w.where} in a new tab)</span>
+                      </a>
+                    ) : (
+                      <a class="wlink" href={w.href} data-transition-word={w.name}>
+                        <span class="wname__t">{w.name}</span>
+                        <span class="sr-only">, case study</span>
+                      </a>
+                    )
+                  ) : (
+                    <span class="wname__t">{w.name}</span>
+                  )}
+                </h3>
+                <p class="wwhat">{w.what}</p>
+                <p class="wstack mu">{w.stack}</p>
+                <p class="wwhere mu">
+                  <span>{w.where}</span>
+                  {w.year && <span>{w.year}</span>}
+                </p>
+                <p class="wmeta mu">{w.meta}</p>
+                <div class="wthumb" aria-hidden="true">
+                  <img class="wlogo" src={w.logo.src} width={w.logo.width} height={w.logo.height} alt="" loading="lazy" decoding="async" />
+                </div>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="work__more" data-reveal data-reveal-y="24">
+      <Pill href={SITE.github} label="More on GitHub ↗" />
+    </div>
+  </div>
+
+  <!-- floating preview (fine pointer only; decorative) -->
+  <div class="wpv" aria-hidden="true" data-work-preview>
+    <div class="wpv__in">
+      <div class="wpv__strip">
+        {
+          WORK.map((w) => (
+            <div class="wpv__panel" style={`--w-bg:${w.bg};--w-ink:${w.ink}`}>
+              <span class="wpv__ring" />
+              <img class="wlogo wpv__logo" src={w.logo.src} width={w.logo.width} height={w.logo.height} alt="" loading="eager" decoding="async" />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+  <div class="wpvl" aria-hidden="true" data-work-cursor>
+    <span class="wpvl__in">View</span>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/home/work-preview';
+</script>
+
+<style>
+  .work {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--space-6) - var(--space-2)); /* 56 */
+  }
+  @media (max-width: 760px) {
+    .work {
+      gap: calc(var(--space-5) - var(--space-2)); /* 32 */
+    }
+  }
+
+  /* ---- head ---- */
+  .work__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .work__title {
+    font-size: var(--fs-big);
+    line-height: 0.95;
+  }
+
+  /* ---- table ---- */
+  .wgrid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.15fr) minmax(0, 0.7fr) minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: center;
+  }
+  .work__cols {
+    color: var(--mu);
+    padding-bottom: var(--space-3);
+  }
+  .wlist {
+    border-bottom: 1px solid var(--fg);
+  }
+  .wrow {
+    position: relative;
+    border-top: 1px solid var(--fg);
+    transition: opacity 0.35s;
+  }
+  .wrow__grid {
+    padding-block: var(--space-5);
+  }
+  .wname {
+    font-size: var(--fs-work);
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+  }
+  /* the shift lives on an inner span so the row-wide link area never moves */
+  .wname__t {
+    display: inline-block;
+    transition: transform 0.5s var(--ease-out);
+  }
+  .wlink {
+    text-decoration: none;
+  }
+  /* the whole row is the link's hit area */
+  .wlink::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .wlink:focus-visible {
+    outline: none;
+  }
+  .wrow--link:has(.wlink:focus-visible) {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+  .wwhat,
+  .wstack,
+  .wwhere {
+    font-size: var(--fs-body);
+    line-height: 1.4;
+  }
+  .wwhere {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+  .wmeta,
+  .wthumb {
+    display: none;
+  }
+
+  /* inline thumbnail (touch / coarse pointer / mobile) */
+  .wthumb {
+    align-items: center;
+    justify-content: center;
+    background: var(--w-bg);
+  }
+  /* logo on a preview panel / thumbnail (square SVGs; contain keeps any ratio) */
+  .wlogo {
+    display: block;
+    width: auto;
+    height: 40%;
+    aspect-ratio: 1;
+    object-fit: contain;
+  }
+
+  /* dim the other rows; nudge the hovered name (fine pointer only) */
+  @media (hover: hover) and (pointer: fine) {
+    .wlist:has(.wrow:hover) .wrow:not(:hover),
+    .wlist:has(.wlink:focus-visible) .wrow:not(:focus-within) {
+      opacity: 0.4;
+    }
+    .wrow:hover .wname__t,
+    .wrow:focus-within .wname__t {
+      transform: translateX(-12px);
+    }
+  }
+
+  /* touch / coarse pointer on a wide screen: thumbnail column on the left */
+  @media (min-width: 761px) and ((hover: none) or (pointer: coarse)) {
+    .wgrid {
+      grid-template-columns: minmax(120px, 0.6fr) minmax(0, 1.35fr) minmax(0, 1.15fr) minmax(0, 0.7fr) minmax(0, 1fr);
+    }
+    .work__cols::before {
+      content: '';
+    }
+    .wthumb {
+      display: flex;
+      order: -1;
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  /* mobile: stacked rows, thumbnail on top, one meta line */
+  @media (max-width: 760px) {
+    .work__cols {
+      display: none;
+    }
+    .wrow__grid {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch; /* .wgrid centres items; here that would shrink and centre each row */
+      gap: 10px;
+      padding-block: var(--space-4);
+      text-align: left;
+    }
+    .wwhat,
+    .wstack,
+    .wwhere {
+      display: none;
+    }
+    .wmeta {
+      display: block;
+      font-size: var(--fs-small);
+      line-height: 1.45;
+    }
+    .wthumb {
+      display: flex;
+      order: -1;
+      height: 150px;
+      aspect-ratio: auto;
+    }
+    .wname {
+      letter-spacing: -0.03em;
+    }
+  }
+
+  .work__more {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* ---- floating preview card + label ---- */
+  .wpv,
+  .wpvl {
+    display: none;
+  }
+  @media (min-width: 761px) and (hover: hover) and (pointer: fine) {
+    .wpv,
+    .wpvl {
+      display: block;
+    }
+  }
+  .wpv {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: var(--z-preview);
+    width: clamp(300px, 27.78vw, 400px);
+    aspect-ratio: 4 / 3;
+    pointer-events: none;
+    translate: -50% -50%;
+    visibility: hidden;
+  }
+  .wpv__in {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transform: scale(0);
+  }
+  .wpv__strip {
+    position: relative;
+    height: 100%;
+  }
+  .wpv__panel {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    background: var(--w-bg);
+    color: var(--w-ink);
+    padding: var(--space-4);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+  /* bottom-left, where the round label (centred on the pointer) never covers it */
+  .wpv__logo {
+    position: relative;
+    height: 28%;
+  }
+  .wpv__ring {
+    position: absolute;
+    right: -10%;
+    top: 13.33%;
+    width: 55%;
+    aspect-ratio: 1;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-pill);
+    opacity: 0.35;
+  }
+  .wpvl {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: calc(var(--z-preview) + 1);
+    width: 88px;
+    height: 88px;
+    margin: -44px 0 0 -44px;
+    pointer-events: none;
+    visibility: hidden;
+  }
+  .wpvl__in {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    color: var(--on-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 500;
+    transform: scale(0);
+  }
+
+  /* reduced motion: card fixed on the right, panels crossfade (set by the script) */
+  .wpv.is-reduced {
+    left: auto;
+    top: 50%;
+    right: var(--grid-margin);
+    translate: 0 -50%;
+    visibility: visible;
+    opacity: 0;
+    transition: opacity 0.3s linear;
+  }
+  .wpv.is-reduced.is-on {
+    opacity: 1;
+  }
+  .wpv.is-reduced .wpv__in {
+    transform: none;
+  }
+  .wpv.is-reduced .wpv__panel {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s linear;
+  }
+  .wpv.is-reduced .wpv__panel.is-active {
+    opacity: 1;
+  }
+</style>

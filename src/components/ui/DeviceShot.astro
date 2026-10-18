@@ -1,0 +1,150 @@
+---
+/**
+ * DeviceShot — a product screenshot framed as a browser window or a phone.
+ *
+ *   <DeviceShot kind="browser" src={desktopPng} alt="…" sizes="…" />
+ *   <DeviceShot kind="phone" src={mobilePng} alt="…" sizes="…" />
+ *
+ * The frame fills its parent's width; the screenshot is cropped from the top
+ * (object-fit: cover) when the parent gives the frame a fixed height, so the
+ * viewport can be shorter than the full screenshot. Images are lazy
+ * <Picture>s (avif + webp, quality 88) from src/assets/, with widths up to the
+ * source width so 2× screens get a sharp image — keep `sizes` equal to the
+ * rendered width. Colours come from the ink/paper tokens so the frame reads on
+ * paper and on the accent.
+ */
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  kind: 'browser' | 'phone';
+  src: ImageMetadata;
+  alt: string;
+  sizes: string;
+  widths?: number[];
+  quality?: number;
+  /** address shown in the browser bar */
+  url?: string;
+  class?: string;
+}
+const { kind, src, alt, sizes, url = 'emachy.com', quality = 88, class: className } = Astro.props;
+const wanted = Astro.props.widths ?? (kind === 'browser' ? [960, 1440, 1920, 2880] : [390, 780]);
+// never upscale; always offer the full source width as the largest candidate
+const widths = [...new Set([...wanted.filter((w) => w < src.width), src.width])];
+---
+
+<div class:list={['shot', `shot--${kind}`, className]}>
+  {
+    kind === 'browser' && (
+      <div class="shot__bar" aria-hidden="true">
+        <span class="shot__dots">
+          <span />
+          <span />
+          <span />
+        </span>
+        <span class="shot__url">{url}</span>
+      </div>
+    )
+  }
+  <div class="shot__screen">
+    <Picture
+      src={src}
+      alt={alt}
+      formats={['avif', 'webp']}
+      fallbackFormat="webp"
+      widths={widths.filter((w) => w <= src.width)}
+      sizes={sizes}
+      quality={quality}
+      loading="lazy"
+      decoding="async"
+      class="shot__img"
+    />
+  </div>
+</div>
+
+<style>
+  .shot {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--ink);
+    box-shadow: 0 30px 70px rgb(0 0 0 / 0.22);
+  }
+
+  /* ---- browser window ---- */
+  .shot--browser {
+    border-radius: var(--radius-window);
+  }
+  .shot__bar {
+    flex: none;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    height: clamp(24px, 19.54px + 1.143vw, 36px);
+    padding: 0 var(--space-3);
+    background: var(--ink-2);
+    color: var(--mute-dark);
+  }
+  .shot__dots {
+    display: flex;
+    gap: 6px;
+  }
+  .shot__dots > span {
+    width: 9px;
+    height: 9px;
+    border-radius: var(--radius-pill);
+    background: var(--rule-dark);
+  }
+  .shot__url {
+    min-width: min(240px, 40vw);
+    padding: 3px var(--space-3);
+    border-radius: var(--radius-pill);
+    background: var(--ink);
+    font-size: var(--fs-label);
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  /* ---- phone ---- */
+  .shot--phone {
+    padding: clamp(6px, 4.5px + 0.4vw, 9px);
+    border-radius: var(--radius-phone);
+  }
+  .shot--phone .shot__screen {
+    flex: none;
+    aspect-ratio: 390 / 844;
+    border-radius: calc(var(--radius-phone) - 8px);
+  }
+
+  .shot__screen {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    background: var(--ink);
+  }
+  .shot__screen :global(picture) {
+    display: contents;
+  }
+  .shot__screen :global(.shot__img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 0;
+  }
+
+  @media (max-width: 760px) {
+    .shot__bar {
+      padding: 0 10px;
+    }
+    .shot__dots > span {
+      width: 6px;
+      height: 6px;
+    }
+    .shot__url {
+      font-size: 10px;
+      padding: 1px 10px;
+    }
+  }
+</style>

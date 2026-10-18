@@ -1,0 +1,148 @@
+---
+/**
+ * "02 - My role" (dark): headline + numbered 2×2 list (stacked on mobile).
+ */
+import Copy from './Copy.astro';
+import CaseHeading from './CaseHeading.astro';
+
+const roles = [
+  {
+    title: 'Every repository',
+    d: 'Created and structured all of the product’s repositories and the cross-repo workflow that ties them together.',
+    m: 'Created all of the product’s repositories and the cross-repo workflow.',
+  },
+  {
+    title: 'Architecture calls',
+    d: '.NET 8 with Clean Architecture, PostgreSQL, an Angular 20 front end - chosen and set up for a small team to move fast.',
+    m: '.NET 8 with Clean Architecture, PostgreSQL, Angular 20.',
+  },
+  {
+    title: 'Infrastructure as code',
+    d: 'Azure, provisioned with OpenTofu, so environments are reproducible rather than hand-built.',
+    m: 'Azure, provisioned with OpenTofu.',
+  },
+  {
+    title: 'How the team builds',
+    d: 'Set up Claude Code as an agentic software factory - shared automation, code review and release workflows.',
+    m: 'Claude Code as an agentic software factory - shared automation, code review, release workflows.',
+  },
+];
+---
+
+<section class="sec" data-tone="dark" aria-labelledby="role-title">
+  <div class="wrap stack">
+    <div class="grid head">
+      <div class="left">
+        <p class="lbl mu" data-reveal="fade">02 - My role</p>
+        <CaseHeading id="role-title" lines={['From the', 'first commit.']} />
+      </div>
+      <p class="right" data-reveal>
+        As co-founder and tech lead I owned the technical side end to end - and the way the team works.
+      </p>
+    </div>
+
+    <ol role="list" class="roles">
+      {
+        roles.map((r, i) => (
+          <li class="role" data-reveal data-motion-delay={i % 2 ? '0.08' : undefined}>
+            <span class="dsp num">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="dsp role-title">{r.title}</h3>
+            <p class="role-body">
+              <Copy d={r.d} m={r.m} />
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .sec {
+    padding-block: clamp(88px, 55.31px + 8.381vw, 176px);
+  }
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(32px, 17.14px + 3.81vw, 72px);
+  }
+  .head {
+    row-gap: var(--space-4);
+    align-items: end;
+  }
+  .left {
+    grid-column: 1 / span 4;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .right {
+    grid-column: 6 / span 7;
+    font-size: clamp(17px, 15.51px + 0.381vw, 21px);
+    line-height: 1.5;
+    color: var(--mu2);
+  }
+
+  .roles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--line);
+  }
+  .role {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 40px 40px 48px 0;
+  }
+  .role:nth-child(even) {
+    padding: 40px 0 48px 40px;
+    border-left: 1px solid var(--line);
+  }
+  .role:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+  .num {
+    font-size: clamp(13px, 12.26px + 0.19vw, 15px);
+    color: var(--accent-dark);
+  }
+  .role-title {
+    font-size: var(--fs-h3);
+    font-weight: 400;
+    letter-spacing: var(--ls-h3);
+    line-height: 1.15;
+  }
+  .role-body {
+    font-size: var(--fs-body);
+    line-height: 1.55;
+    color: var(--mu2);
+  }
+
+  @media (max-width: 760px) {
+    .head {
+      row-gap: 32px;
+    }
+    .left {
+      gap: 32px;
+    }
+    .right {
+      display: none;
+    }
+    .roles {
+      grid-template-columns: 1fr;
+      border-top: 0;
+    }
+    .role,
+    .role:nth-child(even) {
+      gap: 8px;
+      padding: 22px 0;
+      border: 0;
+      border-top: 1px solid var(--line);
+    }
+    .role:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+    .role-body {
+      line-height: 1.5;
+    }
+  }
+</style>
