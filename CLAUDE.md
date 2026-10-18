@@ -18,6 +18,13 @@ Branches: `dev` (default, work here) and `main` (releases). Decisions and phase 
 | `npm run build` | static build to `dist/` — **the** check for agents |
 | `npx astro check` | type/diagnostic check — must report 0 errors |
 
+## Branches and deploy
+
+`dev` is the default working branch. `main` is the live site: GitHub Actions
+(`.github/workflows/deploy.yml`) deploys to https://janosevicsm.github.io when `main` changes, and
+builds (with `astro check`) on every PR into `main`. Release = PR from `dev` to `main`; never push
+to `main` directly.
+
 Agents: never run `astro dev`, `astro preview`, `npm run dev` or any watch/server command.
 Single-run commands only.
 

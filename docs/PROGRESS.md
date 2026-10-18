@@ -25,7 +25,7 @@ default branch is `dev` and `main` is for releases.
 | 2b | Home: selected work, experience timeline, toolbox | subagent | ✅ done |
 | 2c | eMachy case study page | subagent | ✅ done |
 | 3 | Browser check (desktop + mobile, reduced motion), fixes | orchestrator | ✅ done |
-| 4 | GitHub Pages deploy | with you | ⏳ |
+| 4 | GitHub Pages deploy (Actions, on merge to `main`) | with you | ✅ workflow ready, first release PR open |
 
 ## Open items for you
 
@@ -40,3 +40,5 @@ default branch is `dev` and `main` is for releases.
 - 2026-10-18: Phase 1 foundation built: Astro 7, GSAP, Lenis, tokens, loader, nav/menu, footer, page transition, motion data attributes. Build and type check pass.
 - 2026-10-18: Phase 2 built by three parallel subagents: hero, intro, featured eMachy, work list, experience, toolbox, case study.
 - 2026-10-18: Browser review at 1440 and 390 px. Fixed: hero labels stuck hidden, line-mask clipping, narrow work-list layout, designer notes in the mockups. The mockups now use real emachy.com screenshots. Menu, page transition (home ↔ case study), back-link to #work and reduced motion checked.
+- 2026-10-18: Review rounds: sharper screenshots, logos, reworked work list, world-language loader, links to eMachy / WeDoSoftware / schools, Instagram, no version label.
+- 2026-10-18: GitHub Pages switched to GitHub Actions. `.github/workflows/deploy.yml` builds every PR into `main` and deploys when `main` changes. Release = PR from `dev` to `main`.
