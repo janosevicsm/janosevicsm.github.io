@@ -1,15 +1,245 @@
 ---
 /**
- * Experience — No. 03 experience timeline with sticky title (Motion row 11).
- * TODO(phase 2): build from design/project/Home.dc.html + HomeMobile.dc.html.
- * Keep the root element, its id and data-tone. Use the motion data attributes
- * (data-split-lines, data-reveal, data-magnetic) before writing custom JS.
+ * Experience — No. 03 timeline (Motion row 11). Design: Home.dc.html + HomeMobile.dc.html.
+ *
+ * Desktop: the section title is position: sticky on the left (no pin); entries
+ * on the right rise one by one, each period's years count up from −6 to the
+ * real year and the hairline above draws left→right
+ * (src/scripts/home/experience.ts). Mobile: stacked, title static.
+ * Dates: the visible (counting) text is aria-hidden; screen readers get a
+ * static sr-only copy with real <time> elements.
+ * Reduced motion: fade only, dates static.
  */
+import { EXPERIENCE, EXPERIENCE_SUBTITLE, dateParts } from '../../data/experience';
+
+const items = EXPERIENCE.map((x) => {
+  const from = dateParts(x.from);
+  const to = x.to ? dateParts(x.to) : null;
+  return { ...x, fromD: from, toD: to };
+});
 ---
 
-<section id="experience" class="section Experience" data-tone="dark">
-  <div class="wrap">
-    <!-- TODO: Experience content -->
-    <p class="lbl">Experience</p>
+<section id="experience" class="section Experience" data-tone="dark" aria-labelledby="xp-title">
+  <div class="wrap grid xp">
+    <div class="xp-head">
+      <span class="lbl mu" data-reveal="fade">No. 03</span>
+      <h2 id="xp-title" class="dsp xp-title" aria-label="Experience">
+        <span class="v-d" data-split-lines>Experi-<br />ence</span>
+        <span class="v-m" data-split-lines>Experience</span>
+      </h2>
+      <p class="xp-sub mu v-d" data-reveal="fade" data-motion-delay="0.2">{EXPERIENCE_SUBTITLE}</p>
+    </div>
+
+    <ol role="list" class="xp-list">
+      {
+        items.map((x) => (
+          <li class="xp-item" data-xp-item>
+            <div class="xp-rule" aria-hidden="true" data-xp-rule />
+            <div class="xp-row">
+              <p class="lbl mu xp-date">
+                <span class="sr-only">
+                  <time datetime={x.fromD.iso}>{x.fromD.long}</time>
+                  {' to '}
+                  {x.toD ? <time datetime={x.toD.iso}>{x.toD.long}</time> : 'present'}
+                </span>
+                <span class="xp-date__vis" aria-hidden="true">
+                  {x.fromD.month && `${x.fromD.month} `}
+                  <span class="xp-year" data-xp-year={x.fromD.year}>
+                    {x.fromD.year}
+                  </span>
+                  {' – '}
+                  {x.toD ? (
+                    <>
+                      {x.toD.month && `${x.toD.month} `}
+                      <span class="xp-year" data-xp-year={x.toD.year}>
+                        {x.toD.year}
+                      </span>
+                    </>
+                  ) : (
+                    'Present'
+                  )}
+                </span>
+              </p>
+              <div class="xp-body">
+                <h3 class="dsp xp-role">
+                  {x.role}
+                  {x.org && (
+                    <>
+                      {' '}
+                      <span class="xp-dot" aria-hidden="true">
+                        ·
+                      </span>
+                      <span class="sr-only">at</span>{' '}
+                      {x.orgHref ? (
+                        <a class="ul" href={x.orgHref} rel="noopener">
+                          {x.org}
+                        </a>
+                      ) : x.orgShort ? (
+                        <>
+                          <span class="v-d">{x.org}</span>
+                          <span class="v-m">{x.orgShort}</span>
+                        </>
+                      ) : (
+                        x.org
+                      )}
+                    </>
+                  )}
+                </h3>
+                {x.descShort ? (
+                  <>
+                    <p class="xp-desc v-d">{x.desc}</p>
+                    <p class="xp-desc v-m">{x.descShort}</p>
+                  </>
+                ) : (
+                  <p class="xp-desc">{x.desc}</p>
+                )}
+                {x.tags && (
+                  <ul role="list" class="xp-tags" aria-label="Technologies">
+                    {x.tags.map((t) => (
+                      <li class="tag">{t}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
   </div>
 </section>
+
+<script>
+  import '../../scripts/home/experience';
+</script>
+
+<style>
+  .xp {
+    row-gap: calc(var(--space-5) + var(--space-2)); /* 48 */
+    align-items: start;
+  }
+
+  /* ---- sticky title ---- */
+  .xp-head {
+    grid-column: 1 / span 4;
+    position: sticky;
+    top: calc(var(--space-7) + var(--space-4)); /* 120 */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .xp-title {
+    font-size: var(--fs-l);
+    line-height: 0.95;
+  }
+  .xp-title > .v-d {
+    display: block;
+  }
+  .xp-sub {
+    font-size: var(--fs-body);
+  }
+
+  /* desktop / mobile copy variants */
+  .v-m {
+    display: none;
+  }
+
+  /* ---- entries ---- */
+  .xp-list {
+    grid-column: 5 / span 8;
+  }
+  .xp-item {
+    padding-bottom: calc(var(--space-6) - var(--space-2)); /* 56 */
+  }
+  .xp-item:last-child {
+    padding-bottom: 0;
+  }
+  .xp-rule {
+    height: 1px;
+    margin-bottom: calc(var(--space-5) - var(--space-2)); /* 32 */
+    background: var(--fg);
+    transform-origin: left center;
+  }
+  .xp-row {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: calc(var(--space-5) - var(--space-2)); /* 32 */
+  }
+  .xp-date {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .xp-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .xp-role {
+    font-size: var(--fs-h3);
+    font-weight: 400;
+    letter-spacing: var(--ls-h3);
+    line-height: 1.1;
+  }
+  .xp-dot {
+    color: var(--accent-dark);
+  }
+  .xp-desc {
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    color: var(--mu2);
+  }
+  .xp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  /* pre-reveal (the script fades entries in) */
+  :global(html.js) .xp-item {
+    opacity: 0;
+  }
+
+  @media (max-width: 760px) {
+    .xp {
+      row-gap: var(--space-5);
+    }
+    .xp-head {
+      position: static;
+      gap: 12px;
+    }
+    .v-d,
+    .xp-title > .v-d {
+      display: none;
+    }
+    p.v-m,
+    .xp-title > .v-m {
+      display: block;
+    }
+    span.v-m {
+      display: inline;
+    }
+    .xp-item {
+      padding-bottom: var(--space-5);
+    }
+    .xp-rule {
+      margin-bottom: 20px;
+    }
+    .xp-row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+    }
+    .xp-body {
+      gap: 12px;
+    }
+    .xp-role {
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .xp-desc {
+      line-height: var(--lh-body-l);
+    }
+    .xp-tags {
+      gap: 6px;
+    }
+  }
+</style>

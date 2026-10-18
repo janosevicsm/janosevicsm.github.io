@@ -1,15 +1,99 @@
 ---
 /**
- * Toolbox — No. 04 toolbox / skills groups (Motion row 12).
- * TODO(phase 2): build from design/project/Home.dc.html + HomeMobile.dc.html.
- * Keep the root element, its id and data-tone. Use the motion data attributes
- * (data-split-lines, data-reveal, data-magnetic) before writing custom JS.
+ * Toolbox — No. 04 skill groups (Motion row 12). Design: Home.dc.html + HomeMobile.dc.html.
+ * Four groups (4 columns desktop, 2 mobile) slide up 24 px in sequence
+ * (src/scripts/home/toolbox.ts). Reduced motion: fade, 300 ms.
  */
+import { SKILLS } from '../../data/skills';
 ---
 
-<section id="toolbox" class="section Toolbox" data-tone="light">
-  <div class="wrap">
-    <!-- TODO: Toolbox content -->
-    <p class="lbl">Toolbox</p>
+<section id="toolbox" class="section Toolbox" data-tone="light" aria-labelledby="tb-title">
+  <div class="wrap tb">
+    <header class="tb-head">
+      <h2 id="tb-title" class="dsp tb-title" data-split-lines>Toolbox</h2>
+      <span class="lbl tb-no" data-reveal="fade" data-motion-delay="0.2">No. 04</span>
+    </header>
+
+    <div class="tb-grid" data-tb-grid>
+      {
+        SKILLS.map((g) => (
+          <div class="tb-group" data-tb-group>
+            <h3 class="lbl mu">{g.title}</h3>
+            <ul role="list" class="tb-items">
+              {g.items.map((s) => (
+                <li>{s}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
   </div>
 </section>
+
+<script>
+  import '../../scripts/home/toolbox';
+</script>
+
+<style>
+  .tb {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .tb-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--fg);
+  }
+  .tb-title {
+    font-size: var(--fs-l);
+    line-height: 0.95;
+  }
+  .tb-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+  .tb-group {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .tb-items {
+    font-size: var(--fs-skill);
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+  }
+
+  :global(html.js) .tb-group {
+    opacity: 0;
+  }
+
+  @media (max-width: 760px) {
+    .tb {
+      gap: calc(var(--space-5) - var(--space-2)); /* 32 */
+    }
+    .tb-head {
+      padding-bottom: var(--space-3);
+    }
+    .tb-no {
+      display: none;
+    }
+    .tb-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: calc(var(--space-5) - var(--space-1)) var(--space-3); /* 36 16 */
+    }
+    .tb-group {
+      gap: 12px;
+    }
+    .tb-items {
+      line-height: 1.4;
+      letter-spacing: 0;
+    }
+  }
+</style>
