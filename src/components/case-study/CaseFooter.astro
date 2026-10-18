@@ -1,11 +1,10 @@
 ---
 /**
  * Case-study footer (design: "NEXT" block): "Next / All work →" back to the
- * home work list, plus the edition line and socials. Replaces the home
+ * home work list, plus a copyright line and socials. Replaces the home
  * Footer on this page (the design has no contact block here).
  */
 import { SITE, SOCIALS } from '../../data/site';
-import pkg from '../../../package.json';
 ---
 
 <footer class="foot" data-tone="dark" data-tone-fixed>
@@ -15,7 +14,7 @@ import pkg from '../../../package.json';
       <span class="dsp big">All work <span class="arr" aria-hidden="true">→</span></span>
     </a>
     <div class="meta">
-      <span>{SITE.edition} · build {pkg.version}</span>
+      <span>© {new Date().getFullYear()} {SITE.name}</span>
       <ul role="list" class="socials" aria-label="Socials">
         {
           SOCIALS.map((s) => (

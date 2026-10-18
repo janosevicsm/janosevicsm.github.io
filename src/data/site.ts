@@ -12,7 +12,6 @@ export const SITE = {
   emachy: 'https://emachy.com',
   location: 'Novi Sad, Serbia',
   coordinates: '45.27° N - 19.83° E',
-  edition: '2026 © Edition',
 } as const;
 
 /** Intro loader greetings, in order (English and Serbian first). The loader's bars and counter follow the count. */

@@ -7,7 +7,6 @@ import { Image } from 'astro:assets';
 import portrait from '../assets/portrait.jpg';
 import MagneticButton from './ui/MagneticButton.astro';
 import { SITE, SOCIALS } from '../data/site';
-import pkg from '../../package.json';
 ---
 
 <footer class="footer" id="contact" data-tone="dark" data-tone-fixed data-footer>
@@ -41,10 +40,6 @@ import pkg from '../../package.json';
 
       <div class="meta">
         <div class="facts">
-          <div class="fact">
-            <span class="lbl mu">Version</span>
-            <span>{SITE.edition} · build {pkg.version}</span>
-          </div>
           <div class="fact">
             <span class="lbl mu">Local time</span>
             <span class="time">Novi Sad - <time data-clock>--:--:--</time></span>
