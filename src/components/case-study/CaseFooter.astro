@@ -20,7 +20,8 @@ import pkg from '../../../package.json';
         {
           SOCIALS.map((s) => (
             <li>
-              <a class="ul" href={s.href} rel={s.href.startsWith('http') ? 'noopener' : undefined}>
+              <a class="ul" href={s.href} target={s.href.startsWith('http') ? '_blank' : undefined}
+                rel={s.href.startsWith('http') ? 'noopener' : undefined}>
                 {s.label}
               </a>
             </li>

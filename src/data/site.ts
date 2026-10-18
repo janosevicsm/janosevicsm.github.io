@@ -7,6 +7,8 @@ export const SITE = {
   email: 'markojanosevicsm7@gmail.com',
   github: 'https://github.com/janosevicsm',
   linkedin: 'https://linkedin.com/in/marko-janosevic',
+  instagram: 'https://www.instagram.com/kanj0s/',
+  wedosoftware: 'https://wedosoftware.eu',
   emachy: 'https://emachy.com',
   location: 'Novi Sad, Serbia',
   coordinates: '45.27° N - 19.83° E',
@@ -27,5 +29,6 @@ export const NAV_LINKS = [
 export const SOCIALS = [
   { label: 'GitHub', href: SITE.github },
   { label: 'LinkedIn', href: SITE.linkedin },
+  { label: 'Instagram', href: SITE.instagram },
   { label: 'Email', href: `mailto:${SITE.email}` },
 ] as const;

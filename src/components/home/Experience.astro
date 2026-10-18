@@ -9,7 +9,7 @@
  * Dates: the visible (counting) text is aria-hidden; screen readers get a
  * static sr-only copy with real <time> elements.
  * Reduced motion: fade only, dates static.
- * Each entry has a small decorative logo (public/logos, alt="" — the heading names the place).
+ * Each entry has a small logo (public/logos) linking to the place's website.
  */
 import { EXPERIENCE, EXPERIENCE_SUBTITLE, dateParts } from '../../data/experience';
 
@@ -61,7 +61,9 @@ const items = EXPERIENCE.map((x) => {
                   )}
                 </span>
               </p>
-              <img class="xp-logo" src={x.logo} width="48" height="48" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+              <a class="xp-logo" href={x.site} target="_blank" rel="noopener" aria-label={`${x.siteName} website (opens in a new tab)`}>
+                <img src={x.logo} width="48" height="48" alt="" loading="lazy" decoding="async" />
+              </a>
               <div class="xp-body">
                 <h3 class="dsp xp-role">
                   {x.role}
@@ -179,7 +181,25 @@ const items = EXPERIENCE.map((x) => {
     display: block;
     width: 44px;
     height: 44px;
+    border-radius: 6px;
+    transition: transform 0.4s var(--ease-out, ease), opacity 0.3s;
+  }
+  .xp-logo img {
+    display: block;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
+  }
+  .xp-logo:hover {
+    transform: scale(1.08);
+  }
+  .xp-logo:focus-visible {
+    outline-offset: 4px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .xp-logo:hover {
+      transform: none;
+    }
   }
   .xp-body {
     grid-area: body;

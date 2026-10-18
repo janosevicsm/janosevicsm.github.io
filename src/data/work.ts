@@ -3,7 +3,7 @@
  * (role or company, plus the year for eMachy). `meta` is the one-line mobile /
  * touch summary under the name ("What · Stack · Where", short enough for one line at 390 px).
  *
- * Client projects (WeDoSoftware) are named by domain and not linked. Preview
+ * Client projects (WeDoSoftware) are named by domain and link to wedosoftware.eu. Preview
  * panels: `bg` / `ink` colour the panel, `logo` sits centred on it.
  */
 export interface WorkItem {
@@ -25,8 +25,10 @@ export interface WorkItem {
   ink: string;
   /** round label on the floating preview card */
   label: string;
-  /** case-study link; client rows have none */
+  /** row link: the case study, or the company site for client rows */
   href?: string;
+  /** true when href leaves the site (opens in a new tab) */
+  external?: boolean;
 }
 
 const EMACHY_LOGO = { src: '/logos/emachy.svg', width: 1000, height: 1000 };
@@ -55,7 +57,9 @@ export const WORK: WorkItem[] = [
     logo: WDS_LOGO,
     bg: 'var(--ink-2)',
     ink: 'var(--paper)',
-    label: 'Client',
+    label: 'Visit ↗',
+    href: 'https://wedosoftware.eu',
+    external: true,
   },
   {
     name: 'HR & time tracking',
@@ -66,7 +70,9 @@ export const WORK: WorkItem[] = [
     logo: WDS_LOGO,
     bg: 'var(--paper-2)',
     ink: 'var(--ink)',
-    label: 'Client',
+    label: 'Visit ↗',
+    href: 'https://wedosoftware.eu',
+    external: true,
   },
   {
     name: 'Real estate app',
@@ -77,6 +83,8 @@ export const WORK: WorkItem[] = [
     logo: WDS_LOGO,
     bg: '#2a2d34',
     ink: 'var(--paper)',
-    label: 'Client',
+    label: 'Visit ↗',
+    href: 'https://wedosoftware.eu',
+    external: true,
   },
 ];

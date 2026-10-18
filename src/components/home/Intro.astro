@@ -8,6 +8,7 @@
  * copy is aria-hidden. Without JS / reduced motion: full opacity, highlight static.
  */
 import MagneticButton from '../ui/MagneticButton.astro';
+import { SITE } from '../../data/site';
 
 const BEFORE =
   'I build full-stack products end to end - from .NET APIs to Angular and React Native apps. Lately I lead a team that ships a live marketplace with';
@@ -33,7 +34,7 @@ const AFTER = 'as part of the workflow.';
     </div>
 
     <p class="more mu" data-reveal data-reveal-y="24">
-      Currently tech lead and co-founder at eMachy, software engineer at WeDoSoftware, and a master’s student writing
+      Currently tech lead and co-founder at <a class="inl" href={SITE.emachy} target="_blank" rel="noopener">eMachy</a>, software engineer at <a class="inl" href={SITE.wedosoftware} target="_blank" rel="noopener">WeDoSoftware</a>, and a master’s student writing
       about agentic software development.
     </p>
   </div>
@@ -44,6 +45,19 @@ const AFTER = 'as part of the workflow.';
 </script>
 
 <style>
+  /* inline links in the muted note: full-strength colour and a hairline underline that thickens on hover */
+  .inl {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+    transition: text-decoration-color 0.25s;
+  }
+  .inl:hover,
+  .inl:focus-visible {
+    text-decoration-color: currentColor;
+  }
   /* Desktop: 12-col grid — label 1–2 · statement 3–10 · button 11–12; text below in 3–10 */
   .layout {
     display: grid;
